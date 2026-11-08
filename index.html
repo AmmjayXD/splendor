@@ -59,8 +59,8 @@ const C=[];T.forEach((L,l)=>{for(let o=0;o<5;o++)L.forEach(t=>{const c=[0,0,0,0,
 const NB=[[4,4,0,0,0],[0,4,4,0,0],[0,0,4,4,0],[0,0,0,4,4],[4,0,0,0,4],[3,3,3,0,0],[0,3,3,3,0],[0,0,3,3,3],[3,0,0,3,3],[3,3,0,0,3]];
 const $=s=>document.querySelector(s),app=$('#app'),clone=o=>JSON.parse(JSON.stringify(o));
 let peer,conns={},hostConn=null,isHost=false,S=null,uid,myName='',code='',sel=[],selC=null,msg='';
-try{uid=localStorage.getItem('spl_u');myName=localStorage.getItem('spl_n')||''}catch(e){}
-if(!uid){uid='u'+Math.random().toString(36).slice(2,10);try{localStorage.setItem('spl_u',uid)}catch(e){}}
+try{uid=sessionStorage.getItem('spl_u');myName=localStorage.getItem('spl_n')||''}catch(e){}
+if(!uid){uid='u'+Math.random().toString(36).slice(2,10);try{sessionStorage.setItem('spl_u',uid)}catch(e){}}
 const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const pts=p=>p.cards.reduce((a,i)=>a+C[i].p,0)+p.nobles.length*3;
 const bon=p=>{const b=[0,0,0,0,0];p.cards.forEach(i=>b[C[i].o]++);return b};
