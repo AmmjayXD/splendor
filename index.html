@@ -2,81 +2,90 @@
 <html lang="th"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Splendor ออนไลน์</title>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Itim&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <style>
-:root{--gold:#ffd166;--vio:#8b5cf6;--ink:#241a2e;--glass:rgba(255,255,255,.08);--line:rgba(255,255,255,.18)}
+:root{--ink:#1e120a;--parch:#f4e4bd;--gold:#ffc23d;--teal:#2fb7a6;--line:#8a5a2b}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Prompt,system-ui,sans-serif;color:#f5f1ff;padding:14px;
-background:radial-gradient(circle at 12% 8%,#6d28d9 0,transparent 42%),radial-gradient(circle at 88% 18%,#0e9f9d 0,transparent 38%),radial-gradient(circle at 50% 105%,#be185d 0,transparent 45%),#140d24;background-attachment:fixed}
-body:after{content:'✨';position:fixed;right:6%;bottom:8%;font-size:34px;opacity:.5;animation:tw 3s infinite alternate;pointer-events:none}
-@keyframes tw{to{opacity:.1;transform:scale(1.5) rotate(20deg)}}
-.wrap{max-width:1020px;margin:auto}
-h1{margin:4px 0 10px;font-size:30px;font-weight:700;letter-spacing:2px;background:linear-gradient(90deg,#ffd166,#f472b6,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
-.tools{position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;display:flex;gap:8px;z-index:9}
-.tools button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#0006;backdrop-filter:blur(8px);font-size:20px;cursor:pointer}
-.panel{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:14px;margin:12px 0;backdrop-filter:blur(14px);box-shadow:0 10px 30px #0006}
+body{margin:0;min-height:100vh;font-family:Mali,Prompt,system-ui,sans-serif;color:#fdf3dc;padding:12px;background:radial-gradient(circle at 18% 12%,#1f5a70 0,transparent 45%),radial-gradient(circle at 88% 8%,#53306e 0,transparent 40%),#0f1d29;background-attachment:fixed}
+body:before{content:'';position:fixed;inset:0;background-image:radial-gradient(#fff8 1px,transparent 1.6px),radial-gradient(#fff6 1px,transparent 1.6px);background-size:90px 90px,140px 140px;background-position:0 0,40px 60px;opacity:.5;pointer-events:none;animation:star 5s infinite alternate}
+@keyframes star{to{opacity:.2}}
+.wrap{max-width:1340px;margin:auto;position:relative}
+h1{margin:2px 0 8px;font-size:30px;color:var(--gold);text-shadow:3px 3px 0 var(--ink);letter-spacing:2px}
+.tools{position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;display:flex;gap:8px;z-index:30}
+.tools button{width:44px;height:44px;border-radius:12px;border:3px solid var(--ink);background:var(--parch);font-size:20px;cursor:pointer;box-shadow:0 4px 0 var(--ink)}
+.panel{background:linear-gradient(#573622,#3f2616);border:4px solid var(--ink);border-radius:14px;padding:12px;margin:10px 0;box-shadow:0 5px 0 var(--ink),inset 0 0 0 2px var(--line)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.lab{font-size:12px;color:var(--gold);letter-spacing:1px;font-weight:600}
-.lv{display:flex;gap:10px;overflow-x:auto;padding:6px 4px}
-.deck{min-width:78px;border-radius:16px;background:linear-gradient(160deg,#7c3aed,#4c1d95);border:2px solid #ffffff55;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;padding:6px;text-align:center;box-shadow:0 6px 14px #0006}
-.card{min-width:92px;width:92px;height:128px;border-radius:16px;background:linear-gradient(160deg,#fffdf7,#f1e4c8);color:var(--ink);cursor:pointer;position:relative;overflow:hidden;box-shadow:0 6px 14px #0007;transition:transform .18s,box-shadow .18s;flex:none}
+.lab{font-size:13px;color:var(--gold);font-weight:700}
+.sec{font-size:17px;font-weight:700;color:var(--gold);margin-bottom:6px;text-shadow:2px 2px 0 var(--ink)}
+.hint{font-size:14px;margin:6px 0}.leg{font-size:12px;opacity:.85;margin:4px 0 8px}.warn{color:#ffb4a8;font-weight:700}
+.game{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,1fr);gap:16px;align-items:start}
+@media(max-width:900px){.game{grid-template-columns:1fr}}
+.act{position:sticky;top:8px;z-index:6}@media(max-width:900px){.act{position:static}}
+.lv{display:flex;gap:10px;overflow-x:auto;padding:14px 8px 10px}
+.deck{min-width:78px;border-radius:12px;background:repeating-linear-gradient(45deg,#5b3a8a,#5b3a8a 7px,#47286f 7px,#47286f 14px);border:3px solid var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;padding:6px;text-align:center;box-shadow:3px 4px 0 #000a}
+.card{min-width:92px;width:92px;height:130px;border-radius:10px;background:linear-gradient(165deg,var(--parch) 42%,var(--gc,#ddd));color:var(--ink);border:3px solid var(--ink);cursor:pointer;position:relative;overflow:hidden;box-shadow:3px 4px 0 #000a;transition:transform .15s;flex:none}
+.card:hover{transform:translateY(-5px) rotate(-1.5deg)}
+.card.sel{outline:4px solid var(--gold);outline-offset:1px}
+.card.empty{background:#ffffff12;border-style:dashed;box-shadow:none;cursor:default}
+.card .top{height:36px;padding:2px 8px;display:flex;justify-content:space-between;align-items:center;background:var(--gc);border-bottom:3px solid var(--ink);font-weight:700;font-size:17px}
+.card .bi svg{width:26px;height:26px}
+.cost{position:absolute;left:5px;bottom:5px;display:flex;flex-direction:column;gap:2px}
+.cost span{display:inline-flex;align-items:center;gap:2px;font-size:12px;font-weight:700;background:var(--ink);color:#fff;border-radius:10px;padding:0 7px 0 3px;width:fit-content}
+.art{position:absolute;right:5px;bottom:8px;font-size:32px;filter:drop-shadow(2px 3px 0 #0006)}
+.card.fresh{animation:pop .5s both,glowc 3s}
 @keyframes pop{from{transform:scale(.6) translateY(14px);opacity:0}}
-.card:hover{transform:translateY(-5px) rotate(-1deg)}
-.card.sel{transform:translateY(-10px);box-shadow:0 0 0 3px var(--gold),0 0 22px #ffd166aa,0 12px 20px #000a}
-.card.empty{background:#ffffff14;box-shadow:none;cursor:default}
-.card .top{height:38px;padding:3px 9px;display:flex;justify-content:space-between;align-items:center;color:#fff;text-shadow:0 1px 3px #0008}
-.card .top b{font-size:18px}.card .em{font-size:22px}
-.dot{display:inline-block;border-radius:50%;border:1.5px solid #0006;background-image:radial-gradient(circle at 30% 30%,#fffa,#fff0 60%)}
-.cost{position:absolute;left:8px;bottom:7px;display:flex;flex-direction:column;gap:3px}
-.cost span{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700}
-.cost .dot{width:17px;height:17px}
-.noble{min-width:84px;border-radius:16px;padding:8px;text-align:center;background:linear-gradient(160deg,#fff1b8,#e0a526);color:var(--ink);box-shadow:0 6px 14px #0007;font-size:13px;font-weight:700;animation:pop .4s both}
-.noble .r{display:flex;gap:4px;justify-content:center;margin-top:4px;flex-wrap:wrap}
-.pip{display:inline-flex;min-width:26px;height:26px;border-radius:50%;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#111;border:1.5px solid #0006;background-image:radial-gradient(circle at 30% 30%,#fffa,#fff0 60%)}
-.mini{margin-right:3px}
-.gem{width:64px;height:64px;border-radius:50%;border:3px solid #0004;font:700 20px Prompt;color:#111;cursor:pointer;background-image:radial-gradient(circle at 30% 26%,#fffd,#fff0 55%);box-shadow:0 6px 12px #0008,inset 0 -7px 10px #0004;position:relative;transition:transform .15s}
-.gem:hover:not(:disabled){transform:scale(1.1) rotate(-6deg)}
-.gem.s{box-shadow:0 0 0 4px var(--gold),0 0 20px #ffd166cc;transform:scale(1.14)}
-.gem .e{position:absolute;top:-8px;left:-6px;font-size:20px}
-.gem sup{position:absolute;top:-8px;right:-6px;background:var(--gold);color:var(--ink);border-radius:10px;padding:0 6px;font-size:12px}
-button.b{background:linear-gradient(135deg,#ffd166,#f59e0b);color:var(--ink);border:0;border-radius:14px;padding:10px 16px;font:600 14px Prompt;cursor:pointer;box-shadow:0 4px 0 #a16207,0 8px 14px #0005;transition:transform .1s}
-button.b:hover:not(:disabled){filter:brightness(1.08)}
-button.b:active{transform:translateY(3px);box-shadow:0 1px 0 #a16207}button.b:disabled{opacity:.35;cursor:default}
-.p{border-radius:20px;padding:12px;margin:10px 0;background:#00000030;border:1px solid transparent}
-.p.me{background:#ffd16620}.p.turn{border-color:var(--gold);animation:glow 1.5s infinite alternate}
-@keyframes glow{from{box-shadow:0 0 6px #ffd16655}to{box-shadow:0 0 24px #ffd166bb}}
-.pn{font-weight:700;font-size:17px}.sc{float:right;background:linear-gradient(135deg,#ffd166,#f59e0b);color:var(--ink);border-radius:20px;padding:2px 14px;font-weight:700}
-.p .card{min-width:68px;width:68px;height:96px;font-size:10px}
-.p .card .top{height:28px}.p .card .top b{font-size:14px}.p .card .em{font-size:16px}
-.p .cost span{font-size:10px}.p .cost .dot{width:12px;height:12px}
-input{padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:#0006;color:#fff;font:15px Prompt}
-.log{font-size:12px;opacity:.85;max-height:90px;overflow:auto}
-.banner{padding:12px;border-radius:16px;background:linear-gradient(90deg,#ffd166,#f472b6,#ffd166);background-size:200%;animation:sl 3s linear infinite;color:var(--ink);font-weight:700;text-align:center;font-size:17px}
+@keyframes glowc{from{box-shadow:0 0 0 4px #86efac,0 0 28px #86efac}}
+.card.fresh:after{content:'✨ใหม่';position:absolute;top:40px;right:3px;background:#22c55e;color:#fff;border-radius:8px;font-size:9px;padding:0 4px;animation:fo 3s forwards}
+@keyframes fo{75%{opacity:1}to{opacity:0}}
+.slot{display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px}
+.noble{min-width:84px;border-radius:12px;padding:6px;text-align:center;background:linear-gradient(160deg,#ffe98c,#d9972a);color:var(--ink);border:3px solid var(--ink);box-shadow:3px 4px 0 #000a;font-weight:700;animation:pop .4s both}
+.noble .r{display:flex;gap:3px;justify-content:center;margin-top:4px;flex-wrap:wrap}
+.gi{width:1.25em;height:1.25em;vertical-align:-.3em;display:inline-block}
+.pip{display:inline-flex;align-items:center;gap:1px;background:var(--ink);color:#fff;border-radius:12px;padding:1px 8px 1px 3px;font-weight:700;font-size:13px;margin:0 3px 3px 0;border:0;font-family:inherit}
+.noble .pip{padding:1px 6px 1px 2px}
+button.dsc{cursor:pointer;outline:2px solid #ffb4a8}
+.gem{width:68px;height:76px;background:transparent;border:0;cursor:pointer;position:relative;padding:0;font-family:inherit}
+.gem .gs{display:block;width:60px;height:60px;margin:auto;filter:drop-shadow(0 4px 0 #0008);transition:transform .15s}
+.gem .gs svg{width:100%;height:100%}
+.gem b{position:absolute;bottom:0;right:2px;min-width:27px;height:27px;border-radius:14px;background:var(--parch);color:var(--ink);border:3px solid var(--ink);font-size:14px;line-height:21px}
+.gem:hover:not(:disabled) .gs{transform:translateY(-4px) rotate(-6deg)}
+.gem.s .gs{transform:scale(1.18);filter:drop-shadow(0 0 10px var(--gold)) drop-shadow(0 4px 0 #0008)}
+.gem sup{position:absolute;top:-2px;right:0;background:var(--gold);color:var(--ink);border:2px solid var(--ink);border-radius:10px;padding:0 6px;font-size:12px;font-weight:700}
+button.b{background:linear-gradient(#ffd45e,#f5a30f);color:var(--ink);border:3px solid var(--ink);border-radius:12px;padding:8px 14px;font:700 14px Mali,Prompt,sans-serif;cursor:pointer;box-shadow:0 4px 0 var(--ink);transition:transform .1s}
+button.b:hover:not(:disabled){filter:brightness(1.08)}button.b:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}button.b:disabled{opacity:.4;cursor:default}
+.p{border:3px solid var(--ink);border-radius:12px;padding:10px;margin:10px 0;background:#00000030}
+.p.me{background:#ffc23d26}.p.turn{border-color:var(--gold);animation:glow 1.5s infinite alternate}
+@keyframes glow{from{box-shadow:0 0 6px #ffc23d66}to{box-shadow:0 0 22px #ffc23dcc}}
+.p.got{animation:got 1.4s}@keyframes got{30%{transform:scale(1.03);box-shadow:0 0 30px var(--gold)}}
+.pn{font-weight:700;font-size:17px}.sc{float:right;background:var(--gold);color:var(--ink);border:3px solid var(--ink);border-radius:14px;padding:0 12px;font-weight:700}
+.line{margin-top:5px}
+.res .card{zoom:.58}
+.bought{display:flex;flex-wrap:wrap;padding-left:46px;margin-top:4px}
+.bought .card{zoom:.4;margin-left:-46px;margin-top:3px}.bought .card:hover{z-index:3;transform:translateY(-8px)}
+input,select{padding:10px 12px;border-radius:10px;border:3px solid var(--ink);background:var(--parch);color:var(--ink);font:600 15px Mali,Prompt,sans-serif}
+.log{font-size:12px;max-height:110px;overflow:auto}
+.banner{padding:10px;border-radius:12px;background:linear-gradient(90deg,#ffd45e,#ff9fb5,#ffd45e);background-size:200%;animation:sl 3s linear infinite;color:var(--ink);border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);font-weight:700;text-align:center;font-size:18px;margin:6px 0 10px}
 @keyframes sl{to{background-position:200%}}
-.warn{color:#fda4af;font-weight:600}
-.modal{position:fixed;inset:0;background:#000b;z-index:20;display:flex;align-items:center;justify-content:center;padding:14px}
-.modal[hidden]{display:none}.modal>div{background:#241a3e;border:1px solid var(--line);border-radius:22px;max-width:560px;max-height:90vh;overflow:auto;padding:20px;line-height:1.7}
+.modal{position:fixed;inset:0;background:#000b;z-index:40;display:flex;align-items:center;justify-content:center;padding:14px}
+.modal[hidden]{display:none}.modal>div{background:#3f2616;border:4px solid var(--ink);border-radius:16px;max-width:560px;max-height:90vh;overflow:auto;padding:20px;line-height:1.7}
 .modal h2{margin:0 0 8px;color:var(--gold)}.modal li{margin:4px 0}
-.bar{position:sticky;bottom:8px;z-index:5;background:#1b1233ee;border:2px solid var(--gold);border-radius:20px;padding:12px;margin:12px 0;box-shadow:0 8px 24px #000a}
-.hint{font-size:14px;margin:6px 0;opacity:.95}.sec{font-size:16px;font-weight:700;color:var(--gold);margin-bottom:6px}
-.leg{font-size:12px;opacity:.8;margin:4px 0 8px}
-.modal .bk{background:transparent;border:0;position:absolute;inset:0;max-width:none;max-height:none;padding:0;border-radius:0}
-.dlg{position:relative;background:#241a3e;border:1px solid var(--line);border-radius:22px;padding:18px;text-align:center;max-width:380px;width:100%;box-shadow:0 20px 50px #000c;animation:pop .25s both}
-.big{zoom:2;display:flex;justify-content:center;margin:6px 0 10px}.big .card{animation:none;cursor:default;transform:none!important}
-.art{position:absolute;right:6px;bottom:8px;font-size:34px;filter:drop-shadow(0 3px 3px #0005)}
-.p .card .art{font-size:24px;right:4px;bottom:6px}
-.lv{padding:16px 8px 10px}
-.card.fresh{animation:pop .5s both,glowc 2s}
-@keyframes glowc{from{box-shadow:0 0 0 3px #86efac,0 0 28px #86efac}}
-.card.fresh:after{content:'✨ใหม่';position:absolute;top:40px;right:3px;background:#22c55e;color:#fff;border-radius:8px;font-size:9px;padding:0 4px;animation:fo 2.4s forwards}
-@keyframes fo{70%{opacity:1}to{opacity:0}}
-.hand{border:2px dashed var(--gold);background:#ffd16614;border-radius:22px;padding:12px;margin:12px 0}
-.slot{display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:#fff9;border:2px dashed #fff4;background:transparent!important;box-shadow:none;cursor:default}
-.fly{position:fixed;z-index:50;pointer-events:none;margin:0}.fly .card{width:100%;height:100%;animation:none;transform:none;min-width:0}.fly .gem{width:100%;height:100%;animation:none}
-.p.got{animation:got .9s}@keyframes got{30%{transform:scale(1.025);box-shadow:0 0 30px #ffd166}}
-.chip{display:inline-block;border-radius:8px;padding:1px 6px;margin:2px;font-size:12px;color:#111;border:1px solid #0005}
-.toast{position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:60;background:#1b1233f2;border:2px solid var(--gold);border-radius:16px;padding:10px 16px;animation:pop .3s both;max-width:92vw;text-align:center;font-weight:600}
+.modal .bk{background:transparent;border:0;position:absolute;inset:0;max-width:none;max-height:none;padding:0}
+.dlg{position:relative;text-align:center;max-width:380px!important;width:100%;box-shadow:0 20px 50px #000c;animation:pop .25s both}
+.big{zoom:2;display:flex;justify-content:center;margin:6px 0 10px}.big .card{cursor:default;transform:none!important}
+.fly{position:fixed;z-index:50;pointer-events:none;margin:0}.fly .card{width:100%;height:100%;transform:none;min-width:0}.fly .gm{width:100%;height:100%;filter:drop-shadow(0 6px 0 #0008)}.fly .gm svg{width:100%;height:100%}
+.toast{position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:60;background:var(--parch);color:var(--ink);border:4px solid var(--ink);box-shadow:0 5px 0 var(--ink);border-radius:14px;padding:10px 18px;animation:pop .3s both;max-width:92vw;text-align:center;font-weight:700;font-size:16px}
+/* หน้าแรก */
+.hero{display:flex;gap:22px;flex-wrap:wrap;align-items:center;justify-content:center}
+.stage{width:min(400px,92vw)}.merch{width:100%;height:auto;display:block}
+.bubble{background:var(--parch);color:var(--ink);border:3px solid var(--ink);border-radius:14px;padding:6px 12px;text-align:center;font-weight:700;margin-bottom:6px;animation:bob 2.4s ease-in-out infinite}
+.menu{flex:1;min-width:290px;max-width:560px}
+.mbody{animation:bob 2.4s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-5px)}}
+.arm{transform-origin:204px 180px;animation:wave 2.4s ease-in-out infinite}@keyframes wave{50%{transform:rotate(-9deg)}}
+.dia{transform-box:fill-box;transform-origin:center;animation:dsp 2.6s ease-in-out infinite}@keyframes dsp{50%{transform:scale(1.2) rotate(9deg)}}
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.sp{font-size:22px;transform-box:fill-box;transform-origin:center;animation:tw2 1.8s infinite}.s2{animation-delay:.6s}.s3{animation-delay:1.1s}
+@keyframes tw2{0%,100%{opacity:.1;transform:scale(.5)}50%{opacity:1;transform:scale(1.25)}}
 </style></head><body><div class="wrap">
 <div class="tools"><button id="bm" title="เพลง">🎵</button><button id="bs" title="เสียงเอฟเฟกต์">🔊</button></div><h1>💎 SPLENDOR</h1><div id="app" class="panel">กำลังโหลด...</div></div>
 <script>
@@ -131,23 +140,64 @@ function handle(u,a){
   else return;
   commit(s)}
 function commit(s){S=s;sel=[];selC=null;render();Object.entries(conns).forEach(([u,c])=>c.open&&c.send(view(s,u)));botTick()}
-function view(s,u){const v=clone(s);if(v.deck)v.deck=v.deck.map(d=>d.map(()=>-1));v.players.forEach(p=>{if(p.uid!==u)p.res=(p.res||[]).map(()=>-1)});return v}
+function view(s,u){const v=clone(s);if(v.deck)v.deck=v.deck.map(d=>d.map(()=>-1));return v}
 function send(a){a.uid=uid;if(isHost)handle(uid,a);else if(hostConn&&hostConn.open)hostConn.send(a);else{msg='ยังไม่ได้เชื่อมต่อกับห้อง';render()}}
 /* ---------- เครือข่าย ---------- */
-function createRoom(){myName=nm();code=Math.random().toString(36).slice(2,6).toUpperCase();isHost=true;
-  peer=new Peer('splendor-'+code);
-  peer.on('open',()=>{S={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0]}],log:[]};location.hash=code;render()});
-  peer.on('error',e=>{if(e.type==='unavailable-id')createRoom();else{app.innerHTML='สร้างห้องไม่ได้: '+e.type}});
-  peer.on('connection',c=>{c.on('data',d=>{conns[d.uid]=c;if(d.t==='join'&&S&&S.players.some(p=>p.uid===d.uid)&&S.phase!=='lobby')c.send(view(S,d.uid));handle(d.uid,d)})})}
-function joinRoom(){myName=nm();code=$('#cd').value.trim().toUpperCase();if(!code)return;isHost=false;$('#er').textContent='กำลังเชื่อมต่อ...';
-  peer=new Peer();peer.on('open',()=>{hostConn=peer.connect('splendor-'+code,{reliable:true});
-    hostConn.on('open',()=>{location.hash=code;hostConn.send({t:'join',uid,name:myName})});
-    hostConn.on('data',d=>{S=d;msg='';render()});hostConn.on('close',()=>{msg='ขาดการเชื่อมต่อกับห้อง — รีเฟรชหน้าแล้วเข้าห้องเดิมอีกครั้ง';render()})});
-  peer.on('error',e=>{$('#er')?($('#er').textContent=e.type==='peer-unavailable'?'ไม่พบห้องนี้ (หรือเจ้าของห้องปิดหน้าเว็บไปแล้ว)':'เชื่อมต่อไม่ได้: '+e.type):0})}
+const ICE_EXTRA=[]; /* ใส่เซิร์ฟเวอร์ TURN ของคุณเองที่นี่ได้ เช่น {urls:'turn:...',username:'...',credential:'...'} */
+const PCFG={config:{iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:stun2.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'},{urls:'stun:global.stun.twilio.com:3478'},...ICE_EXTRA]}};
+let netMsg='',wl=null;
+function hostStatus(t){netMsg=t;if(S&&S.phase==='lobby'&&isHost)render()}
+async function keepAwake(){try{if(navigator.wakeLock)wl=await navigator.wakeLock.request('screen')}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&isHost&&!solo){keepAwake();if(peer&&peer.disconnected&&!peer.destroyed)peer.reconnect()}});
+function createRoom(){myName=nm();code=Math.random().toString(36).slice(2,6).toUpperCase();isHost=true;solo=false;
+  if(peer&&!peer.destroyed)peer.destroy();
+  peer=new Peer('splendor-'+code,PCFG);
+  peer.on('open',()=>{if(!S||S.host!==uid)S={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0]}],log:[]};location.hash=code;hostStatus('🟢 พร้อมรับเพื่อน');render()});
+  peer.on('disconnected',()=>{hostStatus('🟡 หลุดจากเซิร์ฟเวอร์กลาง กำลังต่อใหม่...');setTimeout(()=>{if(peer&&peer.disconnected&&!peer.destroyed)peer.reconnect()},1000)});
+  peer.on('error',e=>{if(e.type==='unavailable-id')createRoom();
+    else if(['network','server-error','socket-error','socket-closed'].includes(e.type)){hostStatus('🟡 เครือข่ายมีปัญหา ('+e.type+') กำลังลองใหม่...');setTimeout(()=>{if(peer&&peer.disconnected&&!peer.destroyed)peer.reconnect()},2500)}
+    else hostStatus('❌ '+e.type)});
+  peer.on('connection',c=>{c.on('data',d=>{conns[d.uid]=c;if(d.t==='join'&&S&&S.players.some(p=>p.uid===d.uid)&&S.phase!=='lobby')c.send(view(S,d.uid));handle(d.uid,d)})});
+  keepAwake()}
+function joinRoom(){myName=nm();code=$('#cd').value.trim().toUpperCase();if(!code)return;isHost=false;solo=false;
+  const er=t=>{const e=$('#er');if(e)e.textContent=t};er('⏳ กำลังเชื่อมต่อ...');let tries=0,done=false;
+  const attempt=()=>{if(peer&&!peer.destroyed)peer.destroy();peer=new Peer(PCFG);
+    const timer=setTimeout(()=>{if(!done)er('⌛ ยังเชื่อมต่อไม่ได้ — เครือข่ายของคุณหรือเจ้าของห้องอาจบล็อกการเชื่อมต่อตรง (ลองสลับ Wi-Fi/4G หรือใช้ Wi-Fi เดียวกัน) หรือเจ้าของห้องปิดหน้าเว็บไปแล้ว')},15000);
+    peer.on('open',()=>{hostConn=peer.connect('splendor-'+code,{reliable:true});
+      hostConn.on('open',()=>{done=true;clearTimeout(timer);location.hash=code;hostConn.send({t:'join',uid,name:myName})});
+      hostConn.on('data',d=>{S=d;msg='';render()});
+      hostConn.on('close',()=>{msg='ขาดการเชื่อมต่อกับห้อง — รีเฟรชหน้าแล้วเข้าห้องเดิมอีกครั้ง';render()});
+      hostConn.on('error',e=>er('เชื่อมต่อห้องไม่ได้: '+e.type));
+      const pc=hostConn.peerConnection;if(pc)pc.addEventListener('iceconnectionstatechange',()=>{if(pc.iceConnectionState==='failed'&&!done){clearTimeout(timer);er('❌ สร้างเส้นทางเชื่อมต่อกับเจ้าของห้องไม่สำเร็จ (เครือข่ายบล็อกการเชื่อมต่อตรง) — ลองใช้ Wi-Fi เดียวกับเพื่อน หรือสลับ 4G/Wi-Fi')}})});
+    peer.on('error',e=>{if(e.type==='peer-unavailable'&&++tries<8){er('🔎 ยังไม่พบห้อง '+code+' กำลังลองใหม่ ('+tries+'/8)...');clearTimeout(timer);setTimeout(()=>{if(!done)attempt()},2500)}
+      else if(e.type==='peer-unavailable')er('ไม่พบห้อง '+code+' — ตรวจรหัสอีกครั้ง หรือเจ้าของห้องอาจปิดหน้าเว็บ/สลับแอปจนห้องหลุดไปแล้ว');
+      else er('เชื่อมต่อไม่ได้: '+e.type)})};
+  attempt()}
 function nm(){const n=($('#nm').value||'ผู้เล่น').trim().slice(0,14);try{localStorage.setItem('spl_n',n)}catch(e){}return n}
 /* ---------- แสดงผล ---------- */
 const ART=[['⛏️','🪨','🔨','🧺','🕯️','🛠️','🪵','🧵'],['🏪','⛵','🐪','🏺','📜','⚖️'],['🏰','👸','🤴','🦁']];
-const AV=['🦊','🐼','🐯','🦄'],GE=['💎','🔷','🌿','🔥','🌑','⭐'];
+const MERCH=`<svg viewBox="0 0 420 250" class="merch" role="img" aria-label="พ่อค้าเพชรกำลังโชว์เพชร"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1442"/><stop offset="1" stop-color="#6b2d73"/></linearGradient><radialGradient id="gl"><stop offset="0" stop-color="#ffd166" stop-opacity=".85"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient></defs>
+<rect x="2" y="2" width="416" height="246" rx="16" fill="url(#sk)" stroke="#1d110a" stroke-width="4"/>
+<g fill="#fff"><circle class="tw" cx="90" cy="30" r="1.8"/><circle class="tw d2" cx="150" cy="20" r="1.4"/><circle class="tw d3" cx="240" cy="26" r="1.8"/><circle class="tw" cx="330" cy="22" r="1.4"/><circle class="tw d2" cx="396" cy="56" r="1.8"/></g>
+<circle cx="40" cy="40" r="16" fill="#fff3c4"/><circle cx="47" cy="35" r="14" fill="#2a1352"/>
+<g fill="#2a1450"><rect x="10" y="128" width="40" height="62"/><circle cx="30" cy="128" r="20"/><rect x="356" y="120" width="52" height="70"/><circle cx="382" cy="120" r="26"/><rect x="86" y="150" width="26" height="40"/><circle cx="99" cy="150" r="13"/></g>
+<rect x="46" y="44" width="8" height="150" fill="#7a4a2b" stroke="#1d110a" stroke-width="3"/><rect x="366" y="44" width="8" height="150" fill="#7a4a2b" stroke="#1d110a" stroke-width="3"/>
+<path d="M30 8 H390 L400 46 H20 Z" fill="#e63946" stroke="#1d110a" stroke-width="4"/><path d="M90 8 L84 46 M150 8 L148 46 M210 8 V46 M270 8 L272 46 M330 8 L336 46" stroke="#fff1cf" stroke-width="14"/>
+<g stroke="#1d110a" stroke-width="3"><circle cx="38" cy="46" r="14" fill="#e63946"/><circle cx="66" cy="46" r="14" fill="#fff1cf"/><circle cx="94" cy="46" r="14" fill="#e63946"/><circle cx="122" cy="46" r="14" fill="#fff1cf"/><circle cx="150" cy="46" r="14" fill="#e63946"/><circle cx="178" cy="46" r="14" fill="#fff1cf"/><circle cx="206" cy="46" r="14" fill="#e63946"/><circle cx="234" cy="46" r="14" fill="#fff1cf"/><circle cx="262" cy="46" r="14" fill="#e63946"/><circle cx="290" cy="46" r="14" fill="#fff1cf"/><circle cx="318" cy="46" r="14" fill="#e63946"/><circle cx="346" cy="46" r="14" fill="#fff1cf"/><circle cx="374" cy="46" r="14" fill="#e63946"/></g>
+<g class="lant"><line x1="110" y1="58" x2="110" y2="76" stroke="#1d110a" stroke-width="3"/><circle cx="110" cy="88" r="30" fill="url(#gl)"/><circle cx="110" cy="88" r="11" fill="#ffb703" stroke="#1d110a" stroke-width="3"/></g>
+<g class="lant l2"><line x1="300" y1="58" x2="300" y2="76" stroke="#1d110a" stroke-width="3"/><circle cx="300" cy="88" r="30" fill="url(#gl)"/><circle cx="300" cy="88" r="11" fill="#ffb703" stroke="#1d110a" stroke-width="3"/></g>
+<path d="M142 194 Q146 132 190 130 Q234 132 238 194 Z" fill="#2a9d8f" stroke="#1d110a" stroke-width="4"/><path d="M150 160 H230 L232 174 H148 Z" fill="#f4a261" stroke="#1d110a" stroke-width="3"/>
+<g class="armr"><path d="M226 154 Q258 138 266 112" stroke="#1d110a" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M226 154 Q258 138 266 112" stroke="#2a9d8f" stroke-width="15" stroke-linecap="round" fill="none"/><circle cx="267" cy="108" r="9" fill="#e0a96d" stroke="#1d110a" stroke-width="3"/>
+<g class="dia"><polygon points="267,70 285,84 267,106 249,84" fill="#bff0ff" stroke="#1d110a" stroke-width="3"/><path d="M249 84 H285 M259 77 L267 106 L275 77" stroke="#1d110a" stroke-width="1.5" fill="none"/></g><path class="spk" d="M296 66 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#fff"/></g>
+<path d="M154 154 Q132 168 122 188" stroke="#1d110a" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M154 154 Q132 168 122 188" stroke="#2a9d8f" stroke-width="15" stroke-linecap="round" fill="none"/>
+<g class="headb"><circle cx="190" cy="110" r="24" fill="#e0a96d" stroke="#1d110a" stroke-width="4"/><path d="M164 106 Q190 64 216 106 Q190 92 164 106Z" fill="#7b2cbf" stroke="#1d110a" stroke-width="4"/><polygon points="190,76 195,84 190,92 185,84" fill="#ff4d6d" stroke="#1d110a" stroke-width="2"/>
+<g class="eyes"><ellipse cx="181" cy="110" rx="3" ry="4" fill="#1d110a"/><ellipse cx="199" cy="110" rx="3" ry="4" fill="#1d110a"/></g><path d="M174 121 Q190 112 206 121 Q198 134 190 122 Q182 134 174 121Z" fill="#1d110a"/><path d="M184 128 Q190 133 196 128" stroke="#7a2e1e" stroke-width="2" fill="none"/></g>
+<rect x="36" y="190" width="348" height="54" fill="#7a4a2b" stroke="#1d110a" stroke-width="4"/><path d="M36 208 H384 M36 226 H384" stroke="#5a3418" stroke-width="3"/>
+<g stroke="#1d110a" stroke-width="2.5"><polygon class="cg" points="214,204 224,198 234,204 224,216" fill="#f1f5f9"/><polygon class="cg" style="animation-delay:.4s" points="246,204 256,198 266,204 256,216" fill="#4f9cf9"/><polygon class="cg" style="animation-delay:.8s" points="278,204 288,198 298,204 288,216" fill="#3fc36e"/><polygon class="cg" style="animation-delay:1.2s" points="310,204 320,198 330,204 320,216" fill="#ef5350"/><polygon class="cg" style="animation-delay:1.6s" points="342,204 352,198 362,204 352,216" fill="#6b7280"/></g>
+<g stroke="#1d110a" stroke-width="2.5" fill="#ffd166"><ellipse cx="96" cy="200" rx="14" ry="5"/><ellipse cx="96" cy="194" rx="14" ry="5"/><ellipse cx="96" cy="188" rx="14" ry="5"/></g>
+<g class="bub"><path d="M296 106 h104 a8 8 0 0 1 8 8 v22 a8 8 0 0 1 -8 8 h-104 a8 8 0 0 1 -8 -8 v-22 a8 8 0 0 1 8 -8z M288 126 l-22 4 l22 6z" fill="#fff1cf" stroke="#1d110a" stroke-width="3"/><text x="348" y="130" text-anchor="middle" font-size="11" font-weight="700" fill="#1d110a">เพชรแท้ ราคาพิเศษ! 💎</text></g>
+<text class="fl" x="330" y="170" font-size="20">✨</text><text class="fl d2" x="30" y="170" font-size="18">💰</text></svg>`;
+const AV=['🦊','🐼','🐯','🦄'];
 /* ---------- เสียง (สังเคราะห์ด้วย Web Audio ไม่ต้องมีไฟล์) ---------- */
 let AC,mg,sg,musOn=true,sndOn=true,nextT=0,stp=0,lk='';
 try{musOn=localStorage.getItem('spl_m')!=='0';sndOn=localStorage.getItem('spl_s')!=='0'}catch(e){}
@@ -179,8 +229,30 @@ $('#bm').onclick=()=>{audioInit();musOn=!musOn;if(mg)mg.gain.value=musOn?.5:0;tr
 $('#bs').onclick=()=>{audioInit();sndOn=!sndOn;if(sg)sg.gain.value=sndOn?.8:0;try{localStorage.setItem('spl_s',sndOn?1:0)}catch(e){}paintTools();sfx('tick')};
 document.addEventListener('pointerdown',audioInit);paintTools();
 /* ---------- แสดงผล ---------- */
-const pip=(i,n)=>`<span class="pip mini" style="background-color:${HEX[i]}">${n}</span>`;
-const cardH=id=>{const c=C[id];return `<div class="card ${selC===id?'sel':''} ${FRESH.has(id)?'fresh':''}" data-c="${id}" style="background:linear-gradient(160deg,#fffdf7 35%,${HEX[c.o]}66)"><span class="art">${ART[c.l][(id-[0,40,70][c.l])%ART[c.l].length]}</span><div class="top" style="background:linear-gradient(135deg,${HEX[c.o]},#0005)"><b>${c.p?'⭐'+c.p:''}</b><span class="em">${GE[c.o]}</span></div><div class="cost">${c.c.map((n,i)=>n?`<span><i class="dot" style="background-color:${HEX[i]}"></i>${n}</span>`:'').join('')}</div></div>`};
+const GI=[
+`<path d="M6 3h12l5 6-11 13L1 9z" fill="#e8fbff"/><path d="M1 9h22M6 3l3 6 3 13M18 3l-3 6-3 13M9 9l3-6 3 6" fill="none"/><path d="M7 4.5h4l-2 3.5z" fill="#fff" stroke="none" opacity=".8"/>`,
+`<path d="M12 2c5 0 9 4.5 9 10s-4 10-9 10S3 17.5 3 12 7 2 12 2z" fill="#3b82f6"/><path d="M12 6c3 0 5 2.5 5 6s-2 6-5 6-5-2.5-5-6 2-6 5-6z" fill="#60a5fa" stroke="none"/><path d="M7.5 7.5c1-1.8 2.8-2.8 4.5-3" fill="none" stroke="#fff"/>`,
+`<path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" fill="#22c55e"/><path d="M9 7h6l3 3v4l-3 3H9l-3-3v-4z" fill="#4ade80"/><path d="M5 6.5L8 4" stroke="#fff" fill="none"/>`,
+`<path d="M12 2l9 8-9 12L3 10z" fill="#ef4444"/><path d="M3 10h18M12 2l-4 8 4 12 4-12z" fill="none"/><path d="M6 9.5L11 4" stroke="#fff" fill="none" opacity=".8"/>`,
+`<path d="M12 2l9 5v10l-9 5-9-5V7z" fill="#4b5563"/><path d="M12 2v20M3 7l9 5 9-5" fill="none"/><path d="M6 6.5L10.5 4" stroke="#fff" fill="none" opacity=".6"/>`,
+`<circle cx="12" cy="12" r="10" fill="#fbbf24"/><circle cx="12" cy="12" r="6.6" fill="#f59e0b"/><path d="M12 8l1.3 2.7 2.9.4-2.1 2 .5 2.9-2.6-1.4-2.6 1.4.5-2.9-2.1-2 2.9-.4z" fill="#fde68a" stroke-width=".7"/>`];
+const gemSVG=i=>`<svg class="gi" viewBox="0 0 24 24" stroke="#1e120a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">${GI[i]}</svg>`;
+const GE=[0,1,2,3,4,5].map(gemSVG);
+const merchant=()=>`<svg class="merch" viewBox="0 0 320 270" stroke="#1e120a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<rect x="36" y="50" width="9" height="190" fill="#6b4423"/><rect x="275" y="50" width="9" height="190" fill="#6b4423"/>
+<path d="M24 22h272l10 38H14z" fill="#d94b3d"/><path d="M24 22h45l-8 38H14zM115 22h45l-4 38h-45zM206 22h45l4 38h-45z" fill="#fbeac2" stroke="none"/><path d="M24 22h272l10 38H14z" fill="none"/>
+<g class="mbody"><path d="M108 242Q108 152 160 152Q212 152 212 242Z" fill="#2fb7a6"/><path d="M160 152v90" stroke-width="3"/>
+<path d="M122 182Q98 206 116 232" fill="none" stroke-width="20"/><path d="M122 182Q98 206 116 232" fill="none" stroke="#2fb7a6" stroke-width="12"/>
+<g><circle cx="160" cy="120" r="30" fill="#f2c28f"/><path d="M127 112Q160 66 193 112Q160 98 127 112Z" fill="#8e44ad"/><circle cx="160" cy="90" r="6" fill="#ffd93d" stroke-width="3"/>
+<g class="eyes" stroke="none"><ellipse cx="149" cy="120" rx="3.6" ry="4.8" fill="#1e120a"/><ellipse cx="171" cy="120" rx="3.6" ry="4.8" fill="#1e120a"/></g>
+<path d="M142 134Q151 127 160 134Q169 127 178 134Q169 143 160 136Q151 143 142 134Z" fill="#3b2314" stroke-width="2.5"/></g>
+<g class="arm"><path d="M204 180Q236 168 242 132" fill="none" stroke-width="20"/><path d="M204 180Q236 168 242 132" fill="none" stroke="#2fb7a6" stroke-width="12"/><circle cx="242" cy="127" r="9" fill="#f2c28f"/>
+<g class="dia"><svg x="221" y="76" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5">${GI[0]}</svg></g></g></g>
+<rect x="24" y="218" width="272" height="42" rx="8" fill="#8a5a2b"/><path d="M24 232h272M24 246h272" stroke-width="2" fill="none"/>
+${[1,2,3,4,5].map((g,k)=>`<svg x="${56+k*40}" y="194" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.6">${GI[g]}</svg>`).join('')}
+<g stroke="none" fill="#ffe27a"><text class="sp" x="268" y="96">✦</text><text class="sp s2" x="205" y="70">✦</text><text class="sp s3" x="60" y="130">✦</text><text class="sp s2" x="282" y="170">✦</text></g></svg>`;
+const pip=(i,n)=>`<span class="pip">${GE[i]}${n}</span>`;
+const cardH=(id,nc)=>{const c=C[id];return `<div class="card ${selC===id?'sel':''} ${FRESH.has(id)?'fresh':''}" ${nc?'':'data-c="'+id+'"'} data-o="${id}" style="--gc:${HEX[c.o]}"><div class="top"><b>${c.p?'⭐'+c.p:'&nbsp;'}</b><span class="bi">${GE[c.o]}</span></div><span class="art">${ART[c.l][(id-[0,40,70][c.l])%ART[c.l].length]}</span><div class="cost">${c.c.map((n,i)=>n?`<span>${GE[i]}${n}</span>`:'').join('')}</div></div>`};
 const HELP=`<h2>📖 วิธีเล่น Splendor</h2>
 <p>🎯 <b>เป้าหมาย:</b> เป็นคนแรกที่สะสมให้ได้ <b>15 แต้ม ⭐</b> (เล่นให้ครบรอบ แล้วแต้มสูงสุดชนะ)</p>
 <p>🎲 <b>ในตาของคุณ เลือกทำ 1 อย่าง:</b></p><ol>
@@ -199,7 +271,7 @@ try{if(!localStorage.getItem('spl_h')){$('#help').hidden=false;localStorage.setI
 function startSolo(){myName=nm();solo=true;isHost=true;code='SOLO';const nb=+$('#nb').value;
   const s={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0]}],log:[]};
   for(let i=0;i<nb;i++)s.players.push({uid:'bot'+i,name:'บอท '+(i+1),av:'🤖'});newGame(s);commit(s)}
-function botTick(){if(!solo||!S||S.phase!=='play')return;const c=S.players[S.turn];if(c&&c.uid.startsWith('bot'))setTimeout(botMove,1100)}
+function botTick(){if(!solo||!S||S.phase!=='play')return;const c=S.players[S.turn];if(c&&c.uid.startsWith('bot'))setTimeout(botMove,2800)}
 function botMove(){if(!S||S.phase!=='play')return;const p=S.players[S.turn];if(!p.uid.startsWith('bot'))return;const u=p.uid;
   if(S.disc)return handle(u,{t:'disc',i:[0,1,2,3,4,5].filter(i=>p.g[i]>0).sort((a,b)=>p.g[b]-p.g[a])[0]});
   const tb=S.table.flat().filter(x=>x!=null),aff=[...tb,...p.res].filter(id=>canBuy(p,id)).sort((a,b)=>C[b].p-C[a].p||C[b].l-C[a].l);
@@ -211,79 +283,84 @@ function botMove(){if(!S||S.phase!=='play')return;const p=S.players[S.turn];if(!
     if(q.length===1&&lack[0][1]>=2&&S.bank[q[0]]>=4&&want>1&&Math.random()<.5)q=[q[0],q[0]];else av.forEach(i=>{if(q.length<want&&!q.includes(i))q.push(i)});
     if(q.length)return handle(u,{t:'take',sel:q})}
   if(p.res.length<3&&tg!=null)return handle(u,{t:'res',id:tg});handle(u,{t:'pass'})}
-function lobbyUI(pre){app.innerHTML=`<div class="sec">🎮 เริ่มเล่น</div><div class="row"><input id="nm" placeholder="👤 ชื่อของคุณ" value="${myName}" maxlength="14"></div>
-<div class="panel"><div class="sec">🤖 ฝึกเล่นคนเดียว</div><div class="hint">ลองเล่นกับบอทก่อน เพื่อเรียนรู้กติกา ไม่ต้องใช้เน็ตเชื่อมกับใคร</div><div class="row">จำนวนบอท <select id="nb" style="padding:8px;border-radius:10px"><option>1</option><option selected>2</option><option>3</option></select><button class="b" id="solo">▶️ เล่นกับบอท</button></div></div>
-<div class="panel"><div class="sec">🌐 เล่นออนไลน์กับเพื่อน (ต้อง 2 คนขึ้นไป)</div><div class="row"><button class="b" id="mk">🏰 สร้างห้องใหม่</button><span>หรือ</span><input id="cd" placeholder="🔑 รหัสห้อง" size="7" maxlength="4" style="text-transform:uppercase" value="${pre||''}"><button class="b" id="jn">🚪 เข้าร่วม</button></div></div>
-<button class="b" onclick="$('#help').hidden=false">❓ วิธีเล่น</button><p id="er" class="warn"></p>`;
+function lobbyUI(pre){app.innerHTML=`<div class="hero"><div class="stage"><div class="bubble">ยินดีต้อนรับสู่ตลาดเพชร! 💎<br><small>มาแข่งสะสมอัญมณีกันเถอะ</small></div>${merchant()}</div>
+<div class="menu"><div class="sec">👤 ชื่อของคุณ</div><div class="row"><input id="nm" placeholder="ใส่ชื่อ" value="${myName}" maxlength="14"></div>
+<div class="panel"><div class="sec">🤖 ฝึกเล่นคนเดียว</div><div class="hint">ลองเล่นกับบอทก่อนเพื่อเรียนรู้กติกา ไม่ต้องใช้เน็ตเชื่อมกับใคร</div><div class="row">บอท <select id="nb"><option>1</option><option selected>2</option><option>3</option></select> ตัว <button class="b" id="solo">▶️ เล่นกับบอท</button></div></div>
+<div class="panel"><div class="sec">🌐 เล่นออนไลน์กับเพื่อน (2 คนขึ้นไป)</div><div class="leg">ถ้าต่อกันไม่ติด ลองให้ทุกคนใช้ Wi-Fi เดียวกัน</div><div class="row"><button class="b" id="mk">🏰 สร้างห้องใหม่</button><span>หรือ</span><input id="cd" placeholder="รหัสห้อง" size="6" maxlength="4" style="text-transform:uppercase" value="${pre||''}"><button class="b" id="jn">🚪 เข้าร่วม</button></div></div>
+<button class="b" onclick="$('#help').hidden=false">❓ วิธีเล่น</button><p id="er" class="warn"></p></div></div>`;
   $('#mk').onclick=createRoom;$('#jn').onclick=joinRoom;$('#solo').onclick=startSolo}
 function netCost(mp,id){const c=C[id],b=bon(mp);return [0,1,2,3,4].map(i=>[i,Math.max(0,c.c[i]-b[i])]).filter(x=>x[1]>0)}
-function selInfo(mp){if(selC==null)return '👆 แตะการ์ดบนโต๊ะเพื่อเลือก แล้วกด "ซื้อ" หรือ "จอง"';
-  const nc=netCost(mp,selC),miss=need(mp,C[selC])-mp.g[5];
-  return `ราคาสุทธิ (หักโบนัสแล้ว): ${nc.length?nc.map(x=>GE[x[0]]+'×'+x[1]).join(' '):'ฟรี!'} — ${miss<=0?'✅ ซื้อได้เลย':'❌ ยังขาดอีก '+miss+' เหรียญ'}`}
 function detailH(mp,mt){if(selC==null)return '';
-  if(!S.table.flat().includes(selC)&&!mp.res.includes(selC)){selC=null;return ''}
-  const c=C[selC],inR=mp.res.includes(selC),nc=netCost(mp,selC),miss=need(mp,c)-mp.g[5],can=mt&&S.phase==='play'&&!S.disc;
+  const onT=S.table.flat().includes(selC),ow=S.players.find(p=>p.cards.includes(selC)||p.res.includes(selC));
+  if(!onT&&!ow){selC=null;return ''}
+  const c=C[selC],inMy=mp.res.includes(selC),buyable=onT||inMy,nc=netCost(mp,selC),miss=need(mp,c)-mp.g[5],can=mt&&S.phase==='play'&&!S.disc;
+  const where=onT?'📍 อยู่บนโต๊ะ':(ow.cards.includes(selC)?'✅ ซื้อแล้วโดย ':'🔒 ถูกจองโดย ')+(ow?ow.av+' '+ow.name:'');
   return `<div class="modal"><div class="bk" data-a="cc"></div><div class="dlg"><div class="big">${cardH(selC)}</div>
-  <div><b>ระดับ ${'I'.repeat(c.l+1)}</b> · ได้โบนัส ${GE[c.o]} ${COL[c.o]} · ⭐ ${c.p} แต้ม</div>
-  <div class="hint">ราคาเต็ม: ${c.c.map((n,i)=>n?GE[i]+'×'+n:'').join(' ')}<br>ราคาสุทธิ (หักโบนัสของคุณแล้ว): <b>${nc.length?nc.map(x=>GE[x[0]]+'×'+x[1]).join(' '):'ฟรี!'}</b></div>
-  <div class="hint">${miss<=0?'✅ คุณซื้อใบนี้ได้':'❌ เหรียญยังไม่พอ ขาดอีก '+miss+' เหรียญ'}</div>
-  ${can?'':'<div class="hint warn">'+(S.disc?'⚠️ ต้องคืนเหรียญให้เหลือ 10 ก่อน':'⏳ ยังไม่ถึงตาคุณ — ดูรายละเอียดได้อย่างเดียว')+'</div>'}
-  <div class="row" style="justify-content:center;margin-top:8px"><button class="b" data-a="buy" ${can&&miss<=0?'':'disabled'}>🛒 ซื้อ</button>${inR?'':`<button class="b" data-a="res" ${can&&mp.res.length<3?'':'disabled'}>🔒 จอง</button>`}<button class="b" data-a="cc">✖ ปิด</button></div></div></div>`}
+  <div class="hint"><b>${where}</b></div><div>ระดับ ${'I'.repeat(c.l+1)} · ให้โบนัส ${GE[c.o]} ${COL[c.o]} ถาวร · ⭐ ${c.p} แต้ม</div>
+  <div class="hint">ราคาเต็ม: ${c.c.map((n,i)=>n?GE[i]+'×'+n:'').join(' ')}</div>
+  ${buyable?`<div class="hint">ราคาสุทธิ (หักโบนัสของคุณแล้ว): <b>${nc.length?nc.map(x=>GE[x[0]]+'×'+x[1]).join(' '):'ฟรี!'}</b><br>${miss<=0?'✅ คุณซื้อใบนี้ได้':'❌ เหรียญยังไม่พอ ขาดอีก '+miss+' เหรียญ'}</div>`:''}
+  ${buyable&&!can?'<div class="hint warn">'+(S.disc?'⚠️ ต้องคืนเหรียญให้เหลือ 10 ก่อน':'⏳ ยังไม่ถึงตาคุณ — ดูรายละเอียดได้อย่างเดียว')+'</div>':''}
+  <div class="row" style="justify-content:center;margin-top:8px">${buyable?`<button class="b" data-a="buy" ${can&&miss<=0?'':'disabled'}>🛒 ซื้อ</button>`:''}${onT?`<button class="b" data-a="res" ${can&&mp.res.length<3?'':'disabled'}>🔒 จอง</button>`:''}<button class="b" data-a="cc">✖ ปิด</button></div></div></div>`}
 let FRESH=new Set(),lastS=null;
-const handH=mp=>`<div id="hand" class="hand"><div class="sec">🖐️ มือของคุณ <small>(การ์ดที่จองไว้ — มีแค่คุณที่เห็น 🔒)</small></div><div class="row">${[0,1,2].map(i=>mp.res[i]!=null?cardH(mp.res[i]):'<div class="card empty slot">ว่าง<br>จองได้อีก</div>').join('')}</div></div>`;
+const handH=mp=>`<div id="hand" class="hand"><div class="sec">🖐️ มือของคุณ <small>(การ์ดที่ซื้อแล้ว — ให้โบนัสลดราคาถาวร)</small></div><div class="row">${mp.cards.length?[...mp.cards].sort((a,b)=>C[a].o-C[b].o||C[a].p-C[b].p).map(id=>cardH(id,1)).join(''):'<div class="hint">ยังไม่มีการ์ด — ซื้อการ์ดแล้วจะมาอยู่ที่นี่ 🛒</div>'}</div></div>`;
 function grab(){const r={c:{},g:{},d:{}};app.querySelectorAll('[data-c]').forEach(e=>{if(!e.closest('.dlg'))r.c[e.dataset.c]=e.getBoundingClientRect()});
   app.querySelectorAll('[data-g]').forEach(e=>r.g[e.dataset.g]=e.getBoundingClientRect());app.querySelectorAll('[data-dk]').forEach(e=>r.d[e.dataset.dk]=e.getBoundingClientRect());return r}
 const clampR=r=>({left:r.left,top:Math.min(Math.max(r.top,0),innerHeight-90),width:r.width,height:Math.min(r.height,90)});
 function fly(html,from,to,delay,sc,done){const el=document.createElement('div');el.className='fly';el.innerHTML=html;
   el.style.left=from.left+'px';el.style.top=from.top+'px';el.style.width=from.width+'px';el.style.height=from.height+'px';document.body.appendChild(el);
   const dx=to.left+to.width/2-(from.left+from.width/2),dy=to.top+to.height/2-(from.top+from.height/2);
-  const a=el.animate([{transform:'translate(0,0) scale(1) rotate(0deg)'},{transform:`translate(${dx*.45}px,${dy*.45-50}px) scale(1.2) rotate(-7deg)`,offset:.4},{transform:`translate(${dx}px,${dy}px) scale(${sc||.35}) rotate(5deg)`,opacity:.85}],{duration:900,delay,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
+  const hold=`translate(0px,-34px) scale(1.4) rotate(-4deg)`;const a=el.animate([{transform:'translate(0,0) scale(1)',offset:0},{transform:hold,offset:.22},{transform:hold,offset:.42},{transform:`translate(${dx*.6}px,${dy*.6-60}px) scale(1.1) rotate(-6deg)`,offset:.7},{transform:`translate(${dx}px,${dy}px) scale(${sc||.35}) rotate(4deg)`,opacity:.9,offset:1}],{duration:2600,delay,easing:'ease-in-out',fill:'both'});
   a.onfinish=()=>{el.remove();done&&done()}}
-function toast(t){document.querySelectorAll('.toast').forEach(e=>e.remove());const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),3400)}
+function toast(t){document.querySelectorAll('.toast').forEach(e=>e.remove());const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),5200)}
+const hide=id=>{const e=app.querySelector('[data-o="'+id+'"]');if(e)e.style.visibility='hidden';return()=>{if(e)e.style.visibility=''}};
 function anims(pv,R){const apv=pv.players[pv.turn],ai=S.players.findIndex(p=>p.uid===apv.uid);if(ai<0)return;const ap=S.players[ai],mine=ap.uid===uid;
   const pe=app.querySelector('[data-pi="'+ai+'"]');if(!pe)return;const pt=clampR(pe.getBoundingClientRect()),he=document.querySelector('#hand'),ht=he?clampR(he.getBoundingClientRect()):pt;
-  const land=()=>{pe.classList.add('got');setTimeout(()=>pe.classList&&pe.classList.remove('got'),900)};
+  const land=()=>{pe.classList.add('got');setTimeout(()=>pe.classList&&pe.classList.remove('got'),1400)};
   const now=S.table.flat(),gone=pv.table.flat().filter(id=>id!=null&&!now.includes(id));
-  gone.forEach(id=>{const f=R.c[id];if(f)fly(cardH(id),f,ap.cards.includes(id)?pt:(mine?ht:pt),0,.5,land)});
-  apv.res.forEach(id=>{if(id>=0&&ap.cards.includes(id)&&R.c[id])fly(cardH(id),R.c[id],pt,0,.5,land)});
-  if(!gone.length&&ap.res.length>apv.res.length)[0,1,2].forEach(l=>{if(pv.deck[l].length>S.deck[l].length&&R.d[l])fly('<div class="card" style="background:linear-gradient(160deg,#7c3aed,#4c1d95);display:flex;align-items:center;justify-content:center;font-size:30px">🂠</div>',{left:R.d[l].left,top:R.d[l].top,width:70,height:96},mine?ht:pt,0,.5,land)});
-  for(let i=0;i<6;i++){const n=pv.bank[i]-S.bank[i],g=`<button class="gem" style="background-color:${HEX[i]}"><span class="e">${GE[i]}</span></button>`;
-    if(n>0&&R.g[i])for(let k=0;k<Math.min(n,3);k++)fly(g,R.g[i],pt,k*160,.5,land);
-    if(n<0){const e=app.querySelector('[data-g="'+i+'"]');if(e)for(let k=0;k<Math.min(-n,3);k++)fly(g,{left:pt.left+20,top:pt.top+10,width:56,height:56},e.getBoundingClientRect(),k*160,1)}}
+  gone.forEach(id=>{const f=R.c[id];if(f){const r=hide(id);fly(cardH(id,1),f,ap.cards.includes(id)&&mine?ht:pt,0,.5,()=>{r();land()})}});
+  apv.res.forEach(id=>{if(id>=0&&ap.cards.includes(id)&&R.c[id]){const r=hide(id);fly(cardH(id,1),R.c[id],mine?ht:pt,0,.5,()=>{r();land()})}});
+  if(!gone.length&&ap.res.length>apv.res.length)[0,1,2].forEach(l=>{if(pv.deck[l].length>S.deck[l].length&&R.d[l])fly('<div class="card" style="background:linear-gradient(160deg,#7c3aed,#4c1d95);display:flex;align-items:center;justify-content:center;font-size:30px">🂠</div>',{left:R.d[l].left,top:R.d[l].top,width:70,height:96},pt,0,.5,land)});
+  for(let i=0;i<6;i++){const n=pv.bank[i]-S.bank[i],g=`<div class="gm">${gemSVG(i)}</div>`;
+    if(n>0&&R.g[i])for(let k=0;k<Math.min(n,3);k++)fly(g,R.g[i],pt,k*650,.5,land);
+    if(n<0){const e=app.querySelector('[data-g="'+i+'"]');if(e)for(let k=0;k<Math.min(-n,3);k++)fly(g,{left:pt.left+20,top:pt.top+10,width:56,height:56},e.getBoundingClientRect(),k*650,1)}}
   if(S.nobles.length<pv.nobles.length)toast('👑 ขุนนางมาเยือน '+ap.av+' '+ap.name+'!');
   else if(S.log&&S.log.length)toast(ap.av+' '+ap.name+' '+(ap.last||''))}
 function render(){if(!S)return;sfxCheck();
   const pv=lastS,oldR=(pv&&pv!==S&&pv.phase==='play'&&S.phase!=='lobby')?grab():null;
   FRESH=(pv&&pv!==S&&pv.phase==='play')?new Set(S.table.flat().filter(id=>id!=null&&!pv.table.flat().includes(id))):(pv&&pv===S)?new Set():new Set(S.phase==='play'?S.table.flat().filter(x=>x!=null):[]);
   if(S.phase==='lobby'){const host=S.host===uid;
-    app.innerHTML=`<div class="lab">🔑 รหัสห้อง</div><div style="font-size:46px;font-weight:700;color:var(--gold);letter-spacing:8px">${code}</div>
-    <p>📨 ส่งลิงก์หน้านี้ให้เพื่อน (ต่อท้ายด้วย <b>#${code}</b>) หรือบอกรหัสห้อง</p>
-    <div class="panel"><div class="lab">👥 ผู้เล่น ${S.players.length}/4</div>${S.players.map(p=>`<div class="pn" style="margin:6px 0">${p.av||'🙂'} ${p.name}${p.uid===S.host?' 👑':''}</div>`).join('')}</div>
-    ${host?`<button class="b" data-a="start" ${S.players.length<2?'disabled':''}>🚀 เริ่มเกม</button> ${S.players.length<2?'<div class="hint">⏳ ต้องมีผู้เล่นอย่างน้อย 2 คนจึงจะเริ่มได้ — อยากลองคนเดียว ให้รีเฟรชแล้วเลือก "เล่นกับบอท"</div>':''}`:'⏳ รอเจ้าของห้องกดเริ่มเกม...'} <span class="warn">${msg}</span>`;return}
+    app.innerHTML=`<div class="panel"><div class="lab">🔑 รหัสห้อง</div><div style="font-size:48px;font-weight:700;color:var(--gold);letter-spacing:8px;text-shadow:3px 3px 0 var(--ink)">${code}</div>
+    <div class="hint">${isHost?netMsg:''}</div><p>📨 ส่งลิงก์หน้านี้ให้เพื่อน (ต่อท้ายด้วย <b>#${code}</b>) หรือบอกรหัสห้อง</p><button class="b" data-a="copy">📋 คัดลอกลิงก์ห้อง</button><div class="leg">⚠️ เจ้าของห้องต้องเปิดหน้านี้ค้างไว้ตลอดเกม (บนมือถือ อย่าปิดจอหรือสลับแอปนาน)</div>
+    <div class="sec">👥 ผู้เล่น ${S.players.length}/4</div>${S.players.map(p=>`<div class="pn" style="margin:6px 0">${p.av||'🙂'} ${p.name}${p.uid===S.host?' 👑':''}</div>`).join('')}</div>
+    ${host?`<button class="b" data-a="start" ${S.players.length<2?'disabled':''}>🚀 เริ่มเกม</button> ${S.players.length<2?'<div class="hint">⏳ ต้องมีผู้เล่นอย่างน้อย 2 คนจึงเริ่มได้ — อยากลองคนเดียว ให้รีเฟรชแล้วเลือก "เล่นกับบอท"</div>':''}`:'⏳ รอเจ้าของห้องกดเริ่มเกม...'} <span class="warn">${msg}</span>`;return}
   const m=myIdx();if(m<0){app.textContent='เกมนี้เริ่มไปแล้ว และคุณไม่ได้อยู่ในห้อง';return}
-  const mp=S.players[m],cur=S.players[S.turn],mt=myTurn();
+  const mp=S.players[m],cur=S.players[S.turn],mt=myTurn(),av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length;
   let h=`<div class="row" style="justify-content:space-between"><span class="lab">${solo?'🤖 โหมดฝึกเล่น':'🔑 ห้อง '+code} · 🎯 ใครถึง 15 แต้มก่อนชนะ</span><span class="warn">${msg}</span></div>`;
   if(S.phase==='over'){const r=S.players.map(p=>({p,s:pts(p),n:p.cards.length})).sort((a,b)=>b.s-a.s||a.n-b.n);
     h+=`<div class="panel"><div class="banner">🏆 ผู้ชนะ: ${r[0].p.av||''} ${r[0].p.name} (${r[0].s} แต้ม) 🎉</div>${r.map((x,i)=>`<div style="margin:8px 0">${['🥇','🥈','🥉','🎖️'][i]} ${x.p.av||''} ${x.p.name}: ${x.s} แต้ม · ${x.n} การ์ด</div>`).join('')}${S.host===uid?'<button class="b" data-a="again">🔄 เล่นใหม่</button>':''}</div>`}
-  else h+=`<div class="banner" style="${mt?'':'animation:none;background:#0006;color:#f5f1ff'}">${mt?'🎲 ตาของคุณ! เลือกทำ 1 อย่าง (ดูปุ่มด้านล่างจอ)':'⏳ รอ '+(cur.av||'')+' '+cur.name+' เล่น...'}</div>`;
-  h+=`<div class="panel"><div class="sec">👑 ขุนนาง <small>(โบนัสครบตามนี้ → ได้ +3 แต้มอัตโนมัติ)</small></div><div class="row">${S.nobles.map(k=>`<div class="noble">👑<div class="r">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div><div class="panel"><div class="sec">🃏 การ์ดบนโต๊ะ</div><div class="leg">วงกลมสี+เลข = เหรียญที่ต้องจ่าย · ไอคอนมุมขวา = โบนัสสีที่ได้ถาวร · ⭐ = แต้ม</div>`;
-  [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck" data-dk="${l}"><b>${['🥉','🥈','🥇'][l]} ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:4px 10px;font-size:12px" data-rd="${l}">🔒 จองจากกอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
-  h+=`</div><div class="panel"><div class="sec">🪙 เหรียญกลาง <small>(แตะเพื่อเลือกเก็บ)</small></div><div class="row" style="margin-top:10px">${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" style="background-color:${HEX[i]}" data-g="${i}" ${i===5?'disabled':''}><span class="e">${GE[i]}</span>${S.bank[i]}${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}</div><div class="leg">⭐ เหรียญทองเก็บตรงๆ ไม่ได้ ต้องได้จากการจองการ์ด</div></div>`;
-  if(S.phase!=='lobby')h+=handH(mp);
+  else h+=`<div class="banner" style="${mt?'':'animation:none;background:#0006;color:#fdf3dc'}">${mt?'🎲 ตาของคุณ! เลือกทำ 1 อย่าง (ดูกรอบ "การกระทำ" ฝั่งขวา)':'⏳ รอ '+(cur.av||'')+' '+cur.name+' เล่น...'}</div>`;
+  h+=`<div class="game"><div class="board">`;
+  h+=`<div class="panel"><div class="sec">👑 ขุนนาง <small>(โบนัสครบตามนี้ → ได้ +3 แต้มอัตโนมัติ)</small></div><div class="row">${S.nobles.map(k=>`<div class="noble">👑<div class="r">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div>`;
+  h+=`<div class="panel"><div class="sec">🃏 การ์ดบนโต๊ะ</div><div class="leg">ป้ายดำ+อัญมณี = ราคาที่ต้องจ่าย · ไอคอนมุมขวาบน = โบนัสที่ได้ถาวร · แตะการ์ดเพื่อดูรายละเอียด</div>`;
+  [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck" data-dk="${l}"><b>${['🥉','🥈','🥇'][l]} ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:3px 8px;font-size:12px" data-rd="${l}">🔒 จองจากกอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
+  h+=`</div><div class="panel"><div class="sec">💰 คลังอัญมณี <small>(แตะเพื่อเลือกเก็บ)</small></div><div class="row">${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" data-g="${i}" ${i===5?'disabled':''}><span class="gs">${GE[i]}</span><b>${S.bank[i]}</b>${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}</div><div class="leg">🪙 เหรียญทองเก็บตรงๆ ไม่ได้ ต้องได้จากการจองการ์ด · ใช้แทนอัญมณีสีไหนก็ได้</div></div></div>`;
+  h+=`<aside class="side"><div class="panel act"><div class="sec">⚔️ การกระทำ</div>`;
   if(S.phase==='play'){
-    if(mt&&S.disc)h+=`<div class="bar warn">⚠️ คุณมีเหรียญเกิน 10! กดวงกลมเหรียญของคุณในกรอบ "ของคุณ" ด้านล่าง เพื่อคืนทีละเหรียญ</div>`;
-    else if(mt){const av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length;
-      const ok=sel.length&&(sel.length===2&&sel[0]===sel[1]||new Set(sel).size===sel.length&&sel.length===Math.min(3,av));const inR=selC!=null&&mp.res.includes(selC);
-      h+=`<div class="bar"><div class="hint"><b>🪙 ① เก็บเหรียญ:</b> เลือกเหรียญกลาง ${Math.min(3,av)} สีต่างกัน หรือกดสีเดียวกัน 2 ครั้ง (เลือกแล้ว ${sel.length} เหรียญ)</div><div class="row"><button class="b" data-a="take" ${ok?'':'disabled'}>🪙 เก็บเหรียญที่เลือก</button><button class="b" data-a="clr">🧹 ล้างที่เลือก</button></div>
-      <div class="hint" style="margin-top:10px"><b>🛒 ② ซื้อ / 🔒 ③ จอง:</b> 👆 แตะที่ <b>การ์ด</b> เพื่อเปิดหน้าต่างรายละเอียด แล้วกดซื้อหรือจองในนั้น</div></div>`}
-    else h+=`<div class="bar hint">⏳ ยังไม่ถึงตาคุณ — ดูกระดานระหว่างรอได้ ปุ่มจะขึ้นเมื่อถึงตา</div>`}
-  h+=`<div class="sec">👥 ผู้เล่น</div>`;
-  [...S.players.keys()].sort((a,b)=>(b===m)-(a===m)).forEach(i=>{const p=S.players[i],b=bon(p);
-    h+=`<div data-pi="${i}" class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">⭐ ${pts(p)} แต้ม</span><div class="pn">${p.av||'🙂'} ${p.name}${i===m?' (คุณ) — ของคุณ':''} · 🃏 ${p.cards.length} ใบ${p.nobles.length?' · 👑'+p.nobles.length:''}</div>
-    <div style="margin-top:6px"><span class="lab">🃏 โบนัส (ลดราคา)</span> ${b.map((n,k)=>pip(k,n)).join('')}</div>
-    <div style="margin-top:4px"><span class="lab">🪙 เหรียญในมือ ${tot(p)}/10</span> ${p.g.map((n,k)=>i===m&&S.disc&&mt?`<button class="pip mini" style="background-color:${HEX[k]};cursor:pointer;outline:2px solid #fda4af" data-d="${k}">${n}</button>`:pip(k,n)).join('')}</div>
-    ${p.cards.length?`<div style="margin-top:6px"><span class="lab">🃏 การ์ดที่ซื้อแล้ว</span> ${[...p.cards].sort((a,b)=>C[a].o-C[b].o).map(id=>`<span class="chip" style="background:${HEX[C[id].o]}">${GE[C[id].o]}${C[id].p?'⭐'+C[id].p:''}</span>`).join('')}</div>`:''}${i!==m&&p.res.length?`<div class="hint">🔒 จองไว้ ${p.res.length} ใบ (ซ่อนอยู่ในมือเขา)</div>`:''}${p.last?`<div class="hint">📌 ล่าสุด: ${p.last}</div>`:''}</div>`});
-  h+=`<div class="panel log"><div class="sec">📜 เกิดอะไรขึ้นบ้าง</div>${S.log.slice().reverse().join('<br>')}</div>`;h+=detailH(mp,mt);app.innerHTML=h;if(oldR)try{anims(pv,oldR)}catch(e){}lastS=S}
+    if(mt&&S.disc)h+=`<div class="warn">⚠️ คุณมีเหรียญเกิน 10! กดอัญมณีของคุณในกรอบผู้เล่นด้านล่าง (ขอบสีแดง) เพื่อคืนทีละชิ้น</div>`;
+    else if(mt){const ok=sel.length&&(sel.length===2&&sel[0]===sel[1]||new Set(sel).size===sel.length&&sel.length===Math.min(3,av));
+      h+=`<div class="hint"><b>① เก็บอัญมณี:</b> เลือกจากคลัง ${Math.min(3,av)} สีต่างกัน หรือกดสีเดียวกัน 2 ครั้ง (เลือกแล้ว ${sel.length})</div><div class="row"><button class="b" data-a="take" ${ok?'':'disabled'}>💰 เก็บที่เลือก</button><button class="b" data-a="clr">🧹 ล้าง</button></div>
+      <div class="hint" style="margin-top:8px"><b>② ซื้อ / ③ จอง:</b> 👆 แตะ<b>การ์ด</b>บนโต๊ะ (หรือการ์ดที่คุณจองไว้) แล้วกดซื้อหรือจองในหน้าต่างที่เด้งขึ้น</div>`}
+    else h+=`<div class="hint">⏳ ยังไม่ถึงตาคุณ — ดูกระดานระหว่างรอได้ ปุ่มจะขึ้นเมื่อถึงตา</div>`}
+  h+=`</div><div class="sec">👥 ผู้เล่น</div>`;
+  [...S.players.keys()].sort((a,b)=>(b===m)-(a===m)).forEach(i=>{const p=S.players[i],b=bon(p),dz=i===m&&S.disc&&mt;
+    h+=`<div data-pi="${i}" class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">⭐ ${pts(p)}</span><div class="pn">${p.av||'🙂'} ${p.name}${i===m?' (คุณ)':''}</div>
+    <div class="line"><span class="lab">โบนัสลดราคา</span> ${b.map((n,k)=>pip(k,n)).join('')}</div>
+    <div class="line"><span class="lab">อัญมณีในมือ ${tot(p)}/10</span> ${p.g.map((n,k)=>dz?`<button class="pip dsc" data-d="${k}">${GE[k]}${n}</button>`:pip(k,n)).join('')}</div>
+    ${p.res.length?`<div class="line"><span class="lab">🔒 การ์ดที่จองไว้ (ทุกคนเห็น)</span></div><div class="row res">${p.res.map(id=>cardH(id)).join('')}</div>`:''}
+    ${p.cards.length?`<div class="line"><span class="lab">🃏 การ์ดที่ซื้อแล้ว ${p.cards.length} ใบ (แตะดูได้)</span></div><div class="bought">${[...p.cards].sort((a,b)=>C[a].o-C[b].o||C[a].l-C[b].l).map(id=>cardH(id)).join('')}</div>`:''}
+    ${p.nobles.length?`<div class="line">👑 ขุนนาง ${p.nobles.length} ตัว</div>`:''}${p.last?`<div class="hint">📌 ล่าสุด: ${p.last}</div>`:''}</div>`});
+  h+=`<div class="panel log"><div class="sec">📜 เกิดอะไรขึ้นบ้าง</div>${S.log.slice().reverse().join('<br>')}</div></aside></div>`;
+  h+=detailH(mp,mt);app.innerHTML=h;if(oldR)try{anims(pv,oldR)}catch(e){}lastS=S}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c],[data-a],[data-rd],[data-d]');if(!t||!S)return;msg='';const d=t.dataset;
   if(d.d!=null)return send({t:'disc',i:+d.d});
   if(d.g!=null&&myTurn()&&!S.disc){const i=+d.g;sfx('tick');
@@ -292,6 +369,6 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c
     else if(sel.includes(i))sel=sel.filter(x=>x!==i);else sel.push(i);return render()}
   if(d.c!=null){sfx('tick');selC=selC===+d.c?null:+d.c;return render()}
   if(d.rd!=null)return send({t:'res',deck:+d.rd});
-  ({take:()=>send({t:'take',sel}),buy:()=>send({t:'buy',id:selC}),res:()=>send({t:'res',id:selC}),cc:()=>{selC=null;render()},clr:()=>{sel=[];selC=null;render()},start:()=>send({t:'start'}),again:()=>send({t:'again'})})[d.a]?.()});
+  ({take:()=>send({t:'take',sel}),buy:()=>send({t:'buy',id:selC}),res:()=>send({t:'res',id:selC}),copy:()=>{const u=location.origin+location.pathname+'#'+code;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>toast('📋 คัดลอกลิงก์แล้ว!'),()=>toast(u))},cc:()=>{selC=null;render()},clr:()=>{sel=[];selC=null;render()},start:()=>send({t:'start'}),again:()=>send({t:'again'})})[d.a]?.()});
 lobbyUI(location.hash.replace('#','').toUpperCase());
 </script></body></html>
