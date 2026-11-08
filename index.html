@@ -55,6 +55,18 @@ input{padding:11px 14px;border-radius:14px;border:1px solid var(--line);backgrou
 .banner{padding:12px;border-radius:16px;background:linear-gradient(90deg,#ffd166,#f472b6,#ffd166);background-size:200%;animation:sl 3s linear infinite;color:var(--ink);font-weight:700;text-align:center;font-size:17px}
 @keyframes sl{to{background-position:200%}}
 .warn{color:#fda4af;font-weight:600}
+.modal{position:fixed;inset:0;background:#000b;z-index:20;display:flex;align-items:center;justify-content:center;padding:14px}
+.modal[hidden]{display:none}.modal>div{background:#241a3e;border:1px solid var(--line);border-radius:22px;max-width:560px;max-height:90vh;overflow:auto;padding:20px;line-height:1.7}
+.modal h2{margin:0 0 8px;color:var(--gold)}.modal li{margin:4px 0}
+.bar{position:sticky;bottom:8px;z-index:5;background:#1b1233ee;border:2px solid var(--gold);border-radius:20px;padding:12px;margin:12px 0;box-shadow:0 8px 24px #000a}
+.hint{font-size:14px;margin:6px 0;opacity:.95}.sec{font-size:16px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.leg{font-size:12px;opacity:.8;margin:4px 0 8px}
+.modal .bk{background:transparent;border:0;position:absolute;inset:0;max-width:none;max-height:none;padding:0;border-radius:0}
+.dlg{position:relative;background:#241a3e;border:1px solid var(--line);border-radius:22px;padding:18px;text-align:center;max-width:380px;width:100%;box-shadow:0 20px 50px #000c;animation:pop .25s both}
+.big{zoom:2;display:flex;justify-content:center;margin:6px 0 10px}.big .card{animation:none;cursor:default;transform:none!important}
+.art{position:absolute;right:6px;bottom:8px;font-size:34px;filter:drop-shadow(0 3px 3px #0005)}
+.p .card .art{font-size:24px;right:4px;bottom:6px}
+.lv{padding:16px 8px 10px}
 </style></head><body><div class="wrap">
 <div class="tools"><button id="bm" title="เพลง">🎵</button><button id="bs" title="เสียงเอฟเฟกต์">🔊</button></div><h1>💎 SPLENDOR</h1><div id="app" class="panel">กำลังโหลด...</div></div>
 <script>
@@ -65,7 +77,7 @@ const T=[[[0,1,1,1,1,0],[0,1,2,1,1,0],[0,2,2,0,1,0],[0,0,0,1,3,1],[0,0,0,2,1,0],
 const C=[];T.forEach((L,l)=>{for(let o=0;o<5;o++)L.forEach(t=>{const c=[0,0,0,0,0];[1,2,3,4,0].forEach((k,j)=>c[(o+k)%5]=t[j+1]);C.push({l,o,p:t[0],c})})});
 const NB=[[4,4,0,0,0],[0,4,4,0,0],[0,0,4,4,0],[0,0,0,4,4],[4,0,0,0,4],[3,3,3,0,0],[0,3,3,3,0],[0,0,3,3,3],[3,0,0,3,3],[3,3,0,0,3]];
 const $=s=>document.querySelector(s),app=$('#app'),clone=o=>JSON.parse(JSON.stringify(o));
-let peer,conns={},hostConn=null,isHost=false,S=null,uid,myName='',code='',sel=[],selC=null,msg='';
+let solo=false,peer,conns={},hostConn=null,isHost=false,S=null,uid,myName='',code='',sel=[],selC=null,msg='';
 try{uid=sessionStorage.getItem('spl_u');myName=localStorage.getItem('spl_n')||''}catch(e){}
 if(!uid){uid='u'+Math.random().toString(36).slice(2,10);try{sessionStorage.setItem('spl_u',uid)}catch(e){}}
 const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -105,9 +117,10 @@ function handle(u,a){
   else if(a.t==='res'){if(p.res.length>=3)return;let id=a.id;
     if(a.deck!=null){id=s.deck[a.deck]?.pop();if(id==null)return}else if(!takeCard(s,id))return;
     p.res.push(id);if(s.bank[5]>0){s.bank[5]--;p.g[5]++}s.log.push(p.name+' จองการ์ด');finish(s)}
+  else if(a.t==='pass'&&String(u).startsWith('bot')){s.log.push(p.name+' ข้ามตา');finish(s)}
   else return;
   commit(s)}
-function commit(s){S=s;sel=[];selC=null;render();Object.values(conns).forEach(c=>c.open&&c.send(s))}
+function commit(s){S=s;sel=[];selC=null;render();Object.values(conns).forEach(c=>c.open&&c.send(s));botTick()}
 function send(a){a.uid=uid;if(isHost)handle(uid,a);else if(hostConn&&hostConn.open)hostConn.send(a);else{msg='ยังไม่ได้เชื่อมต่อกับห้อง';render()}}
 /* ---------- เครือข่าย ---------- */
 function createRoom(){myName=nm();code=Math.random().toString(36).slice(2,6).toUpperCase();isHost=true;
@@ -122,6 +135,7 @@ function joinRoom(){myName=nm();code=$('#cd').value.trim().toUpperCase();if(!cod
   peer.on('error',e=>{$('#er')?($('#er').textContent=e.type==='peer-unavailable'?'ไม่พบห้องนี้ (หรือเจ้าของห้องปิดหน้าเว็บไปแล้ว)':'เชื่อมต่อไม่ได้: '+e.type):0})}
 function nm(){const n=($('#nm').value||'ผู้เล่น').trim().slice(0,14);try{localStorage.setItem('spl_n',n)}catch(e){}return n}
 /* ---------- แสดงผล ---------- */
+const ART=[['⛏️','🪨','🔨','🧺','🕯️','🛠️','🪵','🧵'],['🏪','⛵','🐪','🏺','📜','⚖️'],['🏰','👸','🤴','🦁']];
 const AV=['🦊','🐼','🐯','🦄'],GE=['💎','🔷','🌿','🔥','🌑','⭐'];
 /* ---------- เสียง (สังเคราะห์ด้วย Web Audio ไม่ต้องมีไฟล์) ---------- */
 let AC,mg,sg,musOn=true,sndOn=true,nextT=0,stp=0,lk='';
@@ -155,36 +169,84 @@ $('#bs').onclick=()=>{audioInit();sndOn=!sndOn;if(sg)sg.gain.value=sndOn?.8:0;tr
 document.addEventListener('pointerdown',audioInit);paintTools();
 /* ---------- แสดงผล ---------- */
 const pip=(i,n)=>`<span class="pip mini" style="background-color:${HEX[i]}">${n}</span>`;
-const cardH=id=>{const c=C[id];return `<div class="card ${selC===id?'sel':''}" data-c="${id}"><div class="top" style="background:linear-gradient(135deg,${HEX[c.o]},#0005)"><b>${c.p?'⭐'+c.p:''}</b><span class="em">${GE[c.o]}</span></div><div class="cost">${c.c.map((n,i)=>n?`<span><i class="dot" style="background-color:${HEX[i]}"></i>${n}</span>`:'').join('')}</div></div>`};
-function lobbyUI(pre){app.innerHTML=`<div class="lab">🎮 เริ่มเล่น</div><div class="row" style="margin-top:8px"><input id="nm" placeholder="👤 ชื่อของคุณ" value="${myName}" maxlength="14"></div>
-<div class="row" style="margin-top:12px"><button class="b" id="mk">🏰 สร้างห้องใหม่</button><span>หรือ</span><input id="cd" placeholder="🔑 รหัสห้อง" size="7" maxlength="4" style="text-transform:uppercase" value="${pre||''}"><button class="b" id="jn">🚪 เข้าร่วม</button></div><p id="er" class="warn"></p>`;
-  $('#mk').onclick=createRoom;$('#jn').onclick=joinRoom}
+const cardH=id=>{const c=C[id];return `<div class="card ${selC===id?'sel':''}" data-c="${id}" style="background:linear-gradient(160deg,#fffdf7 35%,${HEX[c.o]}66)"><span class="art">${ART[c.l][(id-[0,40,70][c.l])%ART[c.l].length]}</span><div class="top" style="background:linear-gradient(135deg,${HEX[c.o]},#0005)"><b>${c.p?'⭐'+c.p:''}</b><span class="em">${GE[c.o]}</span></div><div class="cost">${c.c.map((n,i)=>n?`<span><i class="dot" style="background-color:${HEX[i]}"></i>${n}</span>`:'').join('')}</div></div>`};
+const HELP=`<h2>📖 วิธีเล่น Splendor</h2>
+<p>🎯 <b>เป้าหมาย:</b> เป็นคนแรกที่สะสมให้ได้ <b>15 แต้ม ⭐</b> (เล่นให้ครบรอบ แล้วแต้มสูงสุดชนะ)</p>
+<p>🎲 <b>ในตาของคุณ เลือกทำ 1 อย่าง:</b></p><ol>
+<li>🪙 <b>เก็บเหรียญ</b> — กดเหรียญกลาง 3 สีที่ต่างกัน หรือกดสีเดียวกัน 2 ครั้ง (ได้ 2 เหรียญ แต่กองนั้นต้องมี 4 เหรียญขึ้นไป) แล้วกดปุ่ม "เก็บเหรียญ"</li>
+<li>🛒 <b>ซื้อการ์ด</b> — แตะการ์ดบนโต๊ะ (หรือการ์ดที่จองไว้) แล้วกด "ซื้อ" ต้องจ่ายเหรียญตามราคาที่เห็น</li>
+<li>🔒 <b>จองการ์ด</b> — เก็บการ์ดไว้ซื้อทีหลัง (ถือได้ 3 ใบ) และได้เหรียญทอง ⭐ 1 เหรียญ ใช้แทนสีไหนก็ได้</li></ol>
+<p>🃏 <b>อ่านการ์ด:</b> ตัวเลขในวงกลมสีคือเหรียญที่ต้องจ่าย ไอคอนมุมขวาบนคือ <b>โบนัสสี</b> ที่ได้ถาวร ใช้ลดราคาการ์ดใบต่อไปสีนั้น ⭐ที่มุมซ้ายคือแต้ม</p>
+<p>👑 <b>ขุนนาง:</b> ถ้าโบนัสของคุณครบตามที่ขุนนางต้องการ ขุนนางจะมาหาเอง ได้ +3 แต้ม</p>
+<p>⚠️ ถือเหรียญได้สูงสุด 10 เหรียญ ถ้าเกินต้องคืนจนเหลือ 10</p>
+<p>💡 <b>เคล็ดลับ:</b> ช่วงแรกเก็บเหรียญและซื้อการ์ดราคาถูกให้ได้โบนัสก่อน จะซื้อการ์ดแพงได้ง่ายขึ้นมาก</p>
+<button class="b" onclick="$('#help').hidden=true">เข้าใจแล้ว 👍</button>`;
+document.body.insertAdjacentHTML('beforeend','<div id="help" class="modal" hidden><div>'+HELP+'</div></div>');
+$('.tools').insertAdjacentHTML('afterbegin','<button id="bh" title="วิธีเล่น">❓</button>');
+$('#bh').onclick=()=>{$('#help').hidden=false};
+try{if(!localStorage.getItem('spl_h')){$('#help').hidden=false;localStorage.setItem('spl_h','1')}}catch(e){}
+function startSolo(){myName=nm();solo=true;isHost=true;code='SOLO';const nb=+$('#nb').value;
+  const s={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0]}],log:[]};
+  for(let i=0;i<nb;i++)s.players.push({uid:'bot'+i,name:'บอท '+(i+1),av:'🤖'});newGame(s);commit(s)}
+function botTick(){if(!solo||!S||S.phase!=='play')return;const c=S.players[S.turn];if(c&&c.uid.startsWith('bot'))setTimeout(botMove,1100)}
+function botMove(){if(!S||S.phase!=='play')return;const p=S.players[S.turn];if(!p.uid.startsWith('bot'))return;const u=p.uid;
+  if(S.disc)return handle(u,{t:'disc',i:[0,1,2,3,4,5].filter(i=>p.g[i]>0).sort((a,b)=>p.g[b]-p.g[a])[0]});
+  const tb=S.table.flat().filter(x=>x!=null),aff=[...tb,...p.res].filter(id=>canBuy(p,id)).sort((a,b)=>C[b].p-C[a].p||C[b].l-C[a].l);
+  if(aff.length)return handle(u,{t:'buy',id:aff[0]});
+  const tg=tb.sort((a,b)=>(need(p,C[a])-C[a].p*.5)-(need(p,C[b])-C[b].p*.5))[0];
+  const av=[0,1,2,3,4].filter(i=>S.bank[i]>0),want=Math.min(3,av.length);
+  if(tg!=null&&want){const b=bon(p),c=C[tg],lack=[0,1,2,3,4].map(i=>[i,c.c[i]-b[i]-p.g[i]]).filter(x=>x[1]>0&&S.bank[x[0]]>0).sort((a,b)=>b[1]-a[1]);
+    let q=lack.map(x=>x[0]).slice(0,want);
+    if(q.length===1&&lack[0][1]>=2&&S.bank[q[0]]>=4&&want>1&&Math.random()<.5)q=[q[0],q[0]];else av.forEach(i=>{if(q.length<want&&!q.includes(i))q.push(i)});
+    if(q.length)return handle(u,{t:'take',sel:q})}
+  if(p.res.length<3&&tg!=null)return handle(u,{t:'res',id:tg});handle(u,{t:'pass'})}
+function lobbyUI(pre){app.innerHTML=`<div class="sec">🎮 เริ่มเล่น</div><div class="row"><input id="nm" placeholder="👤 ชื่อของคุณ" value="${myName}" maxlength="14"></div>
+<div class="panel"><div class="sec">🤖 ฝึกเล่นคนเดียว</div><div class="hint">ลองเล่นกับบอทก่อน เพื่อเรียนรู้กติกา ไม่ต้องใช้เน็ตเชื่อมกับใคร</div><div class="row">จำนวนบอท <select id="nb" style="padding:8px;border-radius:10px"><option>1</option><option selected>2</option><option>3</option></select><button class="b" id="solo">▶️ เล่นกับบอท</button></div></div>
+<div class="panel"><div class="sec">🌐 เล่นออนไลน์กับเพื่อน (ต้อง 2 คนขึ้นไป)</div><div class="row"><button class="b" id="mk">🏰 สร้างห้องใหม่</button><span>หรือ</span><input id="cd" placeholder="🔑 รหัสห้อง" size="7" maxlength="4" style="text-transform:uppercase" value="${pre||''}"><button class="b" id="jn">🚪 เข้าร่วม</button></div></div>
+<button class="b" onclick="$('#help').hidden=false">❓ วิธีเล่น</button><p id="er" class="warn"></p>`;
+  $('#mk').onclick=createRoom;$('#jn').onclick=joinRoom;$('#solo').onclick=startSolo}
+function netCost(mp,id){const c=C[id],b=bon(mp);return [0,1,2,3,4].map(i=>[i,Math.max(0,c.c[i]-b[i])]).filter(x=>x[1]>0)}
+function selInfo(mp){if(selC==null)return '👆 แตะการ์ดบนโต๊ะเพื่อเลือก แล้วกด "ซื้อ" หรือ "จอง"';
+  const nc=netCost(mp,selC),miss=need(mp,C[selC])-mp.g[5];
+  return `ราคาสุทธิ (หักโบนัสแล้ว): ${nc.length?nc.map(x=>GE[x[0]]+'×'+x[1]).join(' '):'ฟรี!'} — ${miss<=0?'✅ ซื้อได้เลย':'❌ ยังขาดอีก '+miss+' เหรียญ'}`}
+function detailH(mp,mt){if(selC==null)return '';
+  if(!S.table.flat().includes(selC)&&!mp.res.includes(selC)){selC=null;return ''}
+  const c=C[selC],inR=mp.res.includes(selC),nc=netCost(mp,selC),miss=need(mp,c)-mp.g[5],can=mt&&S.phase==='play'&&!S.disc;
+  return `<div class="modal"><div class="bk" data-a="cc"></div><div class="dlg"><div class="big">${cardH(selC)}</div>
+  <div><b>ระดับ ${'I'.repeat(c.l+1)}</b> · ได้โบนัส ${GE[c.o]} ${COL[c.o]} · ⭐ ${c.p} แต้ม</div>
+  <div class="hint">ราคาเต็ม: ${c.c.map((n,i)=>n?GE[i]+'×'+n:'').join(' ')}<br>ราคาสุทธิ (หักโบนัสของคุณแล้ว): <b>${nc.length?nc.map(x=>GE[x[0]]+'×'+x[1]).join(' '):'ฟรี!'}</b></div>
+  <div class="hint">${miss<=0?'✅ คุณซื้อใบนี้ได้':'❌ เหรียญยังไม่พอ ขาดอีก '+miss+' เหรียญ'}</div>
+  ${can?'':'<div class="hint warn">'+(S.disc?'⚠️ ต้องคืนเหรียญให้เหลือ 10 ก่อน':'⏳ ยังไม่ถึงตาคุณ — ดูรายละเอียดได้อย่างเดียว')+'</div>'}
+  <div class="row" style="justify-content:center;margin-top:8px"><button class="b" data-a="buy" ${can&&miss<=0?'':'disabled'}>🛒 ซื้อ</button>${inR?'':`<button class="b" data-a="res" ${can&&mp.res.length<3?'':'disabled'}>🔒 จอง</button>`}<button class="b" data-a="cc">✖ ปิด</button></div></div></div>`}
 function render(){if(!S)return;sfxCheck();
   if(S.phase==='lobby'){const host=S.host===uid;
     app.innerHTML=`<div class="lab">🔑 รหัสห้อง</div><div style="font-size:46px;font-weight:700;color:var(--gold);letter-spacing:8px">${code}</div>
     <p>📨 ส่งลิงก์หน้านี้ให้เพื่อน (ต่อท้ายด้วย <b>#${code}</b>) หรือบอกรหัสห้อง</p>
     <div class="panel"><div class="lab">👥 ผู้เล่น ${S.players.length}/4</div>${S.players.map(p=>`<div class="pn" style="margin:6px 0">${p.av||'🙂'} ${p.name}${p.uid===S.host?' 👑':''}</div>`).join('')}</div>
-    ${host?`<button class="b" data-a="start" ${S.players.length<2?'disabled':''}>🚀 เริ่มเกม</button>`:'⏳ รอเจ้าของห้องกดเริ่มเกม...'} <span class="warn">${msg}</span>`;return}
+    ${host?`<button class="b" data-a="start" ${S.players.length<2?'disabled':''}>🚀 เริ่มเกม</button> ${S.players.length<2?'<div class="hint">⏳ ต้องมีผู้เล่นอย่างน้อย 2 คนจึงจะเริ่มได้ — อยากลองคนเดียว ให้รีเฟรชแล้วเลือก "เล่นกับบอท"</div>':''}`:'⏳ รอเจ้าของห้องกดเริ่มเกม...'} <span class="warn">${msg}</span>`;return}
   const m=myIdx();if(m<0){app.textContent='เกมนี้เริ่มไปแล้ว และคุณไม่ได้อยู่ในห้อง';return}
   const mp=S.players[m],cur=S.players[S.turn],mt=myTurn();
-  let h=`<div class="row" style="justify-content:space-between"><span class="lab">🔑 ห้อง ${code}</span><span class="warn">${msg}</span></div>`;
+  let h=`<div class="row" style="justify-content:space-between"><span class="lab">${solo?'🤖 โหมดฝึกเล่น':'🔑 ห้อง '+code} · 🎯 ใครถึง 15 แต้มก่อนชนะ</span><span class="warn">${msg}</span></div>`;
   if(S.phase==='over'){const r=S.players.map(p=>({p,s:pts(p),n:p.cards.length})).sort((a,b)=>b.s-a.s||a.n-b.n);
     h+=`<div class="panel"><div class="banner">🏆 ผู้ชนะ: ${r[0].p.av||''} ${r[0].p.name} (${r[0].s} แต้ม) 🎉</div>${r.map((x,i)=>`<div style="margin:8px 0">${['🥇','🥈','🥉','🎖️'][i]} ${x.p.av||''} ${x.p.name}: ${x.s} แต้ม · ${x.n} การ์ด</div>`).join('')}${S.host===uid?'<button class="b" data-a="again">🔄 เล่นใหม่</button>':''}</div>`}
-  else h+=`<div class="banner" style="${mt?'':'animation:none;background:#0006;color:#f5f1ff'}">${mt?'🎲 ตาของคุณ!':'⏳ ตาของ '+(cur.av||'')+' '+cur.name}</div>`;
-  h+=`<div class="panel"><div class="lab">👑 ขุนนาง (+3 แต้ม)</div><div class="row" style="margin-top:6px">${S.nobles.map(k=>`<div class="noble">👑<div class="r">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div><div class="panel">`;
-  [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck"><b>${['🥉','🥈','🥇'][l]} ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:4px 10px;font-size:12px" data-rd="${l}">🔒 จอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
-  h+=`</div><div class="panel"><div class="lab">🪙 กองเหรียญกลาง</div><div class="row" style="margin-top:10px">${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" style="background-color:${HEX[i]}" data-g="${i}" ${i===5?'disabled':''}><span class="e">${GE[i]}</span>${S.bank[i]}${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}</div>`;
-  if(mt&&!S.disc){const av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length;
-    const ok=sel.length&&(sel.length===2&&sel[0]===sel[1]||new Set(sel).size===sel.length&&sel.length===Math.min(3,av));const inR=selC!=null&&mp.res.includes(selC);
-    h+=`<div class="row" style="margin-top:14px"><button class="b" data-a="take" ${ok?'':'disabled'}>🪙 เก็บเหรียญ</button><button class="b" data-a="buy" ${selC!=null&&canBuy(mp,selC)?'':'disabled'}>🛒 ซื้อการ์ด</button><button class="b" data-a="res" ${selC!=null&&!inR&&mp.res.length<3?'':'disabled'}>🔒 จองการ์ด</button><button class="b" data-a="clr">🧹 ล้าง</button></div><small>💡 เหรียญ: 3 สีต่างกัน หรือ 2 เหรียญสีเดียวกัน (กองต้องมี 4+)</small>`}
-  if(mt&&S.disc)h+=`<p class="warn">⚠️ เหรียญเกิน 10! กดเหรียญของคุณด้านล่างเพื่อคืน</p>`;
-  h+='</div>';
+  else h+=`<div class="banner" style="${mt?'':'animation:none;background:#0006;color:#f5f1ff'}">${mt?'🎲 ตาของคุณ! เลือกทำ 1 อย่าง (ดูปุ่มด้านล่างจอ)':'⏳ รอ '+(cur.av||'')+' '+cur.name+' เล่น...'}</div>`;
+  h+=`<div class="panel"><div class="sec">👑 ขุนนาง <small>(โบนัสครบตามนี้ → ได้ +3 แต้มอัตโนมัติ)</small></div><div class="row">${S.nobles.map(k=>`<div class="noble">👑<div class="r">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div><div class="panel"><div class="sec">🃏 การ์ดบนโต๊ะ</div><div class="leg">วงกลมสี+เลข = เหรียญที่ต้องจ่าย · ไอคอนมุมขวา = โบนัสสีที่ได้ถาวร · ⭐ = แต้ม</div>`;
+  [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck"><b>${['🥉','🥈','🥇'][l]} ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:4px 10px;font-size:12px" data-rd="${l}">🔒 จองจากกอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
+  h+=`</div><div class="panel"><div class="sec">🪙 เหรียญกลาง <small>(แตะเพื่อเลือกเก็บ)</small></div><div class="row" style="margin-top:10px">${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" style="background-color:${HEX[i]}" data-g="${i}" ${i===5?'disabled':''}><span class="e">${GE[i]}</span>${S.bank[i]}${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}</div><div class="leg">⭐ เหรียญทองเก็บตรงๆ ไม่ได้ ต้องได้จากการจองการ์ด</div></div>`;
+  if(S.phase==='play'){
+    if(mt&&S.disc)h+=`<div class="bar warn">⚠️ คุณมีเหรียญเกิน 10! กดวงกลมเหรียญของคุณในกรอบ "ของคุณ" ด้านล่าง เพื่อคืนทีละเหรียญ</div>`;
+    else if(mt){const av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length;
+      const ok=sel.length&&(sel.length===2&&sel[0]===sel[1]||new Set(sel).size===sel.length&&sel.length===Math.min(3,av));const inR=selC!=null&&mp.res.includes(selC);
+      h+=`<div class="bar"><div class="hint"><b>🪙 ① เก็บเหรียญ:</b> เลือกเหรียญกลาง ${Math.min(3,av)} สีต่างกัน หรือกดสีเดียวกัน 2 ครั้ง (เลือกแล้ว ${sel.length} เหรียญ)</div><div class="row"><button class="b" data-a="take" ${ok?'':'disabled'}>🪙 เก็บเหรียญที่เลือก</button><button class="b" data-a="clr">🧹 ล้างที่เลือก</button></div>
+      <div class="hint" style="margin-top:10px"><b>🛒 ② ซื้อ / 🔒 ③ จอง:</b> 👆 แตะที่ <b>การ์ด</b> เพื่อเปิดหน้าต่างรายละเอียด แล้วกดซื้อหรือจองในนั้น</div></div>`}
+    else h+=`<div class="bar hint">⏳ ยังไม่ถึงตาคุณ — ดูกระดานระหว่างรอได้ ปุ่มจะขึ้นเมื่อถึงตา</div>`}
+  h+=`<div class="sec">👥 ผู้เล่น</div>`;
   [...S.players.keys()].sort((a,b)=>(b===m)-(a===m)).forEach(i=>{const p=S.players[i],b=bon(p);
-    h+=`<div class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">⭐ ${pts(p)}</span><div class="pn">${p.av||'🙂'} ${p.name}${i===m?' (คุณ)':''} · 🃏 ${p.cards.length}${p.nobles.length?' · 👑'+p.nobles.length:''}</div>
-    <div style="margin-top:6px"><span class="lab">🃏 โบนัส</span> ${b.map((n,k)=>pip(k,n)).join('')}</div>
-    <div style="margin-top:4px"><span class="lab">🪙 เหรียญ</span> ${p.g.map((n,k)=>i===m&&S.disc&&mt?`<button class="pip mini" style="background-color:${HEX[k]};cursor:pointer" data-d="${k}">${n}</button>`:pip(k,n)).join('')}</div>
-    ${p.res.length?`<div class="row" style="margin-top:8px">${p.res.map(id=>i===m?cardH(id):'<div class="card" style="background:#4c1d95">🔒</div>').join('')}</div>`:''}</div>`});
-  h+=`<div class="panel log">📜 ${S.log.slice().reverse().join('<br>')}</div>`;app.innerHTML=h}
+    h+=`<div class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">⭐ ${pts(p)} แต้ม</span><div class="pn">${p.av||'🙂'} ${p.name}${i===m?' (คุณ) — ของคุณ':''} · 🃏 ${p.cards.length} ใบ${p.nobles.length?' · 👑'+p.nobles.length:''}</div>
+    <div style="margin-top:6px"><span class="lab">🃏 โบนัส (ลดราคา)</span> ${b.map((n,k)=>pip(k,n)).join('')}</div>
+    <div style="margin-top:4px"><span class="lab">🪙 เหรียญในมือ ${tot(p)}/10</span> ${p.g.map((n,k)=>i===m&&S.disc&&mt?`<button class="pip mini" style="background-color:${HEX[k]};cursor:pointer;outline:2px solid #fda4af" data-d="${k}">${n}</button>`:pip(k,n)).join('')}</div>
+    ${p.res.length?`<div class="lab" style="margin-top:6px">🔒 การ์ดที่จองไว้</div><div class="row">${p.res.map(id=>i===m?cardH(id):'<div class="card" style="background:#4c1d95">🔒</div>').join('')}</div>`:''}</div>`});
+  h+=`<div class="panel log"><div class="sec">📜 เกิดอะไรขึ้นบ้าง</div>${S.log.slice().reverse().join('<br>')}</div>`;h+=detailH(mp,mt);app.innerHTML=h}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c],[data-a],[data-rd],[data-d]');if(!t||!S)return;msg='';const d=t.dataset;
   if(d.d!=null)return send({t:'disc',i:+d.d});
   if(d.g!=null&&myTurn()&&!S.disc){const i=+d.g;sfx('tick');
@@ -193,6 +255,6 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c
     else if(sel.includes(i))sel=sel.filter(x=>x!==i);else sel.push(i);return render()}
   if(d.c!=null){sfx('tick');selC=selC===+d.c?null:+d.c;return render()}
   if(d.rd!=null)return send({t:'res',deck:+d.rd});
-  ({take:()=>send({t:'take',sel}),buy:()=>send({t:'buy',id:selC}),res:()=>send({t:'res',id:selC}),clr:()=>{sel=[];selC=null;render()},start:()=>send({t:'start'}),again:()=>send({t:'again'})})[d.a]?.()});
+  ({take:()=>send({t:'take',sel}),buy:()=>send({t:'buy',id:selC}),res:()=>send({t:'res',id:selC}),cc:()=>{selC=null;render()},clr:()=>{sel=[];selC=null;render()},start:()=>send({t:'start'}),again:()=>send({t:'again'})})[d.a]?.()});
 lobbyUI(location.hash.replace('#','').toUpperCase());
 </script></body></html>
