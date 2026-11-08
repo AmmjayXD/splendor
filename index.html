@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Splendor ออนไลน์</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+:root{--gold:#e9c46a;--ink:#2a1f14;--cream:#fbf3e0;--glass:rgba(10,30,22,.62);--line:rgba(233,196,106,.35)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Prompt,system-ui,sans-serif;color:#f6efdc;padding:12px;
+background:radial-gradient(ellipse at 50% 0,#1f6b4d 0,#0d3b2a 55%,#07241a 100%);background-attachment:fixed}
+.wrap{max-width:1000px;margin:auto}
+h1{margin:4px 0 10px;font-size:26px;letter-spacing:1px;color:var(--gold);text-shadow:0 2px 8px #0008}
+.panel{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:12px;margin:10px 0;backdrop-filter:blur(6px);box-shadow:0 6px 20px #0005}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lab{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:1px}
+.lv{display:flex;gap:8px;overflow-x:auto;padding:4px 2px}
+.deck{min-width:74px;border-radius:12px;background:repeating-linear-gradient(45deg,#3b2a6b,#3b2a6b 6px,#2f2158 6px,#2f2158 12px);border:2px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;padding:4px;text-align:center}
+.card{min-width:88px;width:88px;height:122px;border-radius:12px;background:linear-gradient(160deg,#fffaf0,#efe0bd);color:var(--ink);cursor:pointer;position:relative;overflow:hidden;box-shadow:0 4px 10px #0007;transition:transform .15s,box-shadow .15s;flex:none}
+.card:hover{transform:translateY(-4px)}
+.card.sel{transform:translateY(-8px);box-shadow:0 0 0 3px var(--gold),0 10px 18px #000a}
+.card.empty{background:#0003;box-shadow:none;cursor:default}
+.card .top{height:34px;padding:2px 8px;display:flex;justify-content:space-between;align-items:center}
+.card .top b{font-size:22px;text-shadow:0 1px 0 #fff8}
+.dot{display:inline-block;border-radius:50%;border:1.5px solid #0006;background-image:radial-gradient(circle at 30% 30%,#fff9,#fff0 60%)}
+.card .top .dot{width:22px;height:22px}
+.cost{position:absolute;left:6px;bottom:6px;display:flex;flex-direction:column;gap:3px}
+.cost span{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700}
+.cost .dot{width:17px;height:17px}
+.noble{min-width:78px;border-radius:12px;padding:6px;text-align:center;background:linear-gradient(160deg,#fff3c4,#d9a93c);color:var(--ink);box-shadow:0 4px 10px #0007;font-size:12px;font-weight:700}
+.noble .r{display:flex;gap:4px;justify-content:center;margin-top:4px;flex-wrap:wrap}
+.pip{display:inline-flex;min-width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#111;border:1.5px solid #0006;background-image:radial-gradient(circle at 30% 30%,#fffa,#fff0 60%)}
+.gem{width:58px;height:58px;border-radius:50%;border:3px solid #0005;font:700 18px Prompt;color:#111;cursor:pointer;background-image:radial-gradient(circle at 30% 28%,#fffc,#fff0 55%);box-shadow:0 4px 8px #0008,inset 0 -5px 8px #0004;position:relative;transition:transform .12s}
+.gem:hover:not(:disabled){transform:scale(1.08)}
+.gem.s{box-shadow:0 0 0 4px var(--gold),0 4px 8px #0008;transform:scale(1.12)}
+.gem sup{position:absolute;top:-6px;right:-6px;background:var(--gold);color:var(--ink);border-radius:10px;padding:0 5px;font-size:11px}
+button.b{background:linear-gradient(#f0cf7a,#cf9d33);color:var(--ink);border:0;border-radius:10px;padding:9px 14px;font:600 14px Prompt;cursor:pointer;box-shadow:0 3px 0 #8a6414}
+button.b:active{transform:translateY(2px);box-shadow:0 1px 0 #8a6414}button.b:disabled{opacity:.4;cursor:default}
+.p{border-radius:14px;padding:10px;margin:8px 0;background:#0004;border:1px solid transparent}
+.p.me{background:#e9c46a22}.p.turn{border-color:var(--gold);box-shadow:0 0 14px #e9c46a66;animation:glow 1.6s infinite alternate}
+@keyframes glow{to{box-shadow:0 0 22px #e9c46aaa}}
+.pn{font-weight:700;font-size:16px}.sc{float:right;background:var(--gold);color:var(--ink);border-radius:20px;padding:0 12px;font-weight:700}
+.mini{margin-right:3px}
+.p .card{min-width:66px;width:66px;height:92px;font-size:10px}
+.p .card .top{height:26px}.p .card .top b{font-size:16px}.p .card .dot{width:16px!important;height:16px!important}
+.p .cost span{font-size:10px}.p .cost .dot{width:12px;height:12px}
+input{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#0007;color:#fff;font:15px Prompt}
+.log{font-size:12px;opacity:.85;max-height:90px;overflow:auto}
+.banner{padding:10px;border-radius:12px;background:#e9c46a;color:var(--ink);font-weight:700;text-align:center}
+.warn{color:#fca5a5;font-weight:600}
+</style></head><body><div class="wrap">
+<h1>💎 SPLENDOR</h1><div id="app" class="panel">กำลังโหลด...</div></div>
+<script>
+const COL=['ขาว','น้ำเงิน','เขียว','แดง','ดำ','ทอง'],HEX=['#f1f5f9','#4f9cf9','#3fc36e','#ef5350','#6b7280','#f2c230'];
+const T=[[[0,1,1,1,1,0],[0,1,2,1,1,0],[0,2,2,0,1,0],[0,0,0,1,3,1],[0,0,0,2,1,0],[0,2,0,2,0,0],[0,0,0,3,0,0],[1,0,0,0,4,0]],
+[[1,3,2,2,0,0],[1,3,0,3,0,2],[2,0,0,1,4,2],[2,0,0,0,5,3],[2,0,0,0,5,0],[3,0,0,0,0,6]],
+[[3,3,3,5,3,0],[4,7,0,0,0,0],[4,3,6,0,0,3],[5,7,0,0,0,3]]];
+const C=[];T.forEach((L,l)=>{for(let o=0;o<5;o++)L.forEach(t=>{const c=[0,0,0,0,0];[1,2,3,4,0].forEach((k,j)=>c[(o+k)%5]=t[j+1]);C.push({l,o,p:t[0],c})})});
+const NB=[[4,4,0,0,0],[0,4,4,0,0],[0,0,4,4,0],[0,0,0,4,4],[4,0,0,0,4],[3,3,3,0,0],[0,3,3,3,0],[0,0,3,3,3],[3,0,0,3,3],[3,3,0,0,3]];
+const $=s=>document.querySelector(s),app=$('#app'),clone=o=>JSON.parse(JSON.stringify(o));
+let peer,conns={},hostConn=null,isHost=false,S=null,uid,myName='',code='',sel=[],selC=null,msg='';
+try{uid=localStorage.getItem('spl_u');myName=localStorage.getItem('spl_n')||''}catch(e){}
+if(!uid){uid='u'+Math.random().toString(36).slice(2,10);try{localStorage.setItem('spl_u',uid)}catch(e){}}
+const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pts=p=>p.cards.reduce((a,i)=>a+C[i].p,0)+p.nobles.length*3;
+const bon=p=>{const b=[0,0,0,0,0];p.cards.forEach(i=>b[C[i].o]++);return b};
+const tot=p=>p.g.reduce((a,b)=>a+b,0);
+const need=(p,c)=>{const b=bon(p);let n=0;for(let i=0;i<5;i++)n+=Math.max(0,c.c[i]-b[i]-p.g[i]);return n};
+const canBuy=(p,id)=>need(p,C[id])<=p.g[5];
+const myIdx=()=>S&&S.players?S.players.findIndex(p=>p.uid===uid):-1;
+const myTurn=()=>S&&S.phase==='play'&&myIdx()===S.turn;
+/* ---------- กติกา (ทำงานบนเครื่องเจ้าของห้องเท่านั้น) ---------- */
+function newGame(s){const n=s.players.length,g=n==2?4:n==3?5:7;
+  s.bank=[g,g,g,g,g,5];s.deck=[0,1,2].map(l=>sh(C.map((c,i)=>i).filter(i=>C[i].l===l)));
+  s.table=s.deck.map(d=>[d.pop(),d.pop(),d.pop(),d.pop()]);s.nobles=sh(NB.map((x,i)=>i)).slice(0,n+1);
+  s.players.forEach(p=>Object.assign(p,{g:[0,0,0,0,0,0],res:[],cards:[],nobles:[]}));
+  sh(s.players);s.turn=0;s.phase='play';s.end=false;s.disc=false;s.log=['เริ่มเกม! ผู้เล่นแรก: '+s.players[0].name]}
+function finish(s){const p=s.players[s.turn];if(tot(p)>10){s.disc=true;return}s.disc=false;
+  const b=bon(p),ni=s.nobles.findIndex(k=>NB[k].every((r,i)=>b[i]>=r));
+  if(ni>=0){p.nobles.push(s.nobles.splice(ni,1)[0]);s.log.push(p.name+' ได้ขุนนาง +3 แต้ม')}
+  if(pts(p)>=15&&!s.end){s.end=true;s.log.push('มีผู้ถึง 15 แต้ม! เล่นให้ครบรอบ')}
+  s.turn=(s.turn+1)%s.players.length;if(s.end&&s.turn===0)s.phase='over';s.log=s.log.slice(-8)}
+function takeCard(s,id){for(let l=0;l<3;l++){const k=s.table[l].indexOf(id);if(k>=0){s.table[l][k]=s.deck[l].pop()??null;return true}}return false}
+function handle(u,a){
+  if(a.t==='join'){if(!S)return;const s=clone(S),ex=s.players.find(p=>p.uid===u);
+    if(ex)ex.name=a.name;else if(s.phase==='lobby'&&s.players.length<4)s.players.push({uid:u,name:a.name});else return;return commit(s)}
+  if(!S)return;const s=clone(S);
+  if((a.t==='start'||a.t==='again')&&u===s.host&&(s.phase==='lobby'||s.phase==='over')&&s.players.length>1){newGame(s);return commit(s)}
+  if(s.phase!=='play')return;const i=s.players.findIndex(p=>p.uid===u);if(i!==s.turn)return;const p=s.players[i];
+  if(a.t==='disc'){if(!s.disc||!p.g[a.i])return;p.g[a.i]--;s.bank[a.i]++;finish(s)}
+  else if(s.disc)return;
+  else if(a.t==='take'){const q=a.sel||[],av=[0,1,2,3,4].filter(k=>s.bank[k]>0).length;
+    const pair=q.length===2&&q[0]===q[1]&&s.bank[q[0]]>=4,tri=new Set(q).size===q.length&&q.length===Math.min(3,av)&&q.every(k=>k<5&&s.bank[k]>0);
+    if(!pair&&!tri)return;q.forEach(k=>{s.bank[k]--;p.g[k]++});s.log.push(p.name+' เก็บเหรียญ '+q.map(k=>COL[k]).join(', '));finish(s)}
+  else if(a.t==='buy'){const id=a.id,r=p.res.indexOf(id);if(r<0&&!s.table.some(x=>x.includes(id)))return;if(!canBuy(p,id))return;
+    const c=C[id],b=bon(p);let gold=0;for(let k=0;k<5;k++){const d=Math.max(0,c.c[k]-b[k]),w=Math.min(d,p.g[k]);p.g[k]-=w;s.bank[k]+=w;gold+=d-w}
+    p.g[5]-=gold;s.bank[5]+=gold;if(r>=0)p.res.splice(r,1);else takeCard(s,id);p.cards.push(id);s.log.push(p.name+' ซื้อการ์ด (+'+COL[c.o]+')');finish(s)}
+  else if(a.t==='res'){if(p.res.length>=3)return;let id=a.id;
+    if(a.deck!=null){id=s.deck[a.deck]?.pop();if(id==null)return}else if(!takeCard(s,id))return;
+    p.res.push(id);if(s.bank[5]>0){s.bank[5]--;p.g[5]++}s.log.push(p.name+' จองการ์ด');finish(s)}
+  else return;
+  commit(s)}
+function commit(s){S=s;sel=[];selC=null;render();Object.values(conns).forEach(c=>c.open&&c.send(s))}
+function send(a){a.uid=uid;if(isHost)handle(uid,a);else if(hostConn&&hostConn.open)hostConn.send(a);else{msg='ยังไม่ได้เชื่อมต่อกับห้อง';render()}}
+/* ---------- เครือข่าย ---------- */
+function createRoom(){myName=nm();code=Math.random().toString(36).slice(2,6).toUpperCase();isHost=true;
+  peer=new Peer('splendor-'+code);
+  peer.on('open',()=>{S={phase:'lobby',host:uid,players:[{uid,name:myName}],log:[]};location.hash=code;render()});
+  peer.on('error',e=>{if(e.type==='unavailable-id')createRoom();else{app.innerHTML='สร้างห้องไม่ได้: '+e.type}});
+  peer.on('connection',c=>{c.on('data',d=>{conns[d.uid]=c;if(d.t==='join'&&S&&S.players.some(p=>p.uid===d.uid)&&S.phase!=='lobby')c.send(S);handle(d.uid,d)})})}
+function joinRoom(){myName=nm();code=$('#cd').value.trim().toUpperCase();if(!code)return;isHost=false;$('#er').textContent='กำลังเชื่อมต่อ...';
+  peer=new Peer();peer.on('open',()=>{hostConn=peer.connect('splendor-'+code,{reliable:true});
+    hostConn.on('open',()=>{location.hash=code;hostConn.send({t:'join',uid,name:myName})});
+    hostConn.on('data',d=>{S=d;msg='';render()});hostConn.on('close',()=>{msg='ขาดการเชื่อมต่อกับห้อง — รีเฟรชหน้าแล้วเข้าห้องเดิมอีกครั้ง';render()})});
+  peer.on('error',e=>{$('#er')?($('#er').textContent=e.type==='peer-unavailable'?'ไม่พบห้องนี้ (หรือเจ้าของห้องปิดหน้าเว็บไปแล้ว)':'เชื่อมต่อไม่ได้: '+e.type):0})}
+function nm(){const n=($('#nm').value||'ผู้เล่น').trim().slice(0,14);try{localStorage.setItem('spl_n',n)}catch(e){}return n}
+/* ---------- แสดงผล ---------- */
+const pip=(i,n)=>`<span class="pip mini" style="background-color:${HEX[i]}">${n}</span>`;
+const cardH=id=>{const c=C[id];return `<div class="card ${selC===id?'sel':''}" data-c="${id}"><div class="top" style="background:${HEX[c.o]}"><b>${c.p||''}</b><span class="dot" style="background-color:${HEX[c.o]}"></span></div><div class="cost">${c.c.map((n,i)=>n?`<span><i class="dot" style="background-color:${HEX[i]}"></i>${n}</span>`:'').join('')}</div></div>`};
+function lobbyUI(pre){app.innerHTML=`<div class="row"><input id="nm" placeholder="ชื่อของคุณ" value="${myName}" maxlength="14"></div>
+<div class="row" style="margin-top:10px"><button class="b" id="mk">สร้างห้องใหม่</button><span>หรือ</span><input id="cd" placeholder="รหัสห้อง" size="6" maxlength="4" style="text-transform:uppercase" value="${pre||''}"><button class="b" id="jn">เข้าร่วม</button></div><p id="er" class="warn"></p>`;
+  $('#mk').onclick=createRoom;$('#jn').onclick=joinRoom}
+function render(){if(!S)return;
+  if(S.phase==='lobby'){const host=S.host===uid;
+    app.innerHTML=`<div class="lab">ห้อง</div><div style="font-size:40px;font-weight:700;color:var(--gold);letter-spacing:6px">${code}</div>
+    <p>ส่งลิงก์หน้านี้ให้เพื่อน (ต่อท้ายด้วย <b>#${code}</b>) หรือบอกรหัสห้อง</p>
+    <div class="panel"><div class="lab">ผู้เล่น ${S.players.length}/4</div>${S.players.map(p=>`<div class="pn">👤 ${p.name}${p.uid===S.host?' (เจ้าของห้อง)':''}</div>`).join('')}</div>
+    ${host?`<button class="b" data-a="start" ${S.players.length<2?'disabled':''}>เริ่มเกม</button>`:'รอเจ้าของห้องกดเริ่มเกม...'} <span class="warn">${msg}</span>`;return}
+  const m=myIdx();if(m<0){app.textContent='เกมนี้เริ่มไปแล้ว และคุณไม่ได้อยู่ในห้อง';return}
+  const mp=S.players[m],cur=S.players[S.turn],mt=myTurn();
+  let h=`<div class="row" style="justify-content:space-between"><span class="lab">ห้อง ${code}</span><span class="warn">${msg}</span></div>`;
+  if(S.phase==='over'){const r=S.players.map(p=>({p,s:pts(p),n:p.cards.length})).sort((a,b)=>b.s-a.s||a.n-b.n);
+    h+=`<div class="panel"><div class="banner">🏆 ผู้ชนะ: ${r[0].p.name} (${r[0].s} แต้ม)</div>${r.map(x=>`<div style="margin:6px 0">${x.p.name}: ${x.s} แต้ม · ${x.n} การ์ด</div>`).join('')}${S.host===uid?'<button class="b" data-a="again">เล่นใหม่</button>':''}</div>`}
+  else h+=`<div class="banner" style="${mt?'':'background:#0006;color:#f6efdc'}">${mt?'ตาของคุณ!':'ตาของ '+cur.name}</div>`;
+  h+=`<div class="panel"><div class="lab">ขุนนาง</div><div class="row">${S.nobles.map(k=>`<div class="noble">👑 +3<div class="r">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div><div class="panel">`;
+  [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck"><b>ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:4px 8px;font-size:12px" data-rd="${l}">จอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
+  h+=`</div><div class="panel"><div class="row">${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" style="background-color:${HEX[i]}" data-g="${i}" ${i===5?'disabled':''}>${S.bank[i]}${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}</div>`;
+  if(mt&&!S.disc){const av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length;
+    const ok=sel.length&&(sel.length===2&&sel[0]===sel[1]||new Set(sel).size===sel.length&&sel.length===Math.min(3,av));const inR=selC!=null&&mp.res.includes(selC);
+    h+=`<div class="row" style="margin-top:12px"><button class="b" data-a="take" ${ok?'':'disabled'}>เก็บเหรียญ</button><button class="b" data-a="buy" ${selC!=null&&canBuy(mp,selC)?'':'disabled'}>ซื้อการ์ด</button><button class="b" data-a="res" ${selC!=null&&!inR&&mp.res.length<3?'':'disabled'}>จองการ์ด</button><button class="b" data-a="clr">ล้าง</button></div><small>เหรียญ: 3 สีต่างกัน หรือ 2 เหรียญสีเดียวกัน (กองต้องมี 4+)</small>`}
+  if(mt&&S.disc)h+=`<p class="warn">เหรียญเกิน 10! กดเหรียญของคุณด้านล่างเพื่อคืน</p>`;
+  h+='</div>';
+  [...S.players.keys()].sort((a,b)=>(b===m)-(a===m)).forEach(i=>{const p=S.players[i],b=bon(p);
+    h+=`<div class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">${pts(p)} แต้ม</span><div class="pn">${p.name}${i===m?' (คุณ)':''} · การ์ด ${p.cards.length}</div>
+    <div style="margin-top:6px"><span class="lab">โบนัส</span> ${b.map((n,k)=>pip(k,n)).join('')}</div>
+    <div style="margin-top:4px"><span class="lab">เหรียญ</span> ${p.g.map((n,k)=>i===m&&S.disc&&mt?`<button class="pip mini" style="background-color:${HEX[k]};cursor:pointer" data-d="${k}">${n}</button>`:pip(k,n)).join('')}</div>
+    ${p.res.length?`<div class="row" style="margin-top:6px">${p.res.map(id=>i===m?cardH(id):'<div class="card" style="background:#3b2a6b"></div>').join('')}</div>`:''}</div>`});
+  h+=`<div class="panel log">${S.log.slice().reverse().join('<br>')}</div>`;app.innerHTML=h}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c],[data-a],[data-rd],[data-d]');if(!t||!S)return;msg='';const d=t.dataset;
+  if(d.d!=null)return send({t:'disc',i:+d.d});
+  if(d.g!=null&&myTurn()&&!S.disc){const i=+d.g;
+    if(sel.length===3||sel.length===2&&sel[0]===sel[1])sel=[i];
+    else if(sel.length===1&&sel[0]===i){S.bank[i]>=4?sel=[i,i]:msg='กองนี้เหลือไม่ถึง 4 เก็บ 2 เหรียญไม่ได้'}
+    else if(sel.includes(i))sel=sel.filter(x=>x!==i);else sel.push(i);return render()}
+  if(d.c!=null){selC=selC===+d.c?null:+d.c;return render()}
+  if(d.rd!=null)return send({t:'res',deck:+d.rd});
+  ({take:()=>send({t:'take',sel}),buy:()=>send({t:'buy',id:selC}),res:()=>send({t:'res',id:selC}),clr:()=>{sel=[];selC=null;render()},start:()=>send({t:'start'}),again:()=>send({t:'again'})})[d.a]?.()});
+lobbyUI(location.hash.replace('#','').toUpperCase());
+</script></body></html>
