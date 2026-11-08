@@ -20,7 +20,7 @@ h1{margin:4px 0 10px;font-size:30px;font-weight:700;letter-spacing:2px;backgroun
 .lab{font-size:12px;color:var(--gold);letter-spacing:1px;font-weight:600}
 .lv{display:flex;gap:10px;overflow-x:auto;padding:6px 4px}
 .deck{min-width:78px;border-radius:16px;background:linear-gradient(160deg,#7c3aed,#4c1d95);border:2px solid #ffffff55;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;padding:6px;text-align:center;box-shadow:0 6px 14px #0006}
-.card{min-width:92px;width:92px;height:128px;border-radius:16px;background:linear-gradient(160deg,#fffdf7,#f1e4c8);color:var(--ink);cursor:pointer;position:relative;overflow:hidden;box-shadow:0 6px 14px #0007;transition:transform .18s,box-shadow .18s;flex:none;animation:pop .35s both}
+.card{min-width:92px;width:92px;height:128px;border-radius:16px;background:linear-gradient(160deg,#fffdf7,#f1e4c8);color:var(--ink);cursor:pointer;position:relative;overflow:hidden;box-shadow:0 6px 14px #0007;transition:transform .18s,box-shadow .18s;flex:none}
 @keyframes pop{from{transform:scale(.6) translateY(14px);opacity:0}}
 .card:hover{transform:translateY(-5px) rotate(-1deg)}
 .card.sel{transform:translateY(-10px);box-shadow:0 0 0 3px var(--gold),0 0 22px #ffd166aa,0 12px 20px #000a}
@@ -67,6 +67,16 @@ input{padding:11px 14px;border-radius:14px;border:1px solid var(--line);backgrou
 .art{position:absolute;right:6px;bottom:8px;font-size:34px;filter:drop-shadow(0 3px 3px #0005)}
 .p .card .art{font-size:24px;right:4px;bottom:6px}
 .lv{padding:16px 8px 10px}
+.card.fresh{animation:pop .5s both,glowc 2s}
+@keyframes glowc{from{box-shadow:0 0 0 3px #86efac,0 0 28px #86efac}}
+.card.fresh:after{content:'✨ใหม่';position:absolute;top:40px;right:3px;background:#22c55e;color:#fff;border-radius:8px;font-size:9px;padding:0 4px;animation:fo 2.4s forwards}
+@keyframes fo{70%{opacity:1}to{opacity:0}}
+.hand{border:2px dashed var(--gold);background:#ffd16614;border-radius:22px;padding:12px;margin:12px 0}
+.slot{display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:#fff9;border:2px dashed #fff4;background:transparent!important;box-shadow:none;cursor:default}
+.fly{position:fixed;z-index:50;pointer-events:none;margin:0}.fly .card{width:100%;height:100%;animation:none;transform:none;min-width:0}.fly .gem{width:100%;height:100%;animation:none}
+.p.got{animation:got .9s}@keyframes got{30%{transform:scale(1.025);box-shadow:0 0 30px #ffd166}}
+.chip{display:inline-block;border-radius:8px;padding:1px 6px;margin:2px;font-size:12px;color:#111;border:1px solid #0005}
+.toast{position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:60;background:#1b1233f2;border:2px solid var(--gold);border-radius:16px;padding:10px 16px;animation:pop .3s both;max-width:92vw;text-align:center;font-weight:600}
 </style></head><body><div class="wrap">
 <div class="tools"><button id="bm" title="เพลง">🎵</button><button id="bs" title="เสียงเอฟเฟกต์">🔊</button></div><h1>💎 SPLENDOR</h1><div id="app" class="panel">กำลังโหลด...</div></div>
 <script>
@@ -94,7 +104,7 @@ function newGame(s){const n=s.players.length,g=n==2?4:n==3?5:7;
   s.table=s.deck.map(d=>[d.pop(),d.pop(),d.pop(),d.pop()]);s.nobles=sh(NB.map((x,i)=>i)).slice(0,n+1);
   s.players.forEach(p=>Object.assign(p,{g:[0,0,0,0,0,0],res:[],cards:[],nobles:[]}));
   sh(s.players);s.turn=0;s.phase='play';s.end=false;s.disc=false;s.log=['เริ่มเกม! ผู้เล่นแรก: '+s.players[0].name]}
-function finish(s){const p=s.players[s.turn];if(tot(p)>10){s.disc=true;return}s.disc=false;
+function finish(s){const p=s.players[s.turn];p.last=(s.log[s.log.length-1]||'').replace(p.name+' ','');if(tot(p)>10){s.disc=true;return}s.disc=false;
   const b=bon(p),ni=s.nobles.findIndex(k=>NB[k].every((r,i)=>b[i]>=r));
   if(ni>=0){p.nobles.push(s.nobles.splice(ni,1)[0]);s.log.push(p.name+' ได้ขุนนาง +3 แต้ม')}
   if(pts(p)>=15&&!s.end){s.end=true;s.log.push('มีผู้ถึง 15 แต้ม! เล่นให้ครบรอบ')}
@@ -120,14 +130,15 @@ function handle(u,a){
   else if(a.t==='pass'&&String(u).startsWith('bot')){s.log.push(p.name+' ข้ามตา');finish(s)}
   else return;
   commit(s)}
-function commit(s){S=s;sel=[];selC=null;render();Object.values(conns).forEach(c=>c.open&&c.send(s));botTick()}
+function commit(s){S=s;sel=[];selC=null;render();Object.entries(conns).forEach(([u,c])=>c.open&&c.send(view(s,u)));botTick()}
+function view(s,u){const v=clone(s);if(v.deck)v.deck=v.deck.map(d=>d.map(()=>-1));v.players.forEach(p=>{if(p.uid!==u)p.res=(p.res||[]).map(()=>-1)});return v}
 function send(a){a.uid=uid;if(isHost)handle(uid,a);else if(hostConn&&hostConn.open)hostConn.send(a);else{msg='ยังไม่ได้เชื่อมต่อกับห้อง';render()}}
 /* ---------- เครือข่าย ---------- */
 function createRoom(){myName=nm();code=Math.random().toString(36).slice(2,6).toUpperCase();isHost=true;
   peer=new Peer('splendor-'+code);
   peer.on('open',()=>{S={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0]}],log:[]};location.hash=code;render()});
   peer.on('error',e=>{if(e.type==='unavailable-id')createRoom();else{app.innerHTML='สร้างห้องไม่ได้: '+e.type}});
-  peer.on('connection',c=>{c.on('data',d=>{conns[d.uid]=c;if(d.t==='join'&&S&&S.players.some(p=>p.uid===d.uid)&&S.phase!=='lobby')c.send(S);handle(d.uid,d)})})}
+  peer.on('connection',c=>{c.on('data',d=>{conns[d.uid]=c;if(d.t==='join'&&S&&S.players.some(p=>p.uid===d.uid)&&S.phase!=='lobby')c.send(view(S,d.uid));handle(d.uid,d)})})}
 function joinRoom(){myName=nm();code=$('#cd').value.trim().toUpperCase();if(!code)return;isHost=false;$('#er').textContent='กำลังเชื่อมต่อ...';
   peer=new Peer();peer.on('open',()=>{hostConn=peer.connect('splendor-'+code,{reliable:true});
     hostConn.on('open',()=>{location.hash=code;hostConn.send({t:'join',uid,name:myName})});
@@ -169,7 +180,7 @@ $('#bs').onclick=()=>{audioInit();sndOn=!sndOn;if(sg)sg.gain.value=sndOn?.8:0;tr
 document.addEventListener('pointerdown',audioInit);paintTools();
 /* ---------- แสดงผล ---------- */
 const pip=(i,n)=>`<span class="pip mini" style="background-color:${HEX[i]}">${n}</span>`;
-const cardH=id=>{const c=C[id];return `<div class="card ${selC===id?'sel':''}" data-c="${id}" style="background:linear-gradient(160deg,#fffdf7 35%,${HEX[c.o]}66)"><span class="art">${ART[c.l][(id-[0,40,70][c.l])%ART[c.l].length]}</span><div class="top" style="background:linear-gradient(135deg,${HEX[c.o]},#0005)"><b>${c.p?'⭐'+c.p:''}</b><span class="em">${GE[c.o]}</span></div><div class="cost">${c.c.map((n,i)=>n?`<span><i class="dot" style="background-color:${HEX[i]}"></i>${n}</span>`:'').join('')}</div></div>`};
+const cardH=id=>{const c=C[id];return `<div class="card ${selC===id?'sel':''} ${FRESH.has(id)?'fresh':''}" data-c="${id}" style="background:linear-gradient(160deg,#fffdf7 35%,${HEX[c.o]}66)"><span class="art">${ART[c.l][(id-[0,40,70][c.l])%ART[c.l].length]}</span><div class="top" style="background:linear-gradient(135deg,${HEX[c.o]},#0005)"><b>${c.p?'⭐'+c.p:''}</b><span class="em">${GE[c.o]}</span></div><div class="cost">${c.c.map((n,i)=>n?`<span><i class="dot" style="background-color:${HEX[i]}"></i>${n}</span>`:'').join('')}</div></div>`};
 const HELP=`<h2>📖 วิธีเล่น Splendor</h2>
 <p>🎯 <b>เป้าหมาย:</b> เป็นคนแรกที่สะสมให้ได้ <b>15 แต้ม ⭐</b> (เล่นให้ครบรอบ แล้วแต้มสูงสุดชนะ)</p>
 <p>🎲 <b>ในตาของคุณ เลือกทำ 1 อย่าง:</b></p><ol>
@@ -218,7 +229,32 @@ function detailH(mp,mt){if(selC==null)return '';
   <div class="hint">${miss<=0?'✅ คุณซื้อใบนี้ได้':'❌ เหรียญยังไม่พอ ขาดอีก '+miss+' เหรียญ'}</div>
   ${can?'':'<div class="hint warn">'+(S.disc?'⚠️ ต้องคืนเหรียญให้เหลือ 10 ก่อน':'⏳ ยังไม่ถึงตาคุณ — ดูรายละเอียดได้อย่างเดียว')+'</div>'}
   <div class="row" style="justify-content:center;margin-top:8px"><button class="b" data-a="buy" ${can&&miss<=0?'':'disabled'}>🛒 ซื้อ</button>${inR?'':`<button class="b" data-a="res" ${can&&mp.res.length<3?'':'disabled'}>🔒 จอง</button>`}<button class="b" data-a="cc">✖ ปิด</button></div></div></div>`}
+let FRESH=new Set(),lastS=null;
+const handH=mp=>`<div id="hand" class="hand"><div class="sec">🖐️ มือของคุณ <small>(การ์ดที่จองไว้ — มีแค่คุณที่เห็น 🔒)</small></div><div class="row">${[0,1,2].map(i=>mp.res[i]!=null?cardH(mp.res[i]):'<div class="card empty slot">ว่าง<br>จองได้อีก</div>').join('')}</div></div>`;
+function grab(){const r={c:{},g:{},d:{}};app.querySelectorAll('[data-c]').forEach(e=>{if(!e.closest('.dlg'))r.c[e.dataset.c]=e.getBoundingClientRect()});
+  app.querySelectorAll('[data-g]').forEach(e=>r.g[e.dataset.g]=e.getBoundingClientRect());app.querySelectorAll('[data-dk]').forEach(e=>r.d[e.dataset.dk]=e.getBoundingClientRect());return r}
+const clampR=r=>({left:r.left,top:Math.min(Math.max(r.top,0),innerHeight-90),width:r.width,height:Math.min(r.height,90)});
+function fly(html,from,to,delay,sc,done){const el=document.createElement('div');el.className='fly';el.innerHTML=html;
+  el.style.left=from.left+'px';el.style.top=from.top+'px';el.style.width=from.width+'px';el.style.height=from.height+'px';document.body.appendChild(el);
+  const dx=to.left+to.width/2-(from.left+from.width/2),dy=to.top+to.height/2-(from.top+from.height/2);
+  const a=el.animate([{transform:'translate(0,0) scale(1) rotate(0deg)'},{transform:`translate(${dx*.45}px,${dy*.45-50}px) scale(1.2) rotate(-7deg)`,offset:.4},{transform:`translate(${dx}px,${dy}px) scale(${sc||.35}) rotate(5deg)`,opacity:.85}],{duration:900,delay,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
+  a.onfinish=()=>{el.remove();done&&done()}}
+function toast(t){document.querySelectorAll('.toast').forEach(e=>e.remove());const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),3400)}
+function anims(pv,R){const apv=pv.players[pv.turn],ai=S.players.findIndex(p=>p.uid===apv.uid);if(ai<0)return;const ap=S.players[ai],mine=ap.uid===uid;
+  const pe=app.querySelector('[data-pi="'+ai+'"]');if(!pe)return;const pt=clampR(pe.getBoundingClientRect()),he=document.querySelector('#hand'),ht=he?clampR(he.getBoundingClientRect()):pt;
+  const land=()=>{pe.classList.add('got');setTimeout(()=>pe.classList&&pe.classList.remove('got'),900)};
+  const now=S.table.flat(),gone=pv.table.flat().filter(id=>id!=null&&!now.includes(id));
+  gone.forEach(id=>{const f=R.c[id];if(f)fly(cardH(id),f,ap.cards.includes(id)?pt:(mine?ht:pt),0,.5,land)});
+  apv.res.forEach(id=>{if(id>=0&&ap.cards.includes(id)&&R.c[id])fly(cardH(id),R.c[id],pt,0,.5,land)});
+  if(!gone.length&&ap.res.length>apv.res.length)[0,1,2].forEach(l=>{if(pv.deck[l].length>S.deck[l].length&&R.d[l])fly('<div class="card" style="background:linear-gradient(160deg,#7c3aed,#4c1d95);display:flex;align-items:center;justify-content:center;font-size:30px">🂠</div>',{left:R.d[l].left,top:R.d[l].top,width:70,height:96},mine?ht:pt,0,.5,land)});
+  for(let i=0;i<6;i++){const n=pv.bank[i]-S.bank[i],g=`<button class="gem" style="background-color:${HEX[i]}"><span class="e">${GE[i]}</span></button>`;
+    if(n>0&&R.g[i])for(let k=0;k<Math.min(n,3);k++)fly(g,R.g[i],pt,k*160,.5,land);
+    if(n<0){const e=app.querySelector('[data-g="'+i+'"]');if(e)for(let k=0;k<Math.min(-n,3);k++)fly(g,{left:pt.left+20,top:pt.top+10,width:56,height:56},e.getBoundingClientRect(),k*160,1)}}
+  if(S.nobles.length<pv.nobles.length)toast('👑 ขุนนางมาเยือน '+ap.av+' '+ap.name+'!');
+  else if(S.log&&S.log.length)toast(ap.av+' '+ap.name+' '+(ap.last||''))}
 function render(){if(!S)return;sfxCheck();
+  const pv=lastS,oldR=(pv&&pv!==S&&pv.phase==='play'&&S.phase!=='lobby')?grab():null;
+  FRESH=(pv&&pv!==S&&pv.phase==='play')?new Set(S.table.flat().filter(id=>id!=null&&!pv.table.flat().includes(id))):(pv&&pv===S)?new Set():new Set(S.phase==='play'?S.table.flat().filter(x=>x!=null):[]);
   if(S.phase==='lobby'){const host=S.host===uid;
     app.innerHTML=`<div class="lab">🔑 รหัสห้อง</div><div style="font-size:46px;font-weight:700;color:var(--gold);letter-spacing:8px">${code}</div>
     <p>📨 ส่งลิงก์หน้านี้ให้เพื่อน (ต่อท้ายด้วย <b>#${code}</b>) หรือบอกรหัสห้อง</p>
@@ -231,8 +267,9 @@ function render(){if(!S)return;sfxCheck();
     h+=`<div class="panel"><div class="banner">🏆 ผู้ชนะ: ${r[0].p.av||''} ${r[0].p.name} (${r[0].s} แต้ม) 🎉</div>${r.map((x,i)=>`<div style="margin:8px 0">${['🥇','🥈','🥉','🎖️'][i]} ${x.p.av||''} ${x.p.name}: ${x.s} แต้ม · ${x.n} การ์ด</div>`).join('')}${S.host===uid?'<button class="b" data-a="again">🔄 เล่นใหม่</button>':''}</div>`}
   else h+=`<div class="banner" style="${mt?'':'animation:none;background:#0006;color:#f5f1ff'}">${mt?'🎲 ตาของคุณ! เลือกทำ 1 อย่าง (ดูปุ่มด้านล่างจอ)':'⏳ รอ '+(cur.av||'')+' '+cur.name+' เล่น...'}</div>`;
   h+=`<div class="panel"><div class="sec">👑 ขุนนาง <small>(โบนัสครบตามนี้ → ได้ +3 แต้มอัตโนมัติ)</small></div><div class="row">${S.nobles.map(k=>`<div class="noble">👑<div class="r">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div><div class="panel"><div class="sec">🃏 การ์ดบนโต๊ะ</div><div class="leg">วงกลมสี+เลข = เหรียญที่ต้องจ่าย · ไอคอนมุมขวา = โบนัสสีที่ได้ถาวร · ⭐ = แต้ม</div>`;
-  [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck"><b>${['🥉','🥈','🥇'][l]} ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:4px 10px;font-size:12px" data-rd="${l}">🔒 จองจากกอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
+  [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck" data-dk="${l}"><b>${['🥉','🥈','🥇'][l]} ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:4px 10px;font-size:12px" data-rd="${l}">🔒 จองจากกอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
   h+=`</div><div class="panel"><div class="sec">🪙 เหรียญกลาง <small>(แตะเพื่อเลือกเก็บ)</small></div><div class="row" style="margin-top:10px">${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" style="background-color:${HEX[i]}" data-g="${i}" ${i===5?'disabled':''}><span class="e">${GE[i]}</span>${S.bank[i]}${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}</div><div class="leg">⭐ เหรียญทองเก็บตรงๆ ไม่ได้ ต้องได้จากการจองการ์ด</div></div>`;
+  if(S.phase!=='lobby')h+=handH(mp);
   if(S.phase==='play'){
     if(mt&&S.disc)h+=`<div class="bar warn">⚠️ คุณมีเหรียญเกิน 10! กดวงกลมเหรียญของคุณในกรอบ "ของคุณ" ด้านล่าง เพื่อคืนทีละเหรียญ</div>`;
     else if(mt){const av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length;
@@ -242,11 +279,11 @@ function render(){if(!S)return;sfxCheck();
     else h+=`<div class="bar hint">⏳ ยังไม่ถึงตาคุณ — ดูกระดานระหว่างรอได้ ปุ่มจะขึ้นเมื่อถึงตา</div>`}
   h+=`<div class="sec">👥 ผู้เล่น</div>`;
   [...S.players.keys()].sort((a,b)=>(b===m)-(a===m)).forEach(i=>{const p=S.players[i],b=bon(p);
-    h+=`<div class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">⭐ ${pts(p)} แต้ม</span><div class="pn">${p.av||'🙂'} ${p.name}${i===m?' (คุณ) — ของคุณ':''} · 🃏 ${p.cards.length} ใบ${p.nobles.length?' · 👑'+p.nobles.length:''}</div>
+    h+=`<div data-pi="${i}" class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">⭐ ${pts(p)} แต้ม</span><div class="pn">${p.av||'🙂'} ${p.name}${i===m?' (คุณ) — ของคุณ':''} · 🃏 ${p.cards.length} ใบ${p.nobles.length?' · 👑'+p.nobles.length:''}</div>
     <div style="margin-top:6px"><span class="lab">🃏 โบนัส (ลดราคา)</span> ${b.map((n,k)=>pip(k,n)).join('')}</div>
     <div style="margin-top:4px"><span class="lab">🪙 เหรียญในมือ ${tot(p)}/10</span> ${p.g.map((n,k)=>i===m&&S.disc&&mt?`<button class="pip mini" style="background-color:${HEX[k]};cursor:pointer;outline:2px solid #fda4af" data-d="${k}">${n}</button>`:pip(k,n)).join('')}</div>
-    ${p.res.length?`<div class="lab" style="margin-top:6px">🔒 การ์ดที่จองไว้</div><div class="row">${p.res.map(id=>i===m?cardH(id):'<div class="card" style="background:#4c1d95">🔒</div>').join('')}</div>`:''}</div>`});
-  h+=`<div class="panel log"><div class="sec">📜 เกิดอะไรขึ้นบ้าง</div>${S.log.slice().reverse().join('<br>')}</div>`;h+=detailH(mp,mt);app.innerHTML=h}
+    ${p.cards.length?`<div style="margin-top:6px"><span class="lab">🃏 การ์ดที่ซื้อแล้ว</span> ${[...p.cards].sort((a,b)=>C[a].o-C[b].o).map(id=>`<span class="chip" style="background:${HEX[C[id].o]}">${GE[C[id].o]}${C[id].p?'⭐'+C[id].p:''}</span>`).join('')}</div>`:''}${i!==m&&p.res.length?`<div class="hint">🔒 จองไว้ ${p.res.length} ใบ (ซ่อนอยู่ในมือเขา)</div>`:''}${p.last?`<div class="hint">📌 ล่าสุด: ${p.last}</div>`:''}</div>`});
+  h+=`<div class="panel log"><div class="sec">📜 เกิดอะไรขึ้นบ้าง</div>${S.log.slice().reverse().join('<br>')}</div>`;h+=detailH(mp,mt);app.innerHTML=h;if(oldR)try{anims(pv,oldR)}catch(e){}lastS=S}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c],[data-a],[data-rd],[data-d]');if(!t||!S)return;msg='';const d=t.dataset;
   if(d.d!=null)return send({t:'disc',i:+d.d});
   if(d.g!=null&&myTurn()&&!S.disc){const i=+d.g;sfx('tick');
