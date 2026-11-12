@@ -86,21 +86,112 @@ input,select{padding:10px 12px;border-radius:10px;border:3px solid var(--ink);ba
 .eyes{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
 .sp{font-size:22px;transform-box:fill-box;transform-origin:center;animation:tw2 1.8s infinite}.s2{animation-delay:.6s}.s3{animation-delay:1.1s}
 @keyframes tw2{0%,100%{opacity:.1;transform:scale(.5)}50%{opacity:1;transform:scale(1.25)}}
+
+#app.plain{background:none;border:0;box-shadow:none;padding:0;margin:0}
+.topline{display:flex;justify-content:space-between;font-size:13px}
+.av{font-size:28px;line-height:1}
+.ph{display:flex;align-items:center;gap:8px}.ph .nm{flex:1;min-width:0;font-weight:700;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.you{font-size:11px;background:var(--teal);color:var(--ink);border-radius:8px;padding:0 7px;margin-left:6px;font-weight:700}
+.tn{font-size:12px;background:var(--gold);color:var(--ink);border-radius:8px;padding:0 8px;font-weight:700}
+.sc{float:none;font-size:17px;padding:0 12px}
+.rt{width:100%;border-collapse:separate;border-spacing:2px;margin-top:6px;text-align:center;font-size:14px}
+.rt .gi{width:22px;height:22px}.rt th{font-weight:400}
+.rt .l{text-align:left;font-size:12px;color:var(--gold);white-space:nowrap;font-weight:700}
+.rt td span,.rt td button{display:inline-block;min-width:28px;border-radius:8px;background:#00000050;padding:1px 4px;font-weight:700;color:#fff}
+.rt td span.z{opacity:.3;font-weight:400;background:none}
+.rt td button.dsc{background:#ffb4a8;color:var(--ink);border:2px solid var(--ink);cursor:pointer;outline:0}
+.cards-row{display:flex;gap:12px;align-items:flex-start;margin-top:6px;flex-wrap:wrap}.cr{flex:1;min-width:110px}.cr .lab{display:block;font-size:12px;margin-bottom:2px}
+.pl-last{font-size:12px;opacity:.85;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p{padding:8px 10px;margin:7px 0}
+@media(min-width:901px){
+ .wrap{max-width:min(100%,1700px)}
+ .game{gap:12px;grid-template-columns:minmax(0,1.6fr) minmax(340px,1fr)}
+ .act{position:static}
+ .panel{margin:6px 0;padding:10px}
+ .banner{margin:4px 0 8px;padding:6px;font-size:16px}
+ .table{display:flex;gap:14px;align-items:flex-start}.rows{flex:1;min-width:0}
+ .bankc{display:flex;flex-direction:column;gap:4px;align-items:center;padding-left:12px;border-left:3px dashed #ffffff30}
+ .card{min-width:86px;width:86px;height:120px}.card .top{height:32px}.art{font-size:28px}
+ .deck{min-width:70px}.lv{padding:8px 6px 8px}
+ h1{font-size:22px;margin:0 0 4px}
+}
+@media(max-width:900px){.table{display:block}.bankc{display:flex;flex-wrap:wrap;margin-top:8px}}
+
+.arena{display:grid;grid-template-columns:minmax(260px,1fr) minmax(0,2.15fr) minmax(260px,1fr);gap:12px;align-items:start}
+@media(max-width:1100px){.arena{grid-template-columns:1fr}.mid{order:-1}}
+.col,.mid{min-width:0}.p{position:relative}
+.figure{width:78px;height:104px;flex:none;position:relative}.ch{width:100%;height:100%;overflow:visible}
+.cb{transform-box:fill-box;transform-origin:50% 100%;animation:idle 2.6s ease-in-out infinite}@keyframes idle{50%{transform:translateY(-3px) scaleY(1.015)}}
+.figure.jump .cb,.win .cb{animation:jumpy .6s ease-in-out infinite}@keyframes jumpy{50%{transform:translateY(-14px)}}
+.pinfo{flex:1;min-width:0}.pinfo .nm{font-weight:700;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pinfo .sc{display:inline-block;margin:2px 6px 2px 0}
+.stands{display:flex;flex-wrap:wrap;max-width:64px;justify-content:flex-end}.stand{width:28px;height:38px;display:inline-block}
+.tom{position:absolute;top:6px;right:6px;background:#ef4444;color:#fff;border:3px solid var(--ink);border-radius:12px;padding:2px 8px;font:700 12px Mali,Prompt,sans-serif;cursor:pointer;box-shadow:0 3px 0 var(--ink);z-index:3}.tom:active{transform:translateY(2px)}
+.p.hot{border-color:#ff7a1a;animation:heat .7s infinite alternate}@keyframes heat{from{box-shadow:0 0 10px #ff7a1a88}to{box-shadow:0 0 26px #ff3d00,0 -10px 30px #ffb34755}}
+.flames{position:absolute;top:-26px;left:6px;right:6px;display:flex;justify-content:space-around;pointer-events:none;z-index:2}
+.flames i{font-style:normal;font-size:26px;animation:flick .45s infinite alternate;transform-origin:50% 100%}.flames i:nth-child(2n){animation-delay:.15s;font-size:32px}.flames i:nth-child(3n){animation-delay:.3s}
+.hot2 .flames i{font-size:36px}
+@keyframes flick{from{transform:scale(.85) rotate(-6deg)}to{transform:scale(1.2) rotate(6deg)}}
+.onfire .ch{filter:drop-shadow(0 0 5px #ff7a1a) drop-shadow(0 0 10px #ff3d00)}
+.hotb{display:inline-block;background:#ff5a1f;color:#fff;border:2px solid var(--ink);border-radius:8px;padding:0 8px;font-size:12px;font-weight:700;animation:flick .5s infinite alternate}
+.figure.splat:after{content:'🍅';position:absolute;left:8px;top:18px;font-size:30px;transform:rotate(-20deg);animation:drip 5s forwards}
+.figure.splat:before{content:'';position:absolute;inset:16% 12% 30% 12%;background:radial-gradient(circle at 30% 30%,#dc2626cc 0 18%,transparent 19%),radial-gradient(circle at 68% 40%,#b91c1ccc 0 14%,transparent 15%),radial-gradient(circle at 45% 72%,#ef4444cc 0 16%,transparent 17%);z-index:3;animation:fadeout 5s forwards;pointer-events:none}
+@keyframes drip{to{transform:translateY(60px) rotate(-20deg);opacity:0}}@keyframes fadeout{80%{opacity:1}to{opacity:0}}
+.card.can{animation:canglow 1.1s ease-in-out infinite alternate}@keyframes canglow{from{box-shadow:0 0 0 3px #86efac,0 0 8px #86efac,3px 4px 0 #000a}to{box-shadow:0 0 0 4px #4ade80,0 0 26px #4ade80,3px 4px 0 #000a}}
+.hall{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;justify-content:center;padding-top:4px}
+.nob{text-align:center}.seat{position:relative;width:70px;height:86px;overflow:hidden;margin:0 auto}
+.seat .ch{position:absolute;left:0;top:0;width:70px;height:93px;z-index:2}
+.seat .chb{position:absolute;left:6px;right:6px;top:18px;bottom:0;background:#7a4b26;border:3px solid var(--ink);border-radius:10px 10px 0 0;z-index:1}
+.seat .chs{position:absolute;left:0;right:0;bottom:0;height:26px;background:linear-gradient(#a8692f,#7a4b26);border:3px solid var(--ink);border-radius:6px;z-index:3}
+.req{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;margin-top:3px}
+.fly .ch{width:100%;height:100%}
+.turnfx{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:70;pointer-events:none;text-align:center;background:var(--parch);color:var(--ink);border:5px solid var(--ink);border-radius:22px;box-shadow:0 8px 0 var(--ink);padding:14px 30px;font-size:30px;font-weight:700;animation:tfx 2.4s both}
+@keyframes tfx{0%{transform:translate(-50%,-50%) scale(.2) rotate(-8deg);opacity:0}15%{transform:translate(-50%,-50%) scale(1.15) rotate(2deg);opacity:1}25%,80%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-80%) scale(.9);opacity:0}}
+.dlg.podg{max-width:780px!important}.pstage{display:flex;align-items:flex-end;justify-content:center;gap:6px;min-height:310px;margin:6px 0 12px}
+.pcol{width:150px;display:flex;flex-direction:column;align-items:center}.pfig{width:110px;height:146px;position:relative}.crown{position:absolute;top:-30px;left:0;right:0;font-size:34px;animation:jumpy .6s infinite}
+.step{width:100%;background:linear-gradient(#ffd45e,#d9972a);border:4px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;display:flex;flex-direction:column;align-items:center;padding-top:6px;color:var(--ink);font-weight:700}
+.pcol.r1 .step{background:linear-gradient(#e5e7eb,#9ca3af)}.pcol.r2 .step{background:linear-gradient(#e0a070,#a8692f)}.pcol.r3 .step{background:linear-gradient(#94a3b8,#64748b)}
+.step b{font-size:26px}.step small{font-size:12px}
+.conf{position:fixed;top:-30px;z-index:45;pointer-events:none;animation:fall linear infinite}@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.chprev{width:140px;height:182px;flex:none}
+.chip2{border:3px solid var(--ink);background:var(--parch);color:var(--ink);border-radius:10px;padding:2px 8px;font:700 12px Mali,Prompt,sans-serif;cursor:pointer}.chip2.on{background:var(--gold)}
+.sw{width:28px;height:28px;border-radius:50%;border:3px solid var(--ink);cursor:pointer;padding:0}.sw.on{outline:3px solid var(--gold)}
+
+.card{container-type:inline-size}
+.card .top{height:37cqw;padding:0 9cqw}.card .top b{font-size:19cqw}.card .bi svg{width:29cqw;height:29cqw}
+.cost{left:6cqw;bottom:6cqw;gap:2cqw}.cost span{font-size:13.5cqw}.art{font-size:34cqw;right:6cqw;bottom:9cqw}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tst{position:fixed;left:10px;bottom:10px;z-index:35;width:250px;max-height:72vh;overflow:auto;background:linear-gradient(#573622,#3f2616);border:4px solid var(--ink);border-radius:14px;box-shadow:0 5px 0 var(--ink);padding:6px 8px}
+.tsth{cursor:pointer;font-weight:700;color:var(--gold)}.tstb{display:flex;flex-direction:column;gap:5px;margin-top:6px}.tstb .chip2{text-align:left;font-size:12px}.tstb .row .chip2{text-align:center}
+.p{padding:12px 14px}.figure{width:96px;height:128px}.pinfo .nm{font-size:19px}.pinfo .sc{font-size:18px}
+.rt{font-size:15px}.rt .gi{width:26px;height:26px}.rt td span,.rt td button{min-width:32px}
+.res .card{zoom:.66}.bought{padding-left:52px}.bought .card{zoom:.46;margin-left:-52px}
+@media(min-width:1101px){
+ .arena{grid-template-columns:minmax(300px,1fr) var(--midw,860px) minmax(300px,1fr)}
+ .arena>.col{max-width:580px}.arena>.col:first-child{justify-self:end;width:100%}.arena>.col:last-child{justify-self:start;width:100%}
+}
+@media(min-width:901px){
+ .lv{display:grid;grid-template-columns:78px repeat(4,var(--cw,100px));gap:10px;justify-content:space-between;overflow:visible;padding:8px 6px}
+ .lv .card{width:var(--cw,100px);min-width:0;height:auto;aspect-ratio:1/1.4}
+ .deck{width:78px;min-width:0}.rows{display:flex;flex-direction:column}
+ .bankc{justify-content:space-between;align-self:stretch}
+ .hall{justify-content:space-evenly;flex-wrap:nowrap}
+ .seat{width:var(--nw,70px);height:calc(var(--nw,70px)*1.23)}.seat .ch{width:var(--nw,70px);height:calc(var(--nw,70px)*1.33)}.seat .chs{height:calc(var(--nw,70px)*.37)}
+}
 </style></head><body><div class="wrap">
 <div class="tools"><button id="bm" title="เพลง">🎵</button><button id="bs" title="เสียงเอฟเฟกต์">🔊</button></div><h1>💎 SPLENDOR</h1><div id="app" class="panel">กำลังโหลด...</div></div>
 <script>
 const COL=['ขาว','น้ำเงิน','เขียว','แดง','ดำ','ทอง'],HEX=['#f1f5f9','#4f9cf9','#3fc36e','#ef5350','#6b7280','#f2c230'];
-const T=[[[0,1,1,1,1,0],[0,1,2,1,1,0],[0,2,2,0,1,0],[0,0,0,1,3,1],[0,0,0,2,1,0],[0,2,0,2,0,0],[0,0,0,3,0,0],[1,0,0,0,4,0]],
-[[1,3,2,2,0,0],[1,3,0,3,0,2],[2,0,0,1,4,2],[2,0,0,0,5,3],[2,0,0,0,5,0],[3,0,0,0,0,6]],
+const T=[[[0,1,1,1,1,0],[0,1,2,1,1,0],[0,2,2,0,1,0],[0,0,1,3,1,0],[0,0,0,2,1,0],[0,2,0,2,0,0],[0,0,0,3,0,0],[1,0,0,0,4,0]],
+[[1,3,2,2,0,0],[1,2,0,3,2,0],[2,0,0,1,4,2],[2,0,0,0,5,3],[2,0,0,0,5,0],[3,0,0,0,0,6]],
 [[3,3,3,5,3,0],[4,7,0,0,0,0],[4,3,6,0,0,3],[5,7,0,0,0,3]]];
 const C=[];T.forEach((L,l)=>{for(let o=0;o<5;o++)L.forEach(t=>{const c=[0,0,0,0,0];[1,2,3,4,0].forEach((k,j)=>c[(o+k)%5]=t[j+1]);C.push({l,o,p:t[0],c})})});
 const NB=[[4,4,0,0,0],[0,4,4,0,0],[0,0,4,4,0],[0,0,0,4,4],[4,0,0,0,4],[3,3,3,0,0],[0,3,3,3,0],[0,0,3,3,3],[3,0,0,3,3],[3,3,0,0,3]];
 const $=s=>document.querySelector(s),app=$('#app'),clone=o=>JSON.parse(JSON.stringify(o));
-let solo=false,peer,conns={},hostConn=null,isHost=false,S=null,uid,myName='',code='',sel=[],selC=null,msg='';
+let taster=false,botsOn=true,solo=false,peer,conns={},hostConn=null,isHost=false,S=null,uid,myName='',code='',sel=[],selC=null,msg='';
 try{uid=sessionStorage.getItem('spl_u');myName=localStorage.getItem('spl_n')||''}catch(e){}
 if(!uid){uid='u'+Math.random().toString(36).slice(2,10);try{sessionStorage.setItem('spl_u',uid)}catch(e){}}
 const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const pts=p=>p.cards.reduce((a,i)=>a+C[i].p,0)+p.nobles.length*3;
+const pts=p=>p.cards.reduce((a,i)=>a+C[i].p,0)+p.nobles.length*3+(p.tp||0);
 const bon=p=>{const b=[0,0,0,0,0];p.cards.forEach(i=>b[C[i].o]++);return b};
 const tot=p=>p.g.reduce((a,b)=>a+b,0);
 const need=(p,c)=>{const b=bon(p);let n=0;for(let i=0;i<5;i++)n+=Math.max(0,c.c[i]-b[i]-p.g[i]);return n};
@@ -121,7 +212,8 @@ function finish(s){const p=s.players[s.turn];p.last=(s.log[s.log.length-1]||'').
 function takeCard(s,id){for(let l=0;l<3;l++){const k=s.table[l].indexOf(id);if(k>=0){s.table[l][k]=s.deck[l].pop()??null;return true}}return false}
 function handle(u,a){
   if(a.t==='join'){if(!S)return;const s=clone(S),ex=s.players.find(p=>p.uid===u);
-    if(ex)ex.name=a.name;else if(s.phase==='lobby'&&s.players.length<4)s.players.push({uid:u,name:a.name,av:AV[s.players.length]});else return;return commit(s)}
+    if(ex){ex.name=a.name;if(a.ch)ex.ch=a.ch}else if(s.phase==='lobby'&&s.players.length<4)s.players.push({uid:u,name:a.name,av:AV[s.players.length],ch:a.ch});else return;return commit(s)}
+  if(a.t==='tomato'){if(!S||S.phase==='lobby'||u===a.to||!S.players.some(p=>p.uid===a.to))return;const now=Date.now(),s=clone(S);if(s.fx&&s.fx.from===u&&now-s.fx.t<700)return;s.fx={id:(s.fx?s.fx.id:0)+1,from:u,to:a.to,t:now};return commit(s,true)}
   if(!S)return;const s=clone(S);
   if((a.t==='start'||a.t==='again')&&u===s.host&&(s.phase==='lobby'||s.phase==='over')&&s.players.length>1){newGame(s);return commit(s)}
   if(s.phase!=='play')return;const i=s.players.findIndex(p=>p.uid===u);if(i!==s.turn)return;const p=s.players[i];
@@ -139,7 +231,7 @@ function handle(u,a){
   else if(a.t==='pass'&&String(u).startsWith('bot')){s.log.push(p.name+' ข้ามตา');finish(s)}
   else return;
   commit(s)}
-function commit(s){S=s;sel=[];selC=null;render();Object.entries(conns).forEach(([u,c])=>c.open&&c.send(view(s,u)));botTick()}
+function commit(s,keep){S=s;if(!keep){sel=[];selC=null}render();Object.entries(conns).forEach(([u,c])=>c.open&&c.send(view(s,u)));if(!keep)botTick()}
 function view(s,u){const v=clone(s);if(v.deck)v.deck=v.deck.map(d=>d.map(()=>-1));return v}
 function send(a){a.uid=uid;if(isHost)handle(uid,a);else if(hostConn&&hostConn.open)hostConn.send(a);else{msg='ยังไม่ได้เชื่อมต่อกับห้อง';render()}}
 /* ---------- เครือข่าย ---------- */
@@ -152,7 +244,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 function createRoom(){myName=nm();code=Math.random().toString(36).slice(2,6).toUpperCase();isHost=true;solo=false;
   if(peer&&!peer.destroyed)peer.destroy();
   peer=new Peer('splendor-'+code,PCFG);
-  peer.on('open',()=>{if(!S||S.host!==uid)S={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0]}],log:[]};location.hash=code;hostStatus('🟢 พร้อมรับเพื่อน');render()});
+  peer.on('open',()=>{if(!S||S.host!==uid)S={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0],ch:MYCH}],log:[]};location.hash=code;hostStatus('🟢 พร้อมรับเพื่อน');render()});
   peer.on('disconnected',()=>{hostStatus('🟡 หลุดจากเซิร์ฟเวอร์กลาง กำลังต่อใหม่...');setTimeout(()=>{if(peer&&peer.disconnected&&!peer.destroyed)peer.reconnect()},1000)});
   peer.on('error',e=>{if(e.type==='unavailable-id')createRoom();
     else if(['network','server-error','socket-error','socket-closed'].includes(e.type)){hostStatus('🟡 เครือข่ายมีปัญหา ('+e.type+') กำลังลองใหม่...');setTimeout(()=>{if(peer&&peer.disconnected&&!peer.destroyed)peer.reconnect()},2500)}
@@ -164,7 +256,7 @@ function joinRoom(){myName=nm();code=$('#cd').value.trim().toUpperCase();if(!cod
   const attempt=()=>{if(peer&&!peer.destroyed)peer.destroy();peer=new Peer(PCFG);
     const timer=setTimeout(()=>{if(!done)er('⌛ ยังเชื่อมต่อไม่ได้ — เครือข่ายของคุณหรือเจ้าของห้องอาจบล็อกการเชื่อมต่อตรง (ลองสลับ Wi-Fi/4G หรือใช้ Wi-Fi เดียวกัน) หรือเจ้าของห้องปิดหน้าเว็บไปแล้ว')},15000);
     peer.on('open',()=>{hostConn=peer.connect('splendor-'+code,{reliable:true});
-      hostConn.on('open',()=>{done=true;clearTimeout(timer);location.hash=code;hostConn.send({t:'join',uid,name:myName})});
+      hostConn.on('open',()=>{done=true;clearTimeout(timer);location.hash=code;hostConn.send({t:'join',uid,name:myName,ch:MYCH})});
       hostConn.on('data',d=>{S=d;msg='';render()});
       hostConn.on('close',()=>{msg='ขาดการเชื่อมต่อกับห้อง — รีเฟรชหน้าแล้วเข้าห้องเดิมอีกครั้ง';render()});
       hostConn.on('error',e=>er('เชื่อมต่อห้องไม่ได้: '+e.type));
@@ -219,7 +311,7 @@ function sfx(n){if(!AC||!sndOn)return;const t=AC.currentTime,d=sg;
   const run=(a,gap,dur,ty,v)=>a.forEach((f,i)=>tone(f,t+i*gap,dur,ty,v,d));
   ({tick:()=>run([880],0,.08,'square',.05),take:()=>run([660,880],.07,.15,'sine',.2),buy:()=>run([523,659,784,1047],.08,.25,'triangle',.22),
   res:()=>run([400,300,500],.09,.18,'sawtooth',.07),noble:()=>run([523,659,784,1047,1319],.1,.4,'triangle',.25),
-  turn:()=>run([988,1319],.12,.3,'sine',.25),win:()=>run([523,659,784,659,784,1047,1319],.14,.5,'triangle',.28)})[n]?.()}
+  turn:()=>run([988,1319],.12,.3,'sine',.25),throw:()=>run([500,700,900],.05,.1,'sine',.1),splat:()=>run([180,90],.04,.18,'sawtooth',.2),win:()=>run([523,659,784,659,784,1047,1319],.14,.5,'triangle',.28)})[n]?.()}
 function sfxCheck(){const l=(S.log&&S.log.length?S.log[S.log.length-1]:'');const k=S.phase+S.turn+l;if(k===lk)return;const first=lk==='';lk=k;
   if(first||S.phase==='lobby')return;
   sfx(S.phase==='over'?'win':/ขุนนาง/.test(l)?'noble':/ซื้อ/.test(l)?'buy':/จอง/.test(l)?'res':/เก็บ/.test(l)?'take':'tick');
@@ -252,7 +344,7 @@ const merchant=()=>`<svg class="merch" viewBox="0 0 320 270" stroke="#1e120a" st
 ${[1,2,3,4,5].map((g,k)=>`<svg x="${56+k*40}" y="194" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.6">${GI[g]}</svg>`).join('')}
 <g stroke="none" fill="#ffe27a"><text class="sp" x="268" y="96">✦</text><text class="sp s2" x="205" y="70">✦</text><text class="sp s3" x="60" y="130">✦</text><text class="sp s2" x="282" y="170">✦</text></g></svg>`;
 const pip=(i,n)=>`<span class="pip">${GE[i]}${n}</span>`;
-const cardH=(id,nc)=>{const c=C[id];return `<div class="card ${selC===id?'sel':''} ${FRESH.has(id)?'fresh':''}" ${nc?'':'data-c="'+id+'"'} data-o="${id}" style="--gc:${HEX[c.o]}"><div class="top"><b>${c.p?'⭐'+c.p:'&nbsp;'}</b><span class="bi">${GE[c.o]}</span></div><span class="art">${ART[c.l][(id-[0,40,70][c.l])%ART[c.l].length]}</span><div class="cost">${c.c.map((n,i)=>n?`<span>${GE[i]}${n}</span>`:'').join('')}</div></div>`};
+const cardH=(id,nc)=>{const c=C[id];return `<div class="card ${selC===id?'sel':''} ${FRESH.has(id)?'fresh':''} ${!nc&&canB(id)?'can':''}" ${nc?'':'data-c="'+id+'"'} data-o="${id}" style="--gc:${HEX[c.o]}"><div class="top"><b>${c.p?'⭐'+c.p:'&nbsp;'}</b><span class="bi">${GE[c.o]}</span></div><span class="art">${ART[c.l][(id-[0,40,70][c.l])%ART[c.l].length]}</span><div class="cost">${c.c.map((n,i)=>n?`<span>${GE[i]}${n}</span>`:'').join('')}</div></div>`};
 const HELP=`<h2>📖 วิธีเล่น Splendor</h2>
 <p>🎯 <b>เป้าหมาย:</b> เป็นคนแรกที่สะสมให้ได้ <b>15 แต้ม ⭐</b> (เล่นให้ครบรอบ แล้วแต้มสูงสุดชนะ)</p>
 <p>🎲 <b>ในตาของคุณ เลือกทำ 1 อย่าง:</b></p><ol>
@@ -269,10 +361,11 @@ $('.tools').insertAdjacentHTML('afterbegin','<button id="bh" title="วิธี
 $('#bh').onclick=()=>{$('#help').hidden=false};
 try{if(!localStorage.getItem('spl_h')){$('#help').hidden=false;localStorage.setItem('spl_h','1')}}catch(e){}
 function startSolo(){myName=nm();solo=true;isHost=true;code='SOLO';const nb=+$('#nb').value;
-  const s={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0]}],log:[]};
-  for(let i=0;i<nb;i++)s.players.push({uid:'bot'+i,name:'บอท '+(i+1),av:'🤖'});newGame(s);commit(s)}
-function botTick(){if(!solo||!S||S.phase!=='play')return;const c=S.players[S.turn];if(c&&c.uid.startsWith('bot'))setTimeout(botMove,2800)}
+  const s={phase:'lobby',host:uid,players:[{uid,name:myName,av:AV[0],ch:MYCH}],log:[]};
+  for(let i=0;i<nb;i++)s.players.push({uid:'bot'+i,name:'บอท '+(i+1),av:'🤖',ch:{...PRESETS[(i*2+1)%6]}});newGame(s);commit(s)}
+function botTick(){if(!solo||!botsOn||!S||S.phase!=='play')return;const c=S.players[S.turn];if(c&&c.uid.startsWith('bot'))setTimeout(botMove,2800)}
 function botMove(){if(!S||S.phase!=='play')return;const p=S.players[S.turn];if(!p.uid.startsWith('bot'))return;const u=p.uid;
+  if(Math.random()<.3){const o=S.players.filter(x=>x.uid!==u);if(o.length)handle(u,{t:'tomato',to:o[Math.floor(Math.random()*o.length)].uid})}
   if(S.disc)return handle(u,{t:'disc',i:[0,1,2,3,4,5].filter(i=>p.g[i]>0).sort((a,b)=>p.g[b]-p.g[a])[0]});
   const tb=S.table.flat().filter(x=>x!=null),aff=[...tb,...p.res].filter(id=>canBuy(p,id)).sort((a,b)=>C[b].p-C[a].p||C[b].l-C[a].l);
   if(aff.length)return handle(u,{t:'buy',id:aff[0]});
@@ -283,12 +376,12 @@ function botMove(){if(!S||S.phase!=='play')return;const p=S.players[S.turn];if(!
     if(q.length===1&&lack[0][1]>=2&&S.bank[q[0]]>=4&&want>1&&Math.random()<.5)q=[q[0],q[0]];else av.forEach(i=>{if(q.length<want&&!q.includes(i))q.push(i)});
     if(q.length)return handle(u,{t:'take',sel:q})}
   if(p.res.length<3&&tg!=null)return handle(u,{t:'res',id:tg});handle(u,{t:'pass'})}
-function lobbyUI(pre){app.innerHTML=`<div class="hero"><div class="stage"><div class="bubble">ยินดีต้อนรับสู่ตลาดเพชร! 💎<br><small>มาแข่งสะสมอัญมณีกันเถอะ</small></div>${merchant()}</div>
-<div class="menu"><div class="sec">👤 ชื่อของคุณ</div><div class="row"><input id="nm" placeholder="ใส่ชื่อ" value="${myName}" maxlength="14"></div>
-<div class="panel"><div class="sec">🤖 ฝึกเล่นคนเดียว</div><div class="hint">ลองเล่นกับบอทก่อนเพื่อเรียนรู้กติกา ไม่ต้องใช้เน็ตเชื่อมกับใคร</div><div class="row">บอท <select id="nb"><option>1</option><option selected>2</option><option>3</option></select> ตัว <button class="b" id="solo">▶️ เล่นกับบอท</button></div></div>
+function lobbyUI(pre){app.className='panel';app.style.zoom=1;app.innerHTML=`<div class="hero"><div class="stage"><div class="bubble">ยินดีต้อนรับสู่ตลาดเพชร! 💎<br><small>มาแข่งสะสมอัญมณีกันเถอะ</small></div>${merchant()}</div>
+<div class="menu"><div class="panel" id="chbox">${chEditor()}</div><div class="sec">👤 ชื่อของคุณ</div><div class="row"><input id="nm" placeholder="ใส่ชื่อ" value="${myName}" maxlength="14"></div>
+<div class="panel"><div class="sec">🤖 ฝึกเล่นคนเดียว</div><div class="hint">ลองเล่นกับบอทก่อนเพื่อเรียนรู้กติกา ไม่ต้องใช้เน็ตเชื่อมกับใคร</div><div class="row">บอท <select id="nb"><option>1</option><option selected>2</option><option>3</option></select> ตัว <button class="b" id="solo">▶️ เล่นกับบอท</button></div><div class="row" style="margin-top:8px"><button class="b" id="tast">🧪 โหมด Taster</button><span class="leg" style="margin:0">ทดลองระบบต่างๆ ด้วยปุ่มทดสอบ</span></div></div>
 <div class="panel"><div class="sec">🌐 เล่นออนไลน์กับเพื่อน (2 คนขึ้นไป)</div><div class="leg">ถ้าต่อกันไม่ติด ลองให้ทุกคนใช้ Wi-Fi เดียวกัน</div><div class="row"><button class="b" id="mk">🏰 สร้างห้องใหม่</button><span>หรือ</span><input id="cd" placeholder="รหัสห้อง" size="6" maxlength="4" style="text-transform:uppercase" value="${pre||''}"><button class="b" id="jn">🚪 เข้าร่วม</button></div></div>
 <button class="b" onclick="$('#help').hidden=false">❓ วิธีเล่น</button><p id="er" class="warn"></p></div></div>`;
-  $('#mk').onclick=createRoom;$('#jn').onclick=joinRoom;$('#solo').onclick=startSolo}
+  $('#mk').onclick=createRoom;$('#jn').onclick=joinRoom;$('#solo').onclick=startSolo;$('#tast').onclick=startTaster;bindCh()}
 function netCost(mp,id){const c=C[id],b=bon(mp);return [0,1,2,3,4].map(i=>[i,Math.max(0,c.c[i]-b[i])]).filter(x=>x[1]>0)}
 function detailH(mp,mt){if(selC==null)return '';
   const onT=S.table.flat().includes(selC),ow=S.players.find(p=>p.cards.includes(selC)||p.res.includes(selC));
@@ -304,7 +397,7 @@ function detailH(mp,mt){if(selC==null)return '';
 let FRESH=new Set(),lastS=null;
 const handH=mp=>`<div id="hand" class="hand"><div class="sec">🖐️ มือของคุณ <small>(การ์ดที่ซื้อแล้ว — ให้โบนัสลดราคาถาวร)</small></div><div class="row">${mp.cards.length?[...mp.cards].sort((a,b)=>C[a].o-C[b].o||C[a].p-C[b].p).map(id=>cardH(id,1)).join(''):'<div class="hint">ยังไม่มีการ์ด — ซื้อการ์ดแล้วจะมาอยู่ที่นี่ 🛒</div>'}</div></div>`;
 function grab(){const r={c:{},g:{},d:{}};app.querySelectorAll('[data-c]').forEach(e=>{if(!e.closest('.dlg'))r.c[e.dataset.c]=e.getBoundingClientRect()});
-  app.querySelectorAll('[data-g]').forEach(e=>r.g[e.dataset.g]=e.getBoundingClientRect());app.querySelectorAll('[data-dk]').forEach(e=>r.d[e.dataset.dk]=e.getBoundingClientRect());return r}
+  app.querySelectorAll('[data-g]').forEach(e=>r.g[e.dataset.g]=e.getBoundingClientRect());app.querySelectorAll('[data-dk]').forEach(e=>r.d[e.dataset.dk]=e.getBoundingClientRect());r.n={};app.querySelectorAll('[data-nb]').forEach(e=>{const q=e.querySelector('.seat')||e;r.n[e.dataset.nb]=q.getBoundingClientRect()});return r}
 const clampR=r=>({left:r.left,top:Math.min(Math.max(r.top,0),innerHeight-90),width:r.width,height:Math.min(r.height,90)});
 function fly(html,from,to,delay,sc,done){const el=document.createElement('div');el.className='fly';el.innerHTML=html;
   el.style.left=from.left+'px';el.style.top=from.top+'px';el.style.width=from.width+'px';el.style.height=from.height+'px';document.body.appendChild(el);
@@ -323,45 +416,139 @@ function anims(pv,R){const apv=pv.players[pv.turn],ai=S.players.findIndex(p=>p.u
   for(let i=0;i<6;i++){const n=pv.bank[i]-S.bank[i],g=`<div class="gm">${gemSVG(i)}</div>`;
     if(n>0&&R.g[i])for(let k=0;k<Math.min(n,3);k++)fly(g,R.g[i],pt,k*650,.5,land);
     if(n<0){const e=app.querySelector('[data-g="'+i+'"]');if(e)for(let k=0;k<Math.min(-n,3);k++)fly(g,{left:pt.left+20,top:pt.top+10,width:56,height:56},e.getBoundingClientRect(),k*650,1)}}
-  if(S.nobles.length<pv.nobles.length)toast('👑 ขุนนางมาเยือน '+ap.av+' '+ap.name+'!');
+  const gn=pv.nobles.filter(k=>!S.nobles.includes(k));
+  gn.forEach(k=>{const f=R.n&&R.n[k],st=app.querySelector('[data-nbp="'+k+'"]');if(f&&st){const r=hideQ('[data-nbp="'+k+'"]');walk(charSVG(NOB(k)),f,st.getBoundingClientRect(),()=>{r();land()})}});
+  if(gn.length)toast('👑 ขุนนางเดินไปหา '+ap.av+' '+ap.name+'!');
   else if(S.log&&S.log.length)toast(ap.av+' '+ap.name+' '+(ap.last||''))}
+function fit(){app.style.zoom=1;if(innerWidth<900||!app.classList.contains('plain'))return;
+  const r=app.getBoundingClientRect(),availH=innerHeight-(r.top+scrollY)-10,availW=app.clientWidth||innerWidth-24;
+  const cw=Math.max(100,Math.min(150,Math.floor((availH-500)/3/1.4)));
+  app.style.setProperty('--cw',cw+'px');app.style.setProperty('--midw',(4*cw+282)+'px');
+  const hall=app.querySelector('.hall');if(hall){const n=Math.max(1,hall.children.length);app.style.setProperty('--nw',Math.max(64,Math.min(120,Math.floor((4*cw+190)/n*.62)))+'px')}
+  const h=app.scrollHeight,minW=innerWidth>1100?600+4*cw+282+24:availW;
+  app.style.zoom=Math.max(.45,Math.min(availH/h,1.3,availW/minW))}
+const dlgSet=h=>{const d=document.querySelector('#dlgRoot');if(d)d.innerHTML=h};
+const SK=['#f6d3b3','#f2c28f','#d9a066','#a86f43','#6b4226'],OUTF=['#2fb7a6','#e11d48','#3b82f6','#f59e0b','#8b5cf6','#16a34a','#64748b','#ec4899'];
+const HATN=['ผ้าโพก','หมวกสูง','มงกุฎ','พ่อมด','หมวกเหล็ก','เบเรต์','ไม่สวม'],FACN=['เกลี้ยง','หนวด','เครา','แว่น'],ACCN=['ถือเพชร','ผ้าคลุม','ผ้าพันคอ','ไม่มี'];
+const PRESETS=[{n:'พ่อค้าเพชร',sk:1,cl:'#2fb7a6',ht:0,fc:1,ac:0},{n:'อัศวิน',sk:2,cl:'#64748b',ht:4,fc:0,ac:1},{n:'พ่อมด',sk:0,cl:'#8b5cf6',ht:3,fc:2,ac:3},{n:'ราชินี',sk:3,cl:'#e11d48',ht:2,fc:0,ac:2},{n:'นักสำรวจ',sk:4,cl:'#f59e0b',ht:5,fc:3,ac:0},{n:'ช่างเพชร',sk:1,cl:'#16a34a',ht:1,fc:3,ac:3}];
+let MYCH=null;try{MYCH=JSON.parse(localStorage.getItem('spl_ch'))}catch(e){}if(!MYCH||MYCH.cl===undefined)MYCH={...PRESETS[0]};
+const saveCh=()=>{try{localStorage.setItem('spl_ch',JSON.stringify(MYCH))}catch(e){}};
+const shade=(h,p)=>{const n=parseInt(h.slice(1),16),f=1+p/100,c=x=>Math.max(0,Math.min(255,Math.round(x*f))).toString(16).padStart(2,'0');return '#'+c(n>>16)+c((n>>8)&255)+c(n&255)};
+const HATS=[`<path d="M28 40Q50 4 72 40Q50 30 28 40Z" fill="#8e44ad"/><circle cx="50" cy="22" r="4" fill="#ffd93d"/>`,
+`<rect x="34" y="4" width="32" height="26" rx="3" fill="#1f2937"/><rect x="26" y="29" width="48" height="7" rx="3" fill="#1f2937"/><rect x="34" y="22" width="32" height="5" fill="#dc2626" stroke="none"/>`,
+`<path d="M29 36L33 14l9 10 8-14 8 14 9-10 4 22z" fill="#facc15"/>`,`<path d="M26 36L50 -6 74 36z" fill="#6d28d9"/><rect x="22" y="33" width="56" height="7" rx="3" fill="#5b21b6"/>`,
+`<path d="M28 44Q28 16 50 16Q72 16 72 44z" fill="#9ca3af"/><rect x="47" y="10" width="6" height="14" fill="#dc2626"/>`,`<ellipse cx="46" cy="26" rx="26" ry="10" fill="#dc2626"/><circle cx="64" cy="17" r="3" fill="#dc2626"/>`,
+`<path d="M28 44Q28 20 50 20Q72 20 72 44Q60 31 50 33Q40 31 28 44Z" fill="#3b2314"/>`];
+const FACES=['',`<path d="M40 56Q45 51 50 56Q55 51 60 56Q55 62 50 58Q45 62 40 56Z" fill="#3b2314" stroke-width="2"/>`,`<path d="M29 50Q50 92 71 50Q60 64 50 62Q40 64 29 50Z" fill="#3b2314" stroke-width="2"/>`,`<circle cx="41" cy="46" r="7" fill="#ffffff55"/><circle cx="59" cy="46" r="7" fill="#ffffff55"/><path d="M48 46h4" fill="none"/>`];
+function charSVG(ch,cls){ch=ch||PRESETS[0];const sk=SK[(ch.sk|0)%5],cl=ch.cl||'#2fb7a6';
+  return `<svg class="ch ${cls||''}" viewBox="0 -8 100 148" stroke="#1e120a" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">${ch.ac===1?`<path d="M30 70L10 130h80L70 70z" fill="#b91c1c"/>`:''}
+<g class="cb"><rect x="37" y="112" width="11" height="22" rx="4" fill="#3b2314"/><rect x="52" y="112" width="11" height="22" rx="4" fill="#3b2314"/>
+<path d="M26 128Q26 70 50 70Q74 70 74 128Z" fill="${cl}"/><path d="M50 72v56" stroke-width="2"/><path d="M28 116h44" stroke="${shade(cl,-35)}" stroke-width="4"/>
+<path d="M28 80Q14 98 24 114" fill="none" stroke-width="13"/><path d="M28 80Q14 98 24 114" fill="none" stroke="${cl}" stroke-width="7"/><circle cx="24" cy="115" r="6" fill="${sk}"/>
+<path d="M72 80Q86 98 76 114" fill="none" stroke-width="13"/><path d="M72 80Q86 98 76 114" fill="none" stroke="${cl}" stroke-width="7"/><circle cx="76" cy="115" r="6" fill="${sk}"/>
+${ch.ac===0?`<svg x="66" y="96" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.6">${GI[0]}</svg>`:''}${ch.ac===2?`<path d="M34 68Q50 80 66 68v9Q50 89 34 77z" fill="#dc2626"/>`:''}
+<circle cx="50" cy="46" r="22" fill="${sk}"/><g class="eyes" stroke="none"><circle cx="42" cy="47" r="2.8" fill="#1e120a"/><circle cx="58" cy="47" r="2.8" fill="#1e120a"/></g><path d="M44 58q6 5 12 0" fill="none" stroke-width="2"/>${FACES[ch.fc|0]||''}${HATS[ch.ht|0]||''}</g></svg>`}
+const NOB=k=>({sk:[1,0,2,3,4,1,0,2,3,4][k],cl:['#7c2d12','#1e3a8a','#14532d','#581c87','#831843','#134e4a','#78350f','#312e81','#7f1d1d','#064e3b'][k],ht:k%2?1:2,fc:[1,2,0,1,2,0,1,2,0,1][k],ac:k%3===0?2:1});
+const chEditor=()=>`<div class="sec">🎭 ตัวละครของคุณ <small>(สร้างเองได้อิสระ)</small></div><div class="row" style="align-items:flex-start;flex-wrap:nowrap"><div class="chprev">${charSVG(MYCH)}</div><div style="flex:1;min-width:0">
+<div class="lab">แบบสำเร็จรูป</div><div class="row">${PRESETS.map((p,i)=>`<button class="chip2" data-ch="pre:${i}">${p.n}</button>`).join('')}<button class="chip2" data-ch="rnd:0">🎲 สุ่ม</button></div>
+<div class="lab">สีผิว</div><div class="row">${SK.map((c,i)=>`<button class="sw ${MYCH.sk===i?'on':''}" style="background:${c}" data-ch="sk:${i}"></button>`).join('')}</div>
+<div class="lab">สีเสื้อ</div><div class="row">${OUTF.map(c=>`<button class="sw ${MYCH.cl===c?'on':''}" style="background:${c}" data-ch="cl:${c}"></button>`).join('')}<input type="color" id="clp" value="${MYCH.cl}" style="width:34px;height:30px;padding:0"></div>
+<div class="lab">หมวก</div><div class="row">${HATN.map((n,i)=>`<button class="chip2 ${MYCH.ht===i?'on':''}" data-ch="ht:${i}">${n}</button>`).join('')}</div>
+<div class="lab">ใบหน้า</div><div class="row">${FACN.map((n,i)=>`<button class="chip2 ${MYCH.fc===i?'on':''}" data-ch="fc:${i}">${n}</button>`).join('')}</div>
+<div class="lab">เครื่องประดับ</div><div class="row">${ACCN.map((n,i)=>`<button class="chip2 ${MYCH.ac===i?'on':''}" data-ch="ac:${i}">${n}</button>`).join('')}</div></div></div>`;
+function bindCh(){const b=$('#chbox');if(!b)return;b.onclick=e=>{const t=e.target.closest('[data-ch]');if(!t)return;const [k,v]=t.dataset.ch.split(':');
+  if(k==='pre')MYCH={...PRESETS[+v]};else if(k==='rnd'){const r=n=>Math.floor(Math.random()*n);MYCH={sk:r(5),cl:OUTF[r(8)],ht:r(7),fc:r(4),ac:r(4)}}else if(k==='cl')MYCH.cl=v;else MYCH[k]=+v;
+  saveCh();b.innerHTML=chEditor()};
+  b.oninput=e=>{if(e.target.id==='clp'){MYCH.cl=e.target.value;saveCh();const p=$('.chprev');if(p)p.innerHTML=charSVG(MYCH)}}}
+let SPLAT={},seenFx=-1,hidePod=false,lastTom=0;
+const sig=s=>JSON.stringify([s.bank,s.table,s.turn,s.nobles,s.phase,s.players.map(p=>[p.g,p.cards,p.res,p.nobles])]);
+const canB=id=>{if(!S||S.phase!=='play')return false;const m=myIdx();if(m<0)return false;const p=S.players[m];return(S.table.flat().includes(id)||p.res.includes(id))&&canBuy(p,id)};
+const hideQ=q=>{const e=app.querySelector(q);if(e)e.style.visibility='hidden';return()=>{if(e)e.style.visibility=''}};
+function walk(html,from,to,done){const el=document.createElement('div');el.className='fly';el.innerHTML=html;el.style.left=from.left+'px';el.style.top=from.top+'px';el.style.width=from.width+'px';el.style.height=from.height*1.1+'px';document.body.appendChild(el);
+  const dx=to.left+to.width/2-(from.left+from.width/2),dy=to.top+to.height/2-(from.top+from.height/2),N=14,kf=[];
+  for(let i=0;i<=N;i++){const t=i/N;kf.push({transform:`translate(${dx*t}px,${dy*t+(i%2?-14:0)}px) scale(${1-.55*t}) rotate(${i%2?5:-5}deg)`,offset:t})}
+  const a=el.animate(kf,{duration:5200,easing:'linear',fill:'both'});a.onfinish=()=>{el.remove();done&&done()}}
+function flyT(from,to,done){const el=document.createElement('div');el.className='fly';el.textContent='🍅';el.style.left=from.left+'px';el.style.top=from.top+'px';el.style.fontSize='38px';el.style.width='40px';el.style.height='40px';document.body.appendChild(el);
+  const dx=to.left-from.left,dy=to.top-from.top,a=el.animate([{transform:'translate(0,0) rotate(0)'},{transform:`translate(${dx*.5}px,${dy*.5-130}px) rotate(360deg) scale(1.3)`,offset:.5},{transform:`translate(${dx}px,${dy}px) rotate(720deg)`}],{duration:1000,easing:'ease-in',fill:'both'});a.onfinish=()=>{el.remove();done&&done()}}
+function throwTomato(fx){try{const a=app.querySelector('[data-pu="'+fx.from+'"]'),b=app.querySelector('[data-pu="'+fx.to+'"]');if(!a||!b)return;
+  const ra=a.getBoundingClientRect(),fg=b.querySelector('.figure'),rf=(fg||b).getBoundingClientRect();sfx('throw');
+  flyT({left:ra.left+ra.width/2-20,top:ra.top+20},{left:rf.left+rf.width/2-20,top:rf.top+rf.height/2-20},()=>{SPLAT[fx.to]=Date.now()+5000;const f=app.querySelector('[data-pu="'+fx.to+'"] .figure');if(f)f.classList.add('splat');sfx('splat');setTimeout(render,5100);
+    const tp=S.players.find(p=>p.uid===fx.to),fp=S.players.find(p=>p.uid===fx.from);if(tp&&fp&&fx.to===uid)toast('🍅 '+fp.name+' ปามะเขือเทศใส่คุณ!')})}catch(e){}}
+function turnFx(){if(!S||S.phase!=='play'||!myTurn())return;document.querySelectorAll('.turnfx').forEach(e=>e.remove());const e=document.createElement('div');e.className='turnfx';e.innerHTML='🎲 ถึงตาของคุณแล้ว!<div style="font-size:15px;margin-top:4px">เลือกทำ 1 อย่าง: เก็บเหรียญ · ซื้อ · จอง</div>';document.body.appendChild(e);setTimeout(()=>e.remove(),2500)}
+function podiumH(){const r=S.players.map(p=>({p,s:pts(p),n:p.cards.length})).sort((a,b)=>b.s-a.s||a.n-b.n),hs=[170,130,100,70];
+  const cols=[1,0,2,3].filter(k=>r[k]).map(k=>`<div class="pcol r${k}"><div class="pfig">${k===0?'<div class="crown">👑</div>':''}${charSVG(r[k].p.ch,k===0?'win':'')}</div><div class="step" style="height:${hs[k]}px"><b>${['🥇','🥈','🥉','4️⃣'][k]}</b><span>${r[k].p.name}</span><small>⭐ ${r[k].s} · 🃏 ${r[k].n}</small></div></div>`).join('');
+  const conf=Array.from({length:16},(_,i)=>`<span class="conf" style="left:${(i*6.3+3)%100}%;animation-duration:${3+i%4}s;animation-delay:${(i%6)*.5}s;font-size:${18+i%3*6}px">${['🎉','✨','🎊','⭐'][i%4]}</span>`).join('');
+  return `<div class="modal"><div class="bk"></div>${conf}<div class="dlg podg"><h2>🏆 สรุปอันดับ</h2><div class="pstage">${cols}</div><div class="row" style="justify-content:center">${S.host===uid?'<button class="b" data-a="again">🔄 เล่นใหม่</button>':'<span class="hint">รอเจ้าของห้องกดเล่นใหม่</span>'}<button class="b" data-a="pod">👀 ดูกระดาน</button></div></div></div>`}
+function boardH(i,m,mt){const p=S.players[i],b=bon(p),dz=i===m&&S.disc&&mt,pt=pts(p),hot=pt>=12&&S.phase!=='over',turn=i===S.turn&&S.phase==='play',sp=(SPLAT[p.uid]||0)>Date.now();
+  return `<div data-pi="${i}" data-pu="${p.uid}" class="p ${i===m?'me':''} ${turn?'turn':''} ${hot?'hot':''} ${pt>=14&&hot?'hot2':''}">
+  ${hot?'<div class="flames"><i>🔥</i><i>🔥</i><i>🔥</i><i>🔥</i><i>🔥</i></div>':''}${i!==m&&S.phase==='play'?`<button class="tom" data-tom="${p.uid}" title="ปามะเขือเทศ">🍅 ปา!</button>`:''}
+  <div class="ph"><div class="figure ${turn?'jump':''} ${hot?'onfire':''} ${sp?'splat':''}">${charSVG(p.ch)}</div><div class="pinfo"><div class="nm">${p.av||''} ${p.name}${i===m?'<span class="you">คุณ</span>':''}</div><span class="sc">⭐ ${pt}</span>${turn?'<span class="tn">🎲 กำลังเล่น</span>':''}${hot?'<div class="hotb">🔥 ใกล้ชนะ!</div>':''}</div>
+  <div class="stands">${p.nobles.map(k=>`<span class="stand" data-nbp="${k}">${charSVG(NOB(k))}</span>`).join('')}</div></div>
+  <table class="rt"><tr><th class="l"></th>${[0,1,2,3,4,5].map(k=>`<th>${GE[k]}</th>`).join('')}</tr>
+  <tr><td class="l">โบนัส</td>${[0,1,2,3,4].map(k=>`<td><span class="${b[k]?'':'z'}">${b[k]}</span></td>`).join('')}<td></td></tr>
+  <tr><td class="l">เหรียญ ${tot(p)}/10</td>${p.g.map((n,k)=>`<td>${dz&&n?`<button class="dsc" data-d="${k}">${n}</button>`:`<span class="${n?'':'z'}">${n}</span>`}</td>`).join('')}</tr></table>
+  ${p.res.length||p.cards.length?`<div class="cards-row">${p.res.length?`<div class="cr"><span class="lab">🔒 จองไว้ ${p.res.length} ใบ</span><div class="row res">${p.res.map(id=>cardH(id)).join('')}</div></div>`:''}${p.cards.length?`<div class="cr"><span class="lab">🃏 ซื้อแล้ว ${p.cards.length} ใบ</span><div class="bought">${[...p.cards].sort((a,b)=>C[a].o-C[b].o||C[a].l-C[b].l).map(id=>cardH(id)).join('')}</div></div>`:''}</div>`:''}
+  ${p.last?`<div class="pl-last">📌 ${p.last}</div>`:''}</div>`}
+let tstOpen=true;
+const TB=[['gems','💰 เติมอัญมณีทุกสี (ทดสอบเหรียญบิน)'],['afford','✨ ทำให้ซื้อการ์ดได้ (ทดสอบเรืองแสง)'],['buy','🛒 ได้การ์ดฟรี 1 ใบ (ทดสอบแอนิเมชันซื้อ)'],['reserve','🔒 จองการ์ด 1 ใบ'],['p12','🔥 ตั้งแต้มเป็น 12 (ติดไฟ)'],['p14','🔥🔥 ตั้งแต้มเป็น 14 (ไฟแรง)'],['p0','❄️ ล้างแต้มพิเศษ'],['noble','👑 เรียกขุนนางมาหาฉัน'],['tomato','🍅 บอทปามะเขือเทศใส่ฉัน'],['turn','🎲 ทดสอบข้อความถึงตา / รับตา'],['disc','⚠️ เหรียญเกิน 10 (ทดสอบคืนเหรียญ)'],['end','🏁 จบเกมทันที (แท่นรับรางวัล)'],['reset','🔄 เริ่มเกมใหม่'],['bots','🤖 บอทเล่นเอง: ']];
+const tstPanel=()=>`<div class="tst"><div class="tsth" data-t="fold">🧪 Taster ${tstOpen?'▾':'▸'}</div>${tstOpen?`<div class="tstb">${TB.map(([k,n])=>`<button class="chip2" data-t="${k}">${n}${k==='bots'?(botsOn?'เปิด':'ปิด'):''}</button>`).join('')}<div class="lab">🔊 ทดสอบเสียง</div><div class="row">${['tick','take','buy','res','noble','turn','win','throw','splat'].map(n=>`<button class="chip2" data-t="sfx:${n}">${n}</button>`).join('')}</div><div class="leg">ปามะเขือเทศ: กดปุ่ม 🍅 บนบอร์ดบอท · ปุ่มทดสอบใช้ได้ตอนเป็นตาคุณ</div></div>`:''}</div>`;
+const tstSet=h=>{const d=document.querySelector('#tstRoot');if(d)d.innerHTML=h};
+function tst(k){if(!S||!taster)return;
+  if(k==='fold'){tstOpen=!tstOpen;tstSet(tstPanel());return}
+  if(k.startsWith('sfx:')){audioInit();sfx(k.slice(4));return}
+  if(k==='bots'){botsOn=!botsOn;tstSet(tstPanel());if(botsOn)botTick();return}
+  const m=myIdx();if(m<0)return;
+  if(k==='turn'){if(myTurn())turnFx();else{const s=clone(S);s.turn=m;s.log.push('🧪 ส่งตาให้คุณ');commit(s)}return}
+  if(k==='tomato'){const b=S.players.find(x=>x.uid!==uid);if(b)handle(b.uid,{t:'tomato',to:uid});return}
+  if(k!=='end'&&k!=='reset'&&!myTurn()){toast('🧪 ยังไม่ถึงตาคุณ — กด "ทดสอบข้อความถึงตา" เพื่อรับตาก่อน');return}
+  const s=clone(S),p=s.players[m],tb=s.table.flat().filter(x=>x!=null),first=tb[0];
+  if(s.phase==='over'&&k!=='reset')return;
+  if(k==='gems'){[0,1,2,3,4].forEach(i=>{const n=Math.min(2,s.bank[i]);s.bank[i]-=n;p.g[i]+=n});s.log.push(p.name+' เก็บเหรียญ (ทดลอง) ทุกสี')}
+  else if(k==='afford'){if(first==null)return;const c=C[first],b=bon(p);for(let i=0;i<5;i++){const d=Math.max(0,c.c[i]-b[i]-p.g[i]),t=Math.min(d,s.bank[i]);s.bank[i]-=t;p.g[i]+=t}s.log.push('🧪 เติมเหรียญให้ซื้อการ์ดใบแรกได้')}
+  else if(k==='buy'){if(first==null)return;const c=C[first];takeCard(s,first);p.cards.push(first);s.log.push(p.name+' ซื้อการ์ด (+'+COL[c.o]+')')}
+  else if(k==='reserve'){if(first==null||p.res.length>=3){toast('🧪 จองไม่ได้ (ครบ 3 ใบแล้ว)');return}takeCard(s,first);p.res.push(first);if(s.bank[5]>0){s.bank[5]--;p.g[5]++}s.log.push(p.name+' จองการ์ด')}
+  else if(k==='p12'||k==='p14'){const g=k==='p12'?12:14;p.tp=0;p.tp=g-pts(p);s.log.push('🧪 ตั้งแต้มเป็น '+g)}
+  else if(k==='p0'){p.tp=0}
+  else if(k==='noble'){if(!s.nobles.length){toast('🧪 ไม่มีขุนนางเหลือแล้ว');return}p.nobles.push(s.nobles.shift());s.log.push(p.name+' ได้รับขุนนาง +3 แต้ม')}
+  else if(k==='disc'){p.g=[3,3,2,2,2,0];s.disc=true;s.log.push('🧪 ให้เหรียญเกิน 10')}
+  else if(k==='end'){s.players.forEach((q,i)=>q.tp=(q===p?12:7+i*2));s.phase='over';s.log.push('🧪 จบเกม')}
+  else if(k==='reset'){s.players.forEach(q=>q.tp=0);newGame(s);s.turn=s.players.findIndex(q=>q.uid===uid)}
+  commit(s)}
+function startTaster(){taster=true;botsOn=false;startSolo();const s=clone(S);s.turn=myIdx();s.log.push('🧪 โหมด Taster: ลองปุ่มทดสอบมุมซ้ายล่างได้เลย');commit(s)}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-t]');if(t)tst(t.dataset.t)});
 function render(){if(!S)return;sfxCheck();
-  const pv=lastS,oldR=(pv&&pv!==S&&pv.phase==='play'&&S.phase!=='lobby')?grab():null;
+  const pv=lastS,oldR=(pv&&pv!==S&&pv.phase==='play'&&S.phase!=='lobby'&&sig(pv)!==sig(S))?grab():null;
   FRESH=(pv&&pv!==S&&pv.phase==='play')?new Set(S.table.flat().filter(id=>id!=null&&!pv.table.flat().includes(id))):(pv&&pv===S)?new Set():new Set(S.phase==='play'?S.table.flat().filter(x=>x!=null):[]);
-  if(S.phase==='lobby'){const host=S.host===uid;
+  if(S.phase==='lobby'){const host=S.host===uid;app.className='panel';app.style.zoom=1;dlgSet('');
     app.innerHTML=`<div class="panel"><div class="lab">🔑 รหัสห้อง</div><div style="font-size:48px;font-weight:700;color:var(--gold);letter-spacing:8px;text-shadow:3px 3px 0 var(--ink)">${code}</div>
     <div class="hint">${isHost?netMsg:''}</div><p>📨 ส่งลิงก์หน้านี้ให้เพื่อน (ต่อท้ายด้วย <b>#${code}</b>) หรือบอกรหัสห้อง</p><button class="b" data-a="copy">📋 คัดลอกลิงก์ห้อง</button><div class="leg">⚠️ เจ้าของห้องต้องเปิดหน้านี้ค้างไว้ตลอดเกม (บนมือถือ อย่าปิดจอหรือสลับแอปนาน)</div>
     <div class="sec">👥 ผู้เล่น ${S.players.length}/4</div>${S.players.map(p=>`<div class="pn" style="margin:6px 0">${p.av||'🙂'} ${p.name}${p.uid===S.host?' 👑':''}</div>`).join('')}</div>
     ${host?`<button class="b" data-a="start" ${S.players.length<2?'disabled':''}>🚀 เริ่มเกม</button> ${S.players.length<2?'<div class="hint">⏳ ต้องมีผู้เล่นอย่างน้อย 2 คนจึงเริ่มได้ — อยากลองคนเดียว ให้รีเฟรชแล้วเลือก "เล่นกับบอท"</div>':''}`:'⏳ รอเจ้าของห้องกดเริ่มเกม...'} <span class="warn">${msg}</span>`;return}
   const m=myIdx();if(m<0){app.textContent='เกมนี้เริ่มไปแล้ว และคุณไม่ได้อยู่ในห้อง';return}
-  const mp=S.players[m],cur=S.players[S.turn],mt=myTurn(),av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length;
-  let h=`<div class="row" style="justify-content:space-between"><span class="lab">${solo?'🤖 โหมดฝึกเล่น':'🔑 ห้อง '+code} · 🎯 ใครถึง 15 แต้มก่อนชนะ</span><span class="warn">${msg}</span></div>`;
-  if(S.phase==='over'){const r=S.players.map(p=>({p,s:pts(p),n:p.cards.length})).sort((a,b)=>b.s-a.s||a.n-b.n);
-    h+=`<div class="panel"><div class="banner">🏆 ผู้ชนะ: ${r[0].p.av||''} ${r[0].p.name} (${r[0].s} แต้ม) 🎉</div>${r.map((x,i)=>`<div style="margin:8px 0">${['🥇','🥈','🥉','🎖️'][i]} ${x.p.av||''} ${x.p.name}: ${x.s} แต้ม · ${x.n} การ์ด</div>`).join('')}${S.host===uid?'<button class="b" data-a="again">🔄 เล่นใหม่</button>':''}</div>`}
-  else h+=`<div class="banner" style="${mt?'':'animation:none;background:#0006;color:#fdf3dc'}">${mt?'🎲 ตาของคุณ! เลือกทำ 1 อย่าง (ดูกรอบ "การกระทำ" ฝั่งขวา)':'⏳ รอ '+(cur.av||'')+' '+cur.name+' เล่น...'}</div>`;
-  h+=`<div class="game"><div class="board">`;
-  h+=`<div class="panel"><div class="sec">👑 ขุนนาง <small>(โบนัสครบตามนี้ → ได้ +3 แต้มอัตโนมัติ)</small></div><div class="row">${S.nobles.map(k=>`<div class="noble">👑<div class="r">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div>`;
-  h+=`<div class="panel"><div class="sec">🃏 การ์ดบนโต๊ะ</div><div class="leg">ป้ายดำ+อัญมณี = ราคาที่ต้องจ่าย · ไอคอนมุมขวาบน = โบนัสที่ได้ถาวร · แตะการ์ดเพื่อดูรายละเอียด</div>`;
+  const mp=S.players[m],cur=S.players[S.turn],mt=myTurn(),av=[0,1,2,3,4].filter(i=>S.bank[i]>0).length,dh=detailH(mp,mt);
+  if(S.phase!=='over')hidePod=false;
+  let h=`<div class="topline"><span class="lab">${solo?'🤖 โหมดฝึกเล่น':'🔑 ห้อง '+code} · 🎯 ใครถึง 15 แต้มก่อนชนะ</span><span class="warn">${msg}</span></div>`;
+  if(S.phase==='over')h+=`<div class="banner">🏁 จบเกมแล้ว! <button class="b" data-a="pod">🏆 ดูอันดับ</button> ${S.host===uid?'<button class="b" data-a="again">🔄 เล่นใหม่</button>':''}</div>`;
+  else h+=`<div class="banner" style="${mt?'':'animation:none;background:#0006;color:#fdf3dc'}">${mt?'🎲 ถึงตาของคุณแล้ว! เลือกทำ 1 อย่าง':'⏳ รอ '+(cur.av||'')+' '+cur.name+' เล่น...'}</div>`;
+  const order=[...S.players.keys()].sort((a,b)=>(b===m)-(a===m)),LS=order.filter((x,k)=>k%2===0),RS=order.filter((x,k)=>k%2===1);
+  h+=`<div class="arena"><aside class="col">${LS.map(i=>boardH(i,m,mt)).join('')}</aside><main class="mid">`;
+  h+=`<div class="panel"><div class="sec" style="margin:0 0 2px">👑 ขุนนางที่นั่งรออยู่ <small>(โบนัสครบ → เดินไปหาคุณ +3 แต้ม)</small></div><div class="hall">${S.nobles.map(k=>`<div class="nob" data-nb="${k}"><div class="seat"><div class="chb"></div>${charSVG(NOB(k))}<div class="chs"></div></div><div class="req">${NB[k].map((n,i)=>n?pip(i,n):'').join('')}</div></div>`).join('')}</div></div>`;
+  h+=`<div class="panel"><div class="table"><div class="rows"><div class="sec" style="margin:0 0 2px">🃏 ตลาดการ์ด <small>(การ์ดเรืองแสง = คุณซื้อได้ · แตะเพื่อดู/ซื้อ/จอง)</small></div>`;
   [2,1,0].forEach(l=>{h+=`<div class="lv"><div class="deck" data-dk="${l}"><b>${['🥉','🥈','🥇'][l]} ระดับ ${'I'.repeat(l+1)}</b><span>เหลือ ${S.deck[l].length}</span>${mt&&!S.disc&&mp.res.length<3&&S.deck[l].length?`<button class="b" style="padding:3px 8px;font-size:12px" data-rd="${l}">🔒 จองจากกอง</button>`:''}</div>${S.table[l].map(id=>id==null?'<div class="card empty"></div>':cardH(id)).join('')}</div>`});
-  h+=`</div><div class="panel"><div class="sec">💰 คลังอัญมณี <small>(แตะเพื่อเลือกเก็บ)</small></div><div class="row">${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" data-g="${i}" ${i===5?'disabled':''}><span class="gs">${GE[i]}</span><b>${S.bank[i]}</b>${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}</div><div class="leg">🪙 เหรียญทองเก็บตรงๆ ไม่ได้ ต้องได้จากการจองการ์ด · ใช้แทนอัญมณีสีไหนก็ได้</div></div></div>`;
-  h+=`<aside class="side"><div class="panel act"><div class="sec">⚔️ การกระทำ</div>`;
+  h+=`</div><div class="bankc"><div class="sec" style="margin:0">💰 คลัง</div>${[0,1,2,3,4,5].map(i=>{const k=sel.filter(x=>x===i).length;return `<button class="gem ${k?'s':''}" data-g="${i}" ${i===5?'disabled':''}><span class="gs">${GE[i]}</span><b>${S.bank[i]}</b>${k?'<sup>+'+k+'</sup>':''}</button>`}).join('')}<div class="leg" style="max-width:78px;text-align:center;margin:0">แตะเพื่อเลือกเก็บ<br>🪙 ทองได้จากการจอง</div></div></div></div>`;
+  h+=`<div class="panel act"><div class="sec" style="margin:0 0 4px">⚔️ การกระทำ</div>`;
   if(S.phase==='play'){
-    if(mt&&S.disc)h+=`<div class="warn">⚠️ คุณมีเหรียญเกิน 10! กดอัญมณีของคุณในกรอบผู้เล่นด้านล่าง (ขอบสีแดง) เพื่อคืนทีละชิ้น</div>`;
+    if(mt&&S.disc)h+=`<div class="warn">⚠️ เหรียญเกิน 10! กดตัวเลขเหรียญสีแดงของคุณในตารางบนบอร์ดเพื่อคืนทีละชิ้น</div>`;
     else if(mt){const ok=sel.length&&(sel.length===2&&sel[0]===sel[1]||new Set(sel).size===sel.length&&sel.length===Math.min(3,av));
-      h+=`<div class="hint"><b>① เก็บอัญมณี:</b> เลือกจากคลัง ${Math.min(3,av)} สีต่างกัน หรือกดสีเดียวกัน 2 ครั้ง (เลือกแล้ว ${sel.length})</div><div class="row"><button class="b" data-a="take" ${ok?'':'disabled'}>💰 เก็บที่เลือก</button><button class="b" data-a="clr">🧹 ล้าง</button></div>
-      <div class="hint" style="margin-top:8px"><b>② ซื้อ / ③ จอง:</b> 👆 แตะ<b>การ์ด</b>บนโต๊ะ (หรือการ์ดที่คุณจองไว้) แล้วกดซื้อหรือจองในหน้าต่างที่เด้งขึ้น</div>`}
-    else h+=`<div class="hint">⏳ ยังไม่ถึงตาคุณ — ดูกระดานระหว่างรอได้ ปุ่มจะขึ้นเมื่อถึงตา</div>`}
-  h+=`</div><div class="sec">👥 ผู้เล่น</div>`;
-  [...S.players.keys()].sort((a,b)=>(b===m)-(a===m)).forEach(i=>{const p=S.players[i],b=bon(p),dz=i===m&&S.disc&&mt;
-    h+=`<div data-pi="${i}" class="p ${i===m?'me':''} ${i===S.turn&&S.phase==='play'?'turn':''}"><span class="sc">⭐ ${pts(p)}</span><div class="pn">${p.av||'🙂'} ${p.name}${i===m?' (คุณ)':''}</div>
-    <div class="line"><span class="lab">โบนัสลดราคา</span> ${b.map((n,k)=>pip(k,n)).join('')}</div>
-    <div class="line"><span class="lab">อัญมณีในมือ ${tot(p)}/10</span> ${p.g.map((n,k)=>dz?`<button class="pip dsc" data-d="${k}">${GE[k]}${n}</button>`:pip(k,n)).join('')}</div>
-    ${p.res.length?`<div class="line"><span class="lab">🔒 การ์ดที่จองไว้ (ทุกคนเห็น)</span></div><div class="row res">${p.res.map(id=>cardH(id)).join('')}</div>`:''}
-    ${p.cards.length?`<div class="line"><span class="lab">🃏 การ์ดที่ซื้อแล้ว ${p.cards.length} ใบ (แตะดูได้)</span></div><div class="bought">${[...p.cards].sort((a,b)=>C[a].o-C[b].o||C[a].l-C[b].l).map(id=>cardH(id)).join('')}</div>`:''}
-    ${p.nobles.length?`<div class="line">👑 ขุนนาง ${p.nobles.length} ตัว</div>`:''}${p.last?`<div class="hint">📌 ล่าสุด: ${p.last}</div>`:''}</div>`});
-  h+=`<div class="panel log"><div class="sec">📜 เกิดอะไรขึ้นบ้าง</div>${S.log.slice().reverse().join('<br>')}</div></aside></div>`;
-  h+=detailH(mp,mt);app.innerHTML=h;if(oldR)try{anims(pv,oldR)}catch(e){}lastS=S}
-document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c],[data-a],[data-rd],[data-d]');if(!t||!S)return;msg='';const d=t.dataset;
+      h+=`<div class="acts"><div><div class="hint" style="margin:2px 0"><b>① เก็บอัญมณี:</b> เลือก ${Math.min(3,av)} สีต่างกัน หรือกดสีเดียวกัน 2 ครั้ง (เลือกแล้ว ${sel.length})</div><div class="row"><button class="b" data-a="take" ${ok?'':'disabled'}>💰 เก็บที่เลือก</button><button class="b" data-a="clr">🧹 ล้าง</button></div></div><div><div class="hint" style="margin:2px 0"><b>② ซื้อ / ③ จอง:</b> 👆 แตะ<b>การ์ด</b>แล้วกดในหน้าต่างที่เด้งขึ้น</div></div></div>`}
+    else h+=`<div class="hint" style="margin:2px 0">⏳ ยังไม่ถึงตาคุณ — ดูกระดานระหว่างรอได้ (หรือจะปามะเขือเทศใส่เพื่อนก็ได้ 🍅)</div>`}
+  h+=`<div class="leg" style="margin:6px 0 0">📜 ${S.log.slice(-2).reverse().join(' · ')}</div></div></main><aside class="col">${RS.map(i=>boardH(i,m,mt)).join('')}</aside></div>`;
+  tstSet(taster?tstPanel():'');dlgSet(S.phase==='over'&&!hidePod?podiumH():dh);app.innerHTML=h;app.className='plain';fit();
+  if(S.fx){if(seenFx<0)seenFx=S.fx.id;else if(S.fx.id>seenFx){seenFx=S.fx.id;throwTomato(S.fx)}}else if(seenFx<0)seenFx=0;
+  if(S.phase==='play'&&mt&&(!pv||pv.phase!=='play'||pv.turn!==S.turn))setTimeout(turnFx,oldR?900:200);
+  if(oldR)try{anims(pv,oldR)}catch(e){}lastS=S}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c],[data-a],[data-rd],[data-d],[data-tom]');if(!t||!S)return;msg='';const d=t.dataset;
+  if(d.tom!=null){if(Date.now()-lastTom<1200){toast('🍅 รอแป๊บนึงนะ!');return}lastTom=Date.now();return send({t:'tomato',to:d.tom})}
   if(d.d!=null)return send({t:'disc',i:+d.d});
   if(d.g!=null&&myTurn()&&!S.disc){const i=+d.g;sfx('tick');
     if(sel.length===3||sel.length===2&&sel[0]===sel[1])sel=[i];
@@ -369,6 +556,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-g],[data-c
     else if(sel.includes(i))sel=sel.filter(x=>x!==i);else sel.push(i);return render()}
   if(d.c!=null){sfx('tick');selC=selC===+d.c?null:+d.c;return render()}
   if(d.rd!=null)return send({t:'res',deck:+d.rd});
-  ({take:()=>send({t:'take',sel}),buy:()=>send({t:'buy',id:selC}),res:()=>send({t:'res',id:selC}),copy:()=>{const u=location.origin+location.pathname+'#'+code;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>toast('📋 คัดลอกลิงก์แล้ว!'),()=>toast(u))},cc:()=>{selC=null;render()},clr:()=>{sel=[];selC=null;render()},start:()=>send({t:'start'}),again:()=>send({t:'again'})})[d.a]?.()});
+  ({take:()=>send({t:'take',sel}),buy:()=>send({t:'buy',id:selC}),res:()=>send({t:'res',id:selC}),pod:()=>{hidePod=!hidePod;render()},copy:()=>{const u=location.origin+location.pathname+'#'+code;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>toast('📋 คัดลอกลิงก์แล้ว!'),()=>toast(u))},cc:()=>{selC=null;render()},clr:()=>{sel=[];selC=null;render()},start:()=>send({t:'start'}),again:()=>send({t:'again'})})[d.a]?.()});
+document.body.insertAdjacentHTML('beforeend','<div id="dlgRoot"></div><div id="tstRoot"></div>');window.addEventListener('resize',()=>{if(S&&S.phase!=='lobby')fit()});
 lobbyUI(location.hash.replace('#','').toUpperCase());
 </script></body></html>
